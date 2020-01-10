@@ -1,16 +1,20 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+// LOOK BELOW 
+//
+//
+// LOOK HERE:
+// https://github.com/wpilibsuite/allwpilib/tree/master/wpilibjExamples/src/main/java/edu/wpi/first/wpilibj/examples/armbot
+//
+// LOOK ABOVE
+//
+//
 
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.OPDrive;
+import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -20,10 +24,17 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  /* The robot's subsystems and commands are defined here... */
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+   // Subsystems - Create all subsystems here, and then pass them into Commands
+  private final Drivetrain DT = new Drivetrain();
+   
+   // Joysticks - Joysticks are made here
+  public Joystick DriveStick = new Joystick(VariableVault.DriveStickID);
+
+   // Commands - Create Command Objects
+   // NOTE: it should be private, but if you need to reference it elsewhere, then 
+  public final OPDrive OPDrive = new OPDrive(DT, DriveStick);
 
 
 
@@ -51,7 +62,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    // NOTE: Put in an actual command
+    return OPDrive;
   }
 }
