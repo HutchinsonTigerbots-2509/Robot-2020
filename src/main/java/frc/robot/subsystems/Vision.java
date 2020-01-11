@@ -90,6 +90,8 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    // Puts all the vision numbers on the Shuffleboard
     SmartDashboard.putNumber("Target X", getTargetX());
     SmartDashboard.putNumber("Target Y", getTargetY());
     SmartDashboard.putNumber("Target Area", getTargetArea());
