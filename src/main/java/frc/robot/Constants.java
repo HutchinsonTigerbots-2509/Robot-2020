@@ -7,13 +7,19 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.util.Color;
+
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean constants. This class should not be used for any other
+ * purpose. All constants should be declared globally (i.e. public static). Do
+ * not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
 
@@ -25,6 +31,14 @@ public final class Constants {
     public static int kLeftRearID = 1;
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
+    // Colorwheel
+    public final Port kColorSensorID = Port.kOnboard;
+    public final int kcolorWheelMotorID = 4; 
+    // Color
+    public static Color kBlue = Color.kRed;
+    public static Color kYellow = Color.kGreen;
+    public static Color kGreen = Color.kYellow;
+    public static Color kRed = Color.kBlue;
 
     /* Vision Constants */
 
@@ -47,4 +61,6 @@ public final class Constants {
     public static String kLimelightTargetSkewID = "ts"; // Target skew/rotation (-90 to 0 degrees)
     public static String kLimelightTargetVertID = "tvert"; // Vertical sidelength of bounding box (0-320 pixels)
     public static String kLimelightTargetHorID = "thor"; // Horizontal sidelength of bounding box (0-320 pixels)
+
+
 }
