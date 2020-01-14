@@ -18,15 +18,15 @@ import frc.robot.Constants;
 
 public class Colorwheel extends SubsystemBase {
 
-  static boolean activateChangeColor = false;
-  static boolean activateRotateWheel = false;
-  static Color _currentColor;
-  static Constants constants;
-  static ColorSensorV3 colorSensor;
-  static Color _expectedColor;
-  static WPI_TalonSRX colorWheelMotor;
-  static int _currentHalfRevolutions;
-  static Color previousColor;
+  public static boolean activateChangeColor = false;
+  public static boolean activateRotateWheel = false;
+  public static Color _currentColor;
+  public static Constants constants;
+  public static ColorSensorV3 colorSensor;
+  public static Color _expectedColor;
+  public static WPI_TalonSRX colorWheelMotor;
+  public static int _currentHalfRevolutions;
+  public static Color previousColor;
   /**
    * Creates a new Colorwheel.
    */

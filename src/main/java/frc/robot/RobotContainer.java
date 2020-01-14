@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.OPDrive;
+import frc.robot.subsystems.Colorwheel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,11 +27,15 @@ import frc.robot.Constants;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  
+  
   // The robot's subsystems and commands are defined here...
   public final Vision sVision = new Vision();
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
-  private final Drivetrain DT = new Drivetrain();
+  private final Drivetrain DT = new Drivetrain(); // hehe I Cole Rahne
+
+  public static Colorwheel sColorWheel = new Colorwheel();
    
    // Joysticks - Joysticks are made here
   public static Joystick OpStick = new Joystick(Constants.kOpStickID);
