@@ -13,15 +13,15 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.VariableVault;
 import frc.robot.RobotContainer;;
 
 public class Drivetrain extends SubsystemBase {
   
-  public final WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
-  public final WPI_TalonSRX LeftRear = new WPI_TalonSRX(Constants.kLeftRearID);
-  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
-  public final WPI_TalonSRX RightRear = new WPI_TalonSRX(Constants.kRightRearID);
+  public final WPI_TalonSRX LeftFront = new WPI_TalonSRX(VariableVault.kLeftFrontID);
+  public final WPI_TalonSRX LeftRear = new WPI_TalonSRX(VariableVault.kLeftRearID);
+  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(VariableVault.kRightFrontID);
+  public final WPI_TalonSRX RightRear = new WPI_TalonSRX(VariableVault.kRightRearID);
 
   public final SpeedControllerGroup Right = new SpeedControllerGroup(LeftFront, LeftRear);
   public final SpeedControllerGroup Left = new SpeedControllerGroup(RightFront, RightRear);

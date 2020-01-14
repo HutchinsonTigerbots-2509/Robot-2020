@@ -13,12 +13,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.OPDrive;
-import frc.robot.subsystems.Colorwheel;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Vision;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import frc.robot.VariableVault;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -38,11 +36,13 @@ public class RobotContainer {
   public static Colorwheel sColorWheel = new Colorwheel();
    
    // Joysticks - Joysticks are made here
-  public static Joystick OpStick = new Joystick(Constants.kOpStickID);
+  public static Joystick OpStick = new Joystick(VariableVault.kOpStickID);
 
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then 
   public final OPDrive OPDrive = new OPDrive(DT, OpStick);
+  public final ChangeColorWheel cChangeColorWheel = new ChangeColorWheel();
+  public final ChangeRotateWheel cChangeRotateWheel = new ChangeRotateWheel();
 
 
 

@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.util.Color;
  * It is advised to statically import this class (or one of its inner classes)
  * wherever the constants are needed, to reduce verbosity.
  */
-public final class Constants {
+public final class VariableVault {
 
     /* ID NUMBERS */
     // Joystick
@@ -34,11 +34,12 @@ public final class Constants {
     // Colorwheel
     public final Port kColorSensorID = Port.kOnboard;
     public final int kcolorWheelMotorID = 4; 
-    // Color
-    public static Color kBlue = Color.kRed;
-    public static Color kYellow = Color.kGreen;
-    public static Color kGreen = Color.kYellow;
-    public static Color kRed = Color.kBlue;
+    // Colors
+    public static Color kBlue = Color.kRed; // when red is under our sensor, blue is under theirs
+    public static Color kYellow = Color.kGreen; // when green is under our sensor, yellow is under theirs
+    public static Color kGreen = Color.kYellow; // when yellow is under our sensor, green is under theirs
+    public static Color kRed = Color.kBlue; // when blue is under our sensor, red is under theirs
+
 
     /* Vision Constants */
 
