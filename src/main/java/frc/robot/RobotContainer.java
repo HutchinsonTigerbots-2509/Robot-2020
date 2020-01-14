@@ -13,11 +13,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.OPDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -26,18 +28,20 @@ import frc.robot.Constants;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  // Declare buttons here
+  private static JoystickButton AlignButton;
   // The robot's subsystems and commands are defined here...
-  public final Vision sVision = new Vision();
+  public static Vision sVision = new Vision();
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
-  private final Drivetrain DT = new Drivetrain();
-   
+  public static Drivetrain sDrivetrain = new Drivetrain();
+  
    // Joysticks - Joysticks are made here
   public static Joystick OpStick = new Joystick(Constants.kOpStickID);
 
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then 
-  public final OPDrive OPDrive = new OPDrive(DT, OpStick);
+  public final OPDrive OPDrive = new OPDrive(sDrivetrain, OpStick);
 
 
 
@@ -56,6 +60,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+  AlignButton = new JoystickButton(OpStick, 1);
+  AlignButton.whenPressed(new AlignWithTarget(sVision, sDrivetrain));
   }
 
 
