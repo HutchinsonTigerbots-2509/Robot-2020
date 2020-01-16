@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.revrobotics.ColorMatch;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
@@ -35,10 +37,10 @@ public final class VariableVault {
     public final Port kColorSensorID = Port.kOnboard;
     public final int kcolorWheelMotorID = 4; 
     // Colors
-    public static Color kBlue = Color.kRed; // when red is under our sensor, blue is under theirs
-    public static Color kYellow = Color.kGreen; // when green is under our sensor, yellow is under theirs
-    public static Color kGreen = Color.kYellow; // when yellow is under our sensor, green is under theirs
-    public static Color kRed = Color.kBlue; // when blue is under our sensor, red is under theirs
+    public static Color kBlue = ColorMatch.makeColor(0.143, 0.427, 0.429); // when red is under our sensor, blue is under theirs
+    public static Color kYellow = ColorMatch.makeColor(0.361, 0.524, 0.113); // when green is under our sensor, yellow is under theirs
+    public static Color kGreen = ColorMatch.makeColor(0.197, 0.561, 0.240); // when yellow is under our sensor, green is under theirs
+    public static Color kRed = ColorMatch.makeColor(0.561, 0.232, 0.114); // when blue is under our sensor, red is under theirs
 
 
     /* Vision Constants */

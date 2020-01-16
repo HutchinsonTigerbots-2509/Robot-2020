@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.VariableVault;
 
 /**
@@ -28,19 +29,22 @@ public class RobotContainer {
   
   
   // The robot's subsystems and commands are defined here...
-  public final Vision sVision = new Vision();
+  // public final Vision sVision = new Vision();
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
-  private final Drivetrain DT = new Drivetrain(); // hehe I Cole Rahne
+  // private final Drivetrain DT = new Drivetrain(); // hehe I Cole Rahne
 
   public static Colorwheel sColorWheel = new Colorwheel();
    
    // Joysticks - Joysticks are made here
   public static Joystick OpStick = new Joystick(VariableVault.kOpStickID);
 
+  public static JoystickButton ChangeColorWheelButton;
+  public static JoystickButton ChangeRotateWheelButton;
+
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then 
-  public final OPDrive OPDrive = new OPDrive(DT, OpStick);
+  // public final OPDrive OPDrive = new OPDrive(DT, OpStick);
   public final ChangeColorWheel cChangeColorWheel = new ChangeColorWheel();
   public final ChangeRotateWheel cChangeRotateWheel = new ChangeRotateWheel();
 
@@ -61,6 +65,12 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    ChangeColorWheelButton = new JoystickButton(OpStick, 1);
+    ChangeColorWheelButton.whenPressed(new ChangeColorWheel());
+
+    ChangeRotateWheelButton = new JoystickButton(OpStick, 2);
+    ChangeRotateWheelButton.whenPressed(new ChangeRotateWheel());
+
   }
 
 
@@ -71,6 +81,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // NOTE: Put in an actual command
-    return OPDrive;
+    // return OPDrive;
+    return null;
   }
 }

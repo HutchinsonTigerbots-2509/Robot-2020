@@ -9,9 +9,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.VariableVault;
@@ -21,18 +25,22 @@ public class Colorwheel extends SubsystemBase {
   // Variables
   public static VariableVault vV;
 
-  public static WPI_TalonSRX colorWheelMotor;
+  public static VictorSP colorWheelMotor;
 
   public static ColorSensorV3 colorSensor;
 
   public static boolean activateChangeColor = false;
   public static boolean activateRotateWheel = false;
 
-  public static Color _currentColor;
-  public static Color _expectedColor;
-  public static Color previousColor;
-  public static Color targetColor;
+  public static String _currentColor;
+  public static String _expectedColor;
+  public static String previousColor;
+  public static String targetColor;
+  private static String colorString;
 
+  private final ColorMatch colorMatcher = new ColorMatch();
+
+  public static ColorMatchResult match;
   
   public static int _currentHalfRevolutions;
 
@@ -42,16 +50,21 @@ public class Colorwheel extends SubsystemBase {
   public Colorwheel() {
    vV = new VariableVault();
 
-   colorWheelMotor = new WPI_TalonSRX(vV.kcolorWheelMotorID);
+   colorWheelMotor = new VictorSP(vV.kcolorWheelMotorID);
 
    colorSensor = new ColorSensorV3(vV.kColorSensorID);
 
     activateChangeColor = false;
     activateRotateWheel = false;
 
-    _expectedColor = Color.kBlue;
+    _expectedColor = getColor(Color.kBlue);
 
     _currentHalfRevolutions = 0;
+
+    colorMatcher.addColorMatch(vV.kBlue);
+    colorMatcher.addColorMatch(vV.kGreen);
+    colorMatcher.addColorMatch(vV.kYellow);
+    colorMatcher.addColorMatch(vV.kRed);
   }
  
   /**
@@ -59,7 +72,8 @@ public class Colorwheel extends SubsystemBase {
    */
   @Override
   public void periodic() {
-    _currentColor = colorSensor.getColor();
+    match = colorMatcher.matchClosestColor(colorSensor.getColor());
+    _currentColor = getColor(match, colorSensor.getColor());
     
     if(activateChangeColor == true){
       changeColor(_currentColor, _expectedColor);
@@ -70,6 +84,14 @@ public class Colorwheel extends SubsystemBase {
     }else{}
 
     previousColor = _currentColor;
+
+    SmartDashboard.putBoolean("Changing Color", activateChangeColor);
+    SmartDashboard.putBoolean("Rotating Wheel", activateRotateWheel);
+    SmartDashboard.putString("Color", _currentColor);
+    SmartDashboard.putString("Expected Color", _expectedColor);
+    // SmartDashboard.putString("Previous Color", previousColor);
+    // SmartDashboard.putString("Target Color", targetColor);
+    // SmartDashboard.putNumber("Current Half Revolutions", _currentHalfRevolutions);
   }
   
   /**
@@ -77,12 +99,15 @@ public class Colorwheel extends SubsystemBase {
    * @param currentColor (color under our sensor)
    * @param expectedColor (color under their sensor - reference {@link Constants#kBlue}) 
    */
-  public void changeColor(Color currentColor, Color expectedColor){
+  public void changeColor(String currentColor, String expectedColor){
+
     if(currentColor == expectedColor){
       colorWheelMotor.set(0);
       activateChangeColor = false;
+
     }else{
       colorWheelMotor.set(.5);
+
     }
   }
   
@@ -95,9 +120,11 @@ public class Colorwheel extends SubsystemBase {
       colorWheelMotor.set(0);
       activateRotateWheel = false;
       _currentHalfRevolutions = 0;
+
     }else{
       if(_currentColor != previousColor && _currentColor == targetColor){ //Checks to make sure that the current color is not equal to the previous color
         _currentHalfRevolutions++;
+
       }
       colorWheelMotor.set(0.5);
     }
@@ -111,12 +138,56 @@ public class Colorwheel extends SubsystemBase {
   public boolean rotationChecker(double fullRotations){
     if(_currentHalfRevolutions == fullRotations * 2){
       return true;
+
     }else{
       return false;
+
     }
   }
 
   public Color getColor(){
     return colorSensor.getColor();
+  }
+
+  public String getColor(ColorMatchResult result, Color color){
+
+    if (result.color == color) {
+      colorString = "Blue";
+
+    } else if (result.color == color) {
+      colorString = "Red";
+
+    } else if (result.color == color) {
+      colorString = "Green";
+
+    } else if (result.color == color) {
+      colorString = "Yellow";
+
+    } else {
+      colorString = "Unknown";
+      
+    }
+    return colorString;
+  }
+
+  public String getColor(Color color){
+
+    if (vV.kBlue == color) {
+      colorString = "Blue";
+
+    } else if (vV.kRed == color) {
+      colorString = "Red";
+
+    } else if (vV.kGreen == color) {
+      colorString = "Green";
+
+    } else if (vV.kYellow == color) {
+      colorString = "Yellow";
+
+    } else {
+      colorString = "Unknown";
+      
+    }
+    return colorString;
   }
 }

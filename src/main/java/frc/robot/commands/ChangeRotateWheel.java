@@ -24,7 +24,7 @@ public class ChangeRotateWheel extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    _sColorWheel.targetColor = _sColorWheel.getColor();
+    _sColorWheel.targetColor = _sColorWheel.getColor(_sColorWheel.getColor());
     _sColorWheel.activateRotateWheel = true;
   }
 }
