@@ -13,16 +13,22 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.VariableVault;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ChangeColorWheel;
+import frc.robot.commands.ChangeRotateWheel;
+import frc.robot.commands.OPDrive;
+import frc.robot.subsystems.Colorwheel;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Vision;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   
@@ -32,6 +38,7 @@ public class RobotContainer {
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
   private final Drivetrain DT = new Drivetrain(); // hehe I Cole Rahne
+  public final Intake sIntake = new Intake(); // hehe I cole rain
 
   public static Colorwheel sColorWheel = new Colorwheel();
    
@@ -40,7 +47,7 @@ public class RobotContainer {
 
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then 
-  public final OPDrive OPDrive = new OPDrive(DT, OpStick);
+  public final OPDrive OPDrive = new OPDrive(DT, sIntake, OpStick);
   public final ChangeColorWheel cChangeColorWheel = new ChangeColorWheel();
   public final ChangeRotateWheel cChangeRotateWheel = new ChangeRotateWheel();
 
@@ -61,6 +68,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
   }
 
 
