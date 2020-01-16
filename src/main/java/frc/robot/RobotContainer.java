@@ -37,8 +37,8 @@ public class RobotContainer {
   // public final Vision sVision = new Vision();
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
-  private final Drivetrain DT = new Drivetrain(); // hehe I Cole Rahne
-  public final Intake sIntake = new Intake(); // hehe I cole rain
+  // private final Drivetrain DT = new Drivetrain(); // hehe I Cole Rahne
+  // public final Intake sIntake = new Intake(); // hehe I cole rain
 
   public static Colorwheel sColorWheel = new Colorwheel();
    

@@ -7,14 +7,11 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -39,8 +36,6 @@ public class Colorwheel extends SubsystemBase {
   private static String colorString;
 
   private final ColorMatch colorMatcher = new ColorMatch();
-
-  public static ColorMatchResult match;
   
   public static int _currentHalfRevolutions;
 
@@ -61,6 +56,8 @@ public class Colorwheel extends SubsystemBase {
 
     _currentHalfRevolutions = 0;
 
+    targetColor = "Unknown";
+
     colorMatcher.addColorMatch(vV.kBlue);
     colorMatcher.addColorMatch(vV.kGreen);
     colorMatcher.addColorMatch(vV.kYellow);
@@ -72,7 +69,7 @@ public class Colorwheel extends SubsystemBase {
    */
   @Override
   public void periodic() {
-    match = colorMatcher.matchClosestColor(colorSensor.getColor());
+    ColorMatchResult match = colorMatcher.matchClosestColor(colorSensor.getColor());
     _currentColor = getColor(match, colorSensor.getColor());
     
     if(activateChangeColor == true){
@@ -89,9 +86,10 @@ public class Colorwheel extends SubsystemBase {
     SmartDashboard.putBoolean("Rotating Wheel", activateRotateWheel);
     SmartDashboard.putString("Color", _currentColor);
     SmartDashboard.putString("Expected Color", _expectedColor);
-    // SmartDashboard.putString("Previous Color", previousColor);
-    // SmartDashboard.putString("Target Color", targetColor);
-    // SmartDashboard.putNumber("Current Half Revolutions", _currentHalfRevolutions);
+    SmartDashboard.putString("Color Under Sensor", colorSensor.toString());
+    SmartDashboard.putString("Previous Color", previousColor);
+    SmartDashboard.putString("Target Color", targetColor);
+    SmartDashboard.putNumber("Current Half Revolutions", _currentHalfRevolutions);
   }
   
   /**
