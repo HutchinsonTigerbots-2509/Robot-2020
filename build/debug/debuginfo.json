@@ -5,5 +5,12 @@
     "debugfile": "frcJava_roborio.debugconfig",
     "project": "FRC-2020",
     "language": "java"
+  },
+  {
+    "artifact": "frcJava (in project Robot-2020)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "Robot-2020",
+    "language": "java"
   }
 ]
