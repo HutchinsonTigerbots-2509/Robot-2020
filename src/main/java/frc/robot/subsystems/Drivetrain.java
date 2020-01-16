@@ -16,14 +16,15 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;;
+import frc.robot.RobotContainer;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Drivetrain extends SubsystemBase {
   
   public final WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
-  public final WPI_TalonSRX LeftRear = new WPI_TalonSRX(Constants.kLeftRearID);
+  public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
   public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
-  public final WPI_TalonSRX RightRear = new WPI_TalonSRX(Constants.kRightRearID);
+  public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
 
   public final SpeedControllerGroup Right = new SpeedControllerGroup(LeftFront, LeftRear);
   public final SpeedControllerGroup Left = new SpeedControllerGroup(RightFront, RightRear);
@@ -37,6 +38,18 @@ public class Drivetrain extends SubsystemBase {
    */
   public Drivetrain() {
 
+  }
+
+  public void TurnLeft(double pSpeed) {
+    Drive.tankDrive(-pSpeed, pSpeed);
+  }
+
+  public void TurnRight(double pSpeed) {
+    Drive.tankDrive(pSpeed, -pSpeed);
+  }
+
+  public void StopMotors() {
+    Drive.tankDrive(0, 0);
   }
 
   /**

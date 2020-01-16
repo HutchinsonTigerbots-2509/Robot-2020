@@ -42,6 +42,7 @@ public class Vision extends SubsystemBase {
     mLimelightTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
     mLimelightTable.getEntry("stream").setNumber(Constants.kLimelightStream);
     mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightStartingPipeline);
+    SmartDashboard.putNumber("here",2);
   }
 
   // Returns the horizontal offset from crosshair to target (+/- 27 degrees)
@@ -97,6 +98,5 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("Target Area", getTargetArea());
     SmartDashboard.putNumber("Target Skew", getTargetSkew());
     SmartDashboard.putNumber("Target Vert", getTargetVert());
-    SmartDashboard.putNumber("Target Hor", getTargetHor());
-  }
+    SmartDashboard.putNumber("Target Hor", getTargetHor());  }
 }
