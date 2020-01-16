@@ -31,6 +31,9 @@ public final class VariableVault {
     public static int kLeftRearID = 1;
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
+    //Intake
+    public static int kIntakeMotor0ID = 9; //NOT CORRECT - DJ
+    public static int kIntakeMotor1ID =8; //NOT CORRECT - DJ
     // Colorwheel
     public final Port kColorSensorID = Port.kOnboard;
     public final int kcolorWheelMotorID = 4; 
