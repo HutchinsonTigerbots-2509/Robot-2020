@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Colorwheel;
 
@@ -26,7 +25,7 @@ public class ChangeColorWheel extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    _sColorWheel.activateChangeColor = true;
+    _sColorWheel.activateCW();
   }
 }
 

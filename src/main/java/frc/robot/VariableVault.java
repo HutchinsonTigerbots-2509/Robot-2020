@@ -33,12 +33,9 @@ public final class VariableVault {
     public static int kLeftRearID = 1;
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
-    //Intake
-    public static int kIntakeMotor0ID = 9; //NOT CORRECT - DJ
-    public static int kIntakeMotor1ID =8; //NOT CORRECT - DJ
     // Colorwheel
-    public final Port kColorSensorID = Port.kOnboard;
-    public final int kcolorWheelMotorID = 4; 
+    public final int kcolorWheelMotorID = 4;
+    public final I2C.Port iPort = Port.kOnboard;
     // Colors
     public final Color kBlue = ColorMatch.makeColor(0.143, 0.427, 0.429); 
     public final Color kYellow = ColorMatch.makeColor(0.361, 0.524, 0.113); // when green is under our sensor, yellow is under theirs

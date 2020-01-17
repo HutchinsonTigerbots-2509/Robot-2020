@@ -17,11 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ChangeColorWheel;
 import frc.robot.commands.ChangeRotateWheel;
-import frc.robot.commands.OPDrive;
 import frc.robot.subsystems.Colorwheel;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Vision;
 
 /**
  * This class is where the bulk of the robot should be declared. Since

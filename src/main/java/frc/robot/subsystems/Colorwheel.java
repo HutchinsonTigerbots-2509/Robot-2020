@@ -29,13 +29,14 @@ public class Colorwheel extends SubsystemBase {
   public static boolean activateChangeColor = false;
   public static boolean activateRotateWheel = false;
 
-  public static String _currentColor;
+  public static Color _currentColor;
+  public static String _currentColorString;
   public static String _expectedColor;
   public static String previousColor;
   public static String targetColor;
-  private static String colorString;
+  public static String colorString;
 
-  private final ColorMatch colorMatcher = new ColorMatch();
+  public static ColorMatch colorMatcher;
   
   public static int _currentHalfRevolutions;
 
@@ -47,16 +48,18 @@ public class Colorwheel extends SubsystemBase {
 
    colorWheelMotor = new VictorSP(vV.kcolorWheelMotorID);
 
-   colorSensor = new ColorSensorV3(vV.kColorSensorID);
+   colorSensor = new ColorSensorV3(vV.iPort);
 
     activateChangeColor = false;
     activateRotateWheel = false;
 
-    _expectedColor = getColor(Color.kBlue);
-
     _currentHalfRevolutions = 0;
 
     targetColor = "Unknown";
+
+    colorMatcher = new ColorMatch();
+
+    _currentColor = colorSensor.getColor();
 
     colorMatcher.addColorMatch(vV.kBlue);
     colorMatcher.addColorMatch(vV.kGreen);
@@ -69,22 +72,23 @@ public class Colorwheel extends SubsystemBase {
    */
   @Override
   public void periodic() {
-    ColorMatchResult match = colorMatcher.matchClosestColor(colorSensor.getColor());
-    _currentColor = getColor(match, colorSensor.getColor());
+    _currentColor = colorSensor.getColor();
+    ColorMatchResult match = colorMatcher.matchClosestColor(_currentColor);
+    _currentColorString = getColor(match);
     
     if(activateChangeColor == true){
-      changeColor(_currentColor, _expectedColor);
+      changeColor(_currentColorString, _expectedColor);
 
     } else if(activateRotateWheel == true){
        rotateWheel(4);
 
     }else{}
 
-    previousColor = _currentColor;
+    previousColor = _currentColorString;
 
     SmartDashboard.putBoolean("Changing Color", activateChangeColor);
     SmartDashboard.putBoolean("Rotating Wheel", activateRotateWheel);
-    SmartDashboard.putString("Color", _currentColor);
+    SmartDashboard.putString("Color", _currentColorString);
     SmartDashboard.putString("Expected Color", _expectedColor);
     SmartDashboard.putString("Color Under Sensor", colorSensor.toString());
     SmartDashboard.putString("Previous Color", previousColor);
@@ -120,7 +124,7 @@ public class Colorwheel extends SubsystemBase {
       _currentHalfRevolutions = 0;
 
     }else{
-      if(_currentColor != previousColor && _currentColor == targetColor){ //Checks to make sure that the current color is not equal to the previous color
+      if(_currentColorString != previousColor && _currentColorString == targetColor){ //Checks to make sure that the current color is not equal to the previous color
         _currentHalfRevolutions++;
 
       }
@@ -147,28 +151,28 @@ public class Colorwheel extends SubsystemBase {
     return colorSensor.getColor();
   }
 
-  public String getColor(ColorMatchResult result, Color color){
+  public String getColor(ColorMatchResult match){
 
-    if (result.color == color) {
+    if (match.color == vV.kBlue) {
       colorString = "Blue";
 
-    } else if (result.color == color) {
+    } else if (match.color == vV.kRed) {
       colorString = "Red";
 
-    } else if (result.color == color) {
+    } else if (match.color == vV.kGreen) {
       colorString = "Green";
 
-    } else if (result.color == color) {
+    } else if (match.color == vV.kYellow) {
       colorString = "Yellow";
 
     } else {
-      colorString = "Unknown";
+      colorString = "Pina Colada";
       
     }
     return colorString;
   }
 
-  public String getColor(Color color){
+  public String getColor2(Color color){
 
     if (vV.kBlue == color) {
       colorString = "Blue";
@@ -187,5 +191,18 @@ public class Colorwheel extends SubsystemBase {
       
     }
     return colorString;
+  }
+
+  public void setTargetColor(){
+    ColorMatchResult match = colorMatcher.matchClosestColor(_currentColor);
+    targetColor = getColor(match);
+  }
+
+  public void activateCW(){
+    activateChangeColor = true;
+  }
+
+  public void activateRW(){
+    activateRotateWheel = true;
   }
 }
