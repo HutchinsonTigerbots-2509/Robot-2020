@@ -43,7 +43,12 @@ public class AlignTurret extends CommandBase {
   @Override
   public void execute() {
     TargetX = sVision.getTargetX();
-    Speed = Math.max(TargetX * 0.1, Constants.kTurretMinVoltage);
+    // Speed = Math.max(TargetX * 0.0002, Constants.kTurretMinVoltage);
+    if (TargetX < 4 && TargetX > -4){
+      Speed = 0.01;
+    } else {
+      Speed = 0.05;
+    }
 
     if(TargetX > 2){
       sTurret.TurnLeft(Speed);
