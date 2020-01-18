@@ -39,7 +39,7 @@ public class RobotContainer {
   public static Colorwheel sColorWheel = new Colorwheel();
    
    // Joysticks - Joysticks are made here
-  public static Joystick OpStick = new Joystick(VariableVault.kOpStickID);
+  public static Joystick OpStick = new Joystick(Constants.kOpStickID);
 
   public static JoystickButton ChangeColorWheelButton;
   public static JoystickButton ChangeRotateWheelButton;
@@ -47,8 +47,8 @@ public class RobotContainer {
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then 
   // public final OPDrive OPDrive = new OPDrive(DT, OpStick);
-  public final ChangeColorWheel cChangeColorWheel = new ChangeColorWheel();
-  public final ChangeRotateWheel cChangeRotateWheel = new ChangeRotateWheel();
+  // public final ChangeColorWheel cChangeColorWheel = new ChangeColorWheel();
+  // public final ChangeRotateWheel cChangeRotateWheel = new ChangeRotateWheel();
 
 
 

@@ -10,17 +10,19 @@ package frc.robot.subsystems;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.VariableVault;
+import frc.robot.Constants;
 
 public class Colorwheel extends SubsystemBase {
 
   // Variables
-  public static VariableVault vV;
+  public final I2C.Port iPort = Port.kOnboard;
 
   public static VictorSP colorWheelMotor;
 
@@ -44,11 +46,10 @@ public class Colorwheel extends SubsystemBase {
    * Creates a new Colorwheel subsystem.
    */
   public Colorwheel() {
-   vV = new VariableVault();
 
-   colorWheelMotor = new VictorSP(vV.kcolorWheelMotorID);
+   colorWheelMotor = new VictorSP(Constants.kcolorWheelMotorID);
 
-   colorSensor = new ColorSensorV3(vV.iPort);
+   colorSensor = new ColorSensorV3(iPort);
 
     activateChangeColor = false;
     activateRotateWheel = false;
@@ -61,10 +62,10 @@ public class Colorwheel extends SubsystemBase {
 
     _currentColor = colorSensor.getColor();
 
-    colorMatcher.addColorMatch(vV.kBlue);
-    colorMatcher.addColorMatch(vV.kGreen);
-    colorMatcher.addColorMatch(vV.kYellow);
-    colorMatcher.addColorMatch(vV.kRed);
+    colorMatcher.addColorMatch(Constants.kBlue);
+    colorMatcher.addColorMatch(Constants.kGreen);
+    colorMatcher.addColorMatch(Constants.kYellow);
+    colorMatcher.addColorMatch(Constants.kRed);
   }
  
   /**
@@ -153,16 +154,16 @@ public class Colorwheel extends SubsystemBase {
 
   public String getColor(ColorMatchResult match){
 
-    if (match.color == vV.kBlue) {
+    if (match.color == Constants.kBlue) {
       colorString = "Blue";
 
-    } else if (match.color == vV.kRed) {
+    } else if (match.color == Constants.kRed) {
       colorString = "Red";
 
-    } else if (match.color == vV.kGreen) {
+    } else if (match.color == Constants.kGreen) {
       colorString = "Green";
 
-    } else if (match.color == vV.kYellow) {
+    } else if (match.color == Constants.kYellow) {
       colorString = "Yellow";
 
     } else {
@@ -174,16 +175,16 @@ public class Colorwheel extends SubsystemBase {
 
   public String getColor2(Color color){
 
-    if (vV.kBlue == color) {
+    if (Constants.kBlue == color) {
       colorString = "Blue";
 
-    } else if (vV.kRed == color) {
+    } else if (Constants.kRed == color) {
       colorString = "Red";
 
-    } else if (vV.kGreen == color) {
+    } else if (Constants.kGreen == color) {
       colorString = "Green";
 
-    } else if (vV.kYellow == color) {
+    } else if (Constants.kYellow == color) {
       colorString = "Yellow";
 
     } else {
