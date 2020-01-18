@@ -44,15 +44,15 @@ public class AlignTurret extends CommandBase {
     TargetX = sVision.getTargetX();
     // Speed = Math.max(TargetX * 0.0002, Constants.kTurretMinVoltage);
     if (TargetX < 4 && TargetX > -4){
-      Speed = 0.01;
+      Speed = 0.03;
     } else {
       Speed = 0.05;
     }
 
-    if(TargetX > 2){
+    if(TargetX > 1){
       sTurret.TurnLeft(Speed);
       Aligned = false;
-    } else if(TargetX < -2){
+    } else if(TargetX < -1){
       sTurret.TurnRight(Speed);
       Aligned = false;
     } else {

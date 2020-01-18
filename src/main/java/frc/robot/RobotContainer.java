@@ -24,10 +24,11 @@ import frc.robot.commands.AlignTurret;
 import frc.robot.subsystems.Turret;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // Declare buttons here
@@ -41,6 +42,9 @@ public class RobotContainer {
   
    // Joysticks - Joysticks are made here
   public static Joystick OpStick = new Joystick(Constants.kOpStickID);
+
+  public static JoystickButton ChangeColorWheelButton;
+  public static JoystickButton ChangeRotateWheelButton;
 
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then 
@@ -76,6 +80,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // NOTE: Put in an actual command
-    return OPDrive;
+    // return OPDrive;
+    return null;
   }
 }
