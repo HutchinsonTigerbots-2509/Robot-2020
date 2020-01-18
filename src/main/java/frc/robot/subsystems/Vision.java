@@ -87,6 +87,12 @@ public class Vision extends SubsystemBase {
     return mTargetHor;
   }
 
+  // Returns the estimated distance from the target in inches
+  // Uses the formula D=177*(Target Area)^-0.56
+  public double getEstimatedDistance() {
+    return (177 * Math.pow(getTargetArea(), -0.56));
+  }
+
 
   @Override
   public void periodic() {
@@ -98,5 +104,7 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("Target Area", getTargetArea());
     SmartDashboard.putNumber("Target Skew", getTargetSkew());
     SmartDashboard.putNumber("Target Vert", getTargetVert());
-    SmartDashboard.putNumber("Target Hor", getTargetHor());  }
+    SmartDashboard.putNumber("Target Hor", getTargetHor());  
+    SmartDashboard.putNumber("Estimated Distance", getEstimatedDistance());
+  }
 }
