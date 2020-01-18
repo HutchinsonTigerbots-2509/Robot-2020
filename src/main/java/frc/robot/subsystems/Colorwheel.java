@@ -31,16 +31,16 @@ public class Colorwheel extends SubsystemBase {
   public static boolean activateChangeColor = false;
   public static boolean activateRotateWheel = false;
 
-  public static Color _currentColor;
-  public static String _currentColorString;
-  public static String _expectedColor;
+  public static Color currentColor;
+  public static String currentColorString;
+  public static String expectedColor;
   public static String previousColor;
   public static String targetColor;
   public static String colorString;
 
   public static ColorMatch colorMatcher;
   
-  public static int _currentHalfRevolutions;
+  public static int currentHalfRevolutions;
 
   /**
    * Creates a new Colorwheel subsystem.
@@ -54,13 +54,13 @@ public class Colorwheel extends SubsystemBase {
     activateChangeColor = false;
     activateRotateWheel = false;
 
-    _currentHalfRevolutions = 0;
+    currentHalfRevolutions = 0;
 
     targetColor = "Unknown";
 
     colorMatcher = new ColorMatch();
 
-    _currentColor = colorSensor.getColor();
+    currentColor = colorSensor.getColor();
 
     colorMatcher.addColorMatch(Constants.kBlue);
     colorMatcher.addColorMatch(Constants.kGreen);
@@ -73,28 +73,28 @@ public class Colorwheel extends SubsystemBase {
    */
   @Override
   public void periodic() {
-    _currentColor = colorSensor.getColor();
-    ColorMatchResult match = colorMatcher.matchClosestColor(_currentColor);
-    _currentColorString = getColor(match);
+    currentColor = colorSensor.getColor();
+    ColorMatchResult match = colorMatcher.matchClosestColor(currentColor);
+    currentColorString = getColor(match);
     
     if(activateChangeColor == true){
-      changeColor(_currentColorString, _expectedColor);
+      changeColor(currentColorString, expectedColor);
 
     } else if(activateRotateWheel == true){
        rotateWheel(4);
 
     }else{}
 
-    previousColor = _currentColorString;
+    previousColor = currentColorString;
 
     SmartDashboard.putBoolean("Changing Color", activateChangeColor);
     SmartDashboard.putBoolean("Rotating Wheel", activateRotateWheel);
-    SmartDashboard.putString("Color", _currentColorString);
-    SmartDashboard.putString("Expected Color", _expectedColor);
+    SmartDashboard.putString("Color", currentColorString);
+    SmartDashboard.putString("Expected Color", expectedColor);
     SmartDashboard.putString("Color Under Sensor", colorSensor.toString());
     SmartDashboard.putString("Previous Color", previousColor);
     SmartDashboard.putString("Target Color", targetColor);
-    SmartDashboard.putNumber("Current Half Revolutions", _currentHalfRevolutions);
+    SmartDashboard.putNumber("Current Half Revolutions", currentHalfRevolutions);
   }
   
   /**
@@ -122,11 +122,11 @@ public class Colorwheel extends SubsystemBase {
     if(rotationChecker(fullRotations)){
       colorWheelMotor.set(0);
       activateRotateWheel = false;
-      _currentHalfRevolutions = 0;
+      currentHalfRevolutions = 0;
 
     }else{
-      if(_currentColorString != previousColor && _currentColorString == targetColor){ //Checks to make sure that the current color is not equal to the previous color
-        _currentHalfRevolutions++;
+      if(currentColorString != previousColor && currentColorString == targetColor){ //Checks to make sure that the current color is not equal to the previous color
+        currentHalfRevolutions++;
 
       }
       colorWheelMotor.set(0.5);
@@ -139,7 +139,7 @@ public class Colorwheel extends SubsystemBase {
    * @return true/false
    */
   public boolean rotationChecker(double fullRotations){
-    if(_currentHalfRevolutions == fullRotations * 2){
+    if(currentHalfRevolutions == fullRotations * 2){
       return true;
 
     }else{
@@ -195,7 +195,7 @@ public class Colorwheel extends SubsystemBase {
   }
 
   public void setTargetColor(){
-    ColorMatchResult match = colorMatcher.matchClosestColor(_currentColor);
+    ColorMatchResult match = colorMatcher.matchClosestColor(currentColor);
     targetColor = getColor(match);
   }
 
