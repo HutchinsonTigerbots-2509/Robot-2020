@@ -169,6 +169,7 @@ public class Colorwheel extends SubsystemBase {
     } else {
       colorWheelMotor.stopMotor();
       activateRotateWheel = false;
+      currentRevolutions = 0;
     }
   }
 
