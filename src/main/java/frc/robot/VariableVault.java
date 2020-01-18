@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.util.Color;
  */
 public final class VariableVault {
 
-    /* ID NUMBERS */
+	/* ID NUMBERS */
     // Joystick
     public static int kOpStickID = 0;
     // Drivetrain
@@ -34,8 +34,10 @@ public final class VariableVault {
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
     // Colorwheel
-    public final int kcolorWheelMotorID = 4;
+    public final int kColorWheelMotorID = 4;
+    public final double kColorWheelMotorSpeed = 0.5;
     public final I2C.Port iPort = Port.kOnboard;
+    public final double kRevolutionsWanted = 3.0;
     // Colors
     public final Color kBlue = ColorMatch.makeColor(0.143, 0.427, 0.429); 
     public final Color kYellow = ColorMatch.makeColor(0.361, 0.524, 0.113); // when green is under our sensor, yellow is under theirs
