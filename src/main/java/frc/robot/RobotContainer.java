@@ -64,7 +64,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
   AlignButton = new JoystickButton(OpStick, 1);
-  AlignButton.whenPressed(new AlignTurret(sVision, sTurret));
+  // AlignButton.whenPressed(new AlignTurret(sVision, sTurret));
+  AlignButton.toggleWhenPressed(new AlignTurret(sVision, sTurret));
   }
 
 

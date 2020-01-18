@@ -29,7 +29,6 @@ public class AlignTurret extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sVision);
     addRequirements(sTurret);
-
   }
 
   // Called when the command is initially scheduled.
