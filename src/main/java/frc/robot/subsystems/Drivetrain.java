@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -81,5 +82,8 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     MarioDrive(RobotContainer.OpStick);
+    SmartDashboard.putNumber("Gyro Roll", Gyro.getRoll());
+    SmartDashboard.putNumber("Gyro Yaw", Gyro.getYaw());
+    SmartDashboard.putNumber("Gyro Pitch", Gyro.getPitch());
   }
 }
