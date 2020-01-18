@@ -35,7 +35,7 @@ public final class VariableVault {
     public static int kRightRearID = 3;
     // Colorwheel
     public final int kColorWheelMotorID = 4;
-    public final double kColorWheelMotorSpeed = 0.75;
+    public final double kColorWheelMotorSpeed = 0.3;
     public final I2C.Port iPort = Port.kOnboard;
     public final double kRevolutionsWanted = 3.0;
     // Colors
