@@ -359,17 +359,25 @@ public class Colorwheel extends SubsystemBase {
   }
 
   /**
-   * Sets activateChangeColor to true
+   * Sets activateChangeColor to true/false
    */
-  public void activateChangeColor(){
-    activateChangeColor = true;
+  public void activateChangeColorSwitch(){
+    if (activateChangeColor == true){
+      activateChangeColor = false;
+    } else {
+      activateChangeColor = true;
+    }
   }
 
   /**
-   * Sets activateRotateWheel to true
+   * Sets activateRotateWheel to true/false
    */
-  public void activateRotateWheel(){
-    activateRotateWheel = true;
+  public void activateRotateWheelSwitch(){
+    if (activateRotateWheel == true){
+      activateRotateWheel = false;
+    } else {
+      activateRotateWheel = true;
+    }
   }
 
   //#endregion
