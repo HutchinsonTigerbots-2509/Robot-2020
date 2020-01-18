@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.VariableVault;
+import frc.robot.VariableVault;;
 
 /**
  * The colorwheel controls the motor that interacts with the color wheel in order to rotate a set amount
