@@ -22,6 +22,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AlignTurret;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -37,6 +38,7 @@ public class RobotContainer {
   public static Drivetrain sDrivetrain = new Drivetrain();
   public static Vision sVision = new Vision();
   public static Turret sTurret = new Turret();
+  public static Intake sIntake = new Intake();
 
   
    // Joysticks - Joysticks are made here
