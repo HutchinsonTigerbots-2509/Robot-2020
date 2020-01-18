@@ -92,12 +92,7 @@ public class Colorwheel extends SubsystemBase {
     prePeriodic();
     // Periodic Method Start
 
-    if (activateChangeColor == true && activateRotateWheel == true){
-
-      activateChangeColor = false;
-      activateRotateWheel = false;
-
-    } else if (activateChangeColor == true){
+    if (activateChangeColor == true){
 
       changeColor();
 
@@ -130,6 +125,7 @@ public class Colorwheel extends SubsystemBase {
    * be under our sensor
    */
   private boolean colorMatchsGame(){
+    getGameColor();
     if (colorExpectedColor == vV.kBlue){
 
       if (colorCurrentColor == vV.kRed){
@@ -234,6 +230,10 @@ public class Colorwheel extends SubsystemBase {
     } else {
       SmartDashboard.putString("Expected Color", "Not Initialized");
     }
+
+    SmartDashboard.putNumber("Motor Speed", colorWheelMotor.get());
+    SmartDashboard.putNumber("Current Revolutions", currentRevolutions);
+    SmartDashboard.putNumber("Wanted Revolutions", fullRevolutions);
   }
 
   /**
