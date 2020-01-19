@@ -38,11 +38,11 @@ public class Turret extends SubsystemBase {
   }
 
   public void TurnLeft(double pSpeed) {
-    TurretMotor.set(-pSpeed);
+    TurretMotor.set(pSpeed);
   }
 
   public void TurnRight(double pSpeed){
-    TurretMotor.set(pSpeed);
+    TurretMotor.set(-pSpeed);
   }
 
   public void StopMotor(){

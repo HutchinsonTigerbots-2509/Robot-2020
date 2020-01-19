@@ -60,7 +60,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public void MarioDrive(Joystick stick) {
 		double SpeedMulti = 1;
-		double TurnSpeedMulti = 1;
+		double TurnSpeedMulti = .75;
 		double Speed = 0.0;
 		
 		if(stick.getRawAxis(3) > 0) {
@@ -70,10 +70,10 @@ public class Drivetrain extends SubsystemBase {
 		}
 		
 		if(Speed > 0) {
-		  Drive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
+		  Drive.arcadeDrive(Speed, stick.getRawAxis(0) * TurnSpeedMulti);
 		}
 		else {
-			Drive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
+			Drive.arcadeDrive(Speed, stick.getRawAxis(0) * TurnSpeedMulti);
     }
   }
 
