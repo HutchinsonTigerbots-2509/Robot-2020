@@ -7,9 +7,20 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.OPDrive;
+import frc.robot.commands.RadiusTurnCommand;
+import frc.robot.commands.RadiusTurning;
+import frc.robot.commands.RadiusTurningTester;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,6 +32,17 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   public static RobotContainer RobotContainer;
+  public static Drivetrain DT;
+  public static RadiusTurning RTurning;
+  public static RadiusTurnCommand RTG;
+  public static RadiusTurnCommand RTG2;
+  public static OPDrive Driver;
+  public static SequentialCommandGroup RTT;
+  public static Joystick stick;
+
+  public static Compressor comp = new Compressor();
+  public static AHRS DrivetrainGyro = new AHRS(SPI.Port.kMXP);
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -31,6 +53,17 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     RobotContainer = new RobotContainer();
+    Drivetrain DT = new Drivetrain();
+    // RTurning = new RadiusTurning(DT);
+    // RTT = new RadiusTurningTester(DT);
+    RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
+    new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
+    stick = new Joystick(0);
+
+    // RTG = new RadiusTurnCommand(DT, 45, .1, 2.0, "Right");
+    // RTG2 = new RadiusTurnCommand(DT, 45, .1, 2.0, "Left");
+    Driver = new OPDrive(DT, stick);
+    
   }
 
   /**
@@ -65,7 +98,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = RobotContainer.getAutonomousCommand();
+    DrivetrainGyro.reset();
+    RTT.schedule();
+    m_autonomousCommand = null;
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -78,6 +113,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+
+    // RTurning.start();
+    // RTurning.initialize();
   }
 
   @Override
@@ -86,9 +124,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    DrivetrainGyro.reset();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    comp.stop();
   }
 
   /**
@@ -96,12 +136,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    Driver.schedule();
+    comp.stop();
   }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+
   }
 
   /**

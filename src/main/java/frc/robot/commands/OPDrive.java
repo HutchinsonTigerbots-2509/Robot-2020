@@ -7,13 +7,19 @@
 
 package frc.robot.commands;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class OPDrive extends CommandBase {
   private final Drivetrain DT;
   private final Joystick DriveStick;
+  public static AHRS DrivetrainGyro = new AHRS(SPI.Port.kMXP);
+
   /**
    * You pass the DT in RobotContainer
    */
@@ -33,6 +39,7 @@ public class OPDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putNumber("Gyro",DrivetrainGyro.getAngle());
     DT.MarioDrive(DriveStick);
   }
 
