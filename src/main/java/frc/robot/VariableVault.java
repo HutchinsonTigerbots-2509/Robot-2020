@@ -35,9 +35,14 @@ public final class VariableVault {
     public static int kRightRearID = 3;
     // Colorwheel
     public final int kColorWheelMotorID = 4;
-    public final double kColorWheelMotorSpeed = -.2;
+    public final double kColorWheelMotorSpeedFast = -1.0;
+    public final double kColorWheelMotorSpeedSlow = -.2;
     public final I2C.Port iPort = Port.kOnboard;
     public final double kRevolutionsWanted = 3.0;
+    // Delays
+    public final double kJoltDelay = 0.2;
+    public final double kDelay = 0.3;
+    public final double kRotateDelay = 4.0;
     // Colors
     public final Color kBlue = ColorMatch.makeColor(0.143, 0.427, 0.429); 
     public final Color kYellow = ColorMatch.makeColor(0.361, 0.524, 0.113);

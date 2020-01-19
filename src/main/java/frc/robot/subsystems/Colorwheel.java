@@ -81,7 +81,6 @@ public class Colorwheel extends SubsystemBase {
     colorSensor = new ColorSensorV3(vV.iPort);
     colorMatcher = new ColorMatch();
 
-    colorMatcher.addColorMatch(vV.kClearGlass);
     colorMatcher.addColorMatch(vV.kBlue);
     colorMatcher.addColorMatch(vV.kGreen);
     colorMatcher.addColorMatch(vV.kRed);
@@ -89,13 +88,19 @@ public class Colorwheel extends SubsystemBase {
     colorCurrentColor = colorMatcher.matchClosestColor(colorSensor.getColor()).color;
   }
 
-  public void initRotate() {
+  /**
+   * Initiates the color wheel rotating process
+   * 
+   * @apiNote *1: Blue *2: Yellow *3: Red *4: Green
+   * @implNote Because of Yellow and Blue making Green the process will do a quick jolt to get an accurate reading of the color
+   */
+  public void initGetStartingColor() {
     if (getCurrentColor() == vV.kGreen){
-      colorWheelMotor.set(-0.2);
-        Timer.delay(0.2);
+      colorWheelMotor.set(vV.kColorWheelMotorSpeedSlow);
+        Timer.delay(vV.kJoltDelay);
         colorWheelMotor.stopMotor();
     }
-    Timer.delay(0.2);
+    Timer.delay(vV.kDelay);
     colorCurrentColor = colorMatcher.matchClosestColor(colorSensor.getColor()).color;
     if (getCurrentColor() == vV.kBlue){
       colorTracker = 1;
@@ -121,14 +126,6 @@ public class Colorwheel extends SubsystemBase {
 
       changeColor();
 
-    } else if (activateRotateWheel == true){
-
-      // rotateWheel();
-      // colorWheelMotor.set(vV.kColorWheelMotorSpeed);
-      // double startTime = Timer.getMatchTime()
-
-      // colorWheelMotor.stopMotor();
-
     } else {}
 
     // Periodic Method End
@@ -136,9 +133,12 @@ public class Colorwheel extends SubsystemBase {
 
   }
 
-  public void startTheMotor(){
-    colorWheelMotor.set(1.0);
-    Timer.delay(4);
+  /**
+   * Starts rotating the wheel for a set amount of time
+   */
+  public void rotateWheel(){
+    colorWheelMotor.set(vV.kColorWheelMotorSpeedFast);
+    Timer.delay(vV.kRotateDelay);
     colorWheelMotor.stopMotor();
   }
 
@@ -147,12 +147,6 @@ public class Colorwheel extends SubsystemBase {
    * the one under theirs
    */
   private void changeColor() {
-    // if (colorMatchsGame()){
-    //   colorWheelMotor.stopMotor();
-    //   activateChangeColor = false;
-    // } else {
-    //   colorWheelMotor.set(vV.kColorWheelMotorSpeed);
-    // }
     if (colorTracker == 1){ // If color should be blue
       if (colorCurrentColor == vV.kYellow){
         if (colorMatchsGame()){
@@ -226,41 +220,6 @@ public class Colorwheel extends SubsystemBase {
   }
 
   /**
-   * Rotates the wheel a set number of times
-   */
-  private void rotateWheel() {
-    if (currentRevolutions < (fullRevolutions - 0.25)){
-      if (colorTracker == 1){ // If color should be blue
-        if (colorCurrentColor == vV.kYellow){
-          colorTracker++;
-          currentRevolutions = currentRevolutions + 0.125;
-        }
-      } else if (colorTracker == 2){ // If color should be Yellow
-        if (colorCurrentColor == vV.kRed){
-          colorTracker++;
-          currentRevolutions = currentRevolutions + 0.125;        
-        }
-      } else if (colorTracker == 3){ // If color should be Red
-        if (colorCurrentColor == vV.kGreen){
-          colorTracker++;
-          currentRevolutions = currentRevolutions + 0.125;       
-        }
-      } else if (colorTracker == 4){ // If color should be Green
-        if (colorCurrentColor == vV.kBlue){
-          colorTracker = 1;
-          currentRevolutions = currentRevolutions + 0.125;        
-        }
-      }
-      colorWheelMotor.set(vV.kColorWheelMotorSpeed);
-    } else {
-      activateRotateWheel = false;
-      currentRevolutions = 0;
-      colorTracker = 0;
-      colorWheelMotor.stopMotor();
-    }
-  }
-
-  /**
    * Converts a color from a Color object to a String object
    * (Color needs to already be matched to a closest color)
    * @param color
@@ -276,8 +235,6 @@ public class Colorwheel extends SubsystemBase {
       finalColor = "Red";
     } else if (color == vV.kYellow){
       finalColor = "Yellow";
-    } else if (color == vV.kClearGlass){
-      finalColor = "Clear Glass";
     } else {
       finalColor = "Not Recongized";
     }
@@ -296,9 +253,6 @@ public class Colorwheel extends SubsystemBase {
    * Items to initialize after periodic
    */
   private void postPeriodic(){
-    // if (colorPreviousColor != vV.kClearGlass){
-    //   colorPreviousColor = colorCurrentColor;
-    // }
     colorPreviousColor = colorCurrentColor;
 
     updateDashboard();
@@ -406,6 +360,10 @@ public class Colorwheel extends SubsystemBase {
     return currentRevolutions;
   }
 
+  /**
+   * Sets the motors at a specified speed
+   * @param speed
+   */
   public void setMotorSpeed(double speed){
     colorWheelMotor.set(speed);
   }
@@ -460,6 +418,10 @@ public class Colorwheel extends SubsystemBase {
     currentRevolutions = revolutions;
   }
 
+  /**
+   * Set the color tracker to a specified integer
+   * @param number
+   */
   public void setColorTracker(int number){
     colorTracker = number;
   }

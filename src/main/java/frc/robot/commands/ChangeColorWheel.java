@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
+import frc.robot.VariableVault;
 import frc.robot.subsystems.Colorwheel;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -16,6 +17,7 @@ import frc.robot.subsystems.Colorwheel;
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class ChangeColorWheel extends InstantCommand {
   static Colorwheel sColorWheel = RobotContainer.sColorWheel;
+  static VariableVault vV = new VariableVault();
   public ChangeColorWheel() {
     
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,8 +27,8 @@ public class ChangeColorWheel extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    sColorWheel.initRotate();
-    sColorWheel.setMotorSpeed(-0.25);
+    sColorWheel.initGetStartingColor();
+    sColorWheel.setMotorSpeed(vV.kColorWheelMotorSpeedSlow);
     sColorWheel.activateChangeColorSwitch();
   }
 }

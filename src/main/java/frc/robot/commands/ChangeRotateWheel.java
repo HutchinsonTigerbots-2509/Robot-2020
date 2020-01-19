@@ -26,34 +26,6 @@ public class ChangeRotateWheel extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // if (sColorWheel.getCurrentColor() == vV.kBlue){
-    //   sColorWheel.setColorTracker(1);
-    //   sColorWheel.activateRotateWheelSwitch();
-    // } else if (sColorWheel.getCurrentColor() == vV.kYellow){
-    //   sColorWheel.setColorTracker(2);
-    //   sColorWheel.activateRotateWheelSwitch();
-    // } else if (sColorWheel.getCurrentColor() == vV.kRed){
-    //   sColorWheel.setColorTracker(3);
-    //   sColorWheel.activateRotateWheelSwitch();
-    // } else if (sColorWheel.getCurrentColor() == vV.kGreen){
-    //   sColorWheel.setColorTracker(4);
-    //   sColorWheel.activateRotateWheelSwitch();
-    // }
-
-
-    // if (sColorWheel.getCurrentColor() == vV.kRed){
-    //   //   sColorWheel.setColorTracker(3);
-    //   //   sColorWheel.activateRotateWheelSwitch();
-
-    // sColorWheel.setCurrentColor(sColorWheel.getCurrentColor());
-
-    // sColorWheel.setColorTracker(3);
-    // sColorWheel.activateRotateWheelSwitch();
-    // }
-
-    // sColorWheel.initRotate();
-    // sColorWheel.activateRotateWheelSwitch();
-
-    sColorWheel.startTheMotor();
+    sColorWheel.rotateWheel();
   }
 }
