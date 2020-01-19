@@ -35,14 +35,15 @@ public final class VariableVault {
     public static int kRightRearID = 3;
     // Colorwheel
     public final int kColorWheelMotorID = 4;
-    public final double kColorWheelMotorSpeed = 0.3;
+    public final double kColorWheelMotorSpeed = -.2;
     public final I2C.Port iPort = Port.kOnboard;
     public final double kRevolutionsWanted = 3.0;
     // Colors
     public final Color kBlue = ColorMatch.makeColor(0.143, 0.427, 0.429); 
-    public final Color kYellow = ColorMatch.makeColor(0.361, 0.524, 0.113); // when green is under our sensor, yellow is under theirs
-    public final Color kGreen = ColorMatch.makeColor(0.197, 0.561, 0.240); // when yellow is under our sensor, green is under theirs
-    public final Color kRed = ColorMatch.makeColor(0.561, 0.232, 0.114); // when blue is under our sensor, red is under theirs
+    public final Color kYellow = ColorMatch.makeColor(0.361, 0.524, 0.113);
+    public final Color kGreen = ColorMatch.makeColor(0.197, 0.561, 0.240);
+    public final Color kRed = ColorMatch.makeColor(0.561, 0.232, 0.114);
+    public final Color kClearGlass = ColorMatch.makeColor(0.13, 0.25, 0.14); // Clear Glass of the wheel
 
 
     /* Vision Constants */

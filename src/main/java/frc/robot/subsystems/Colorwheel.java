@@ -11,6 +11,7 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -35,6 +36,8 @@ public class Colorwheel extends SubsystemBase {
   private static Color colorCurrentColor; // Color under our sensor
   private static Color colorExpectedColor; // Color under their sensor
   private static Color colorPreviousColor; // Previous color
+
+  private static int colorTracker;
 
   // Revolution Variables
   private static double fullRevolutions;
@@ -68,6 +71,7 @@ public class Colorwheel extends SubsystemBase {
     colorCurrentColor = colorPlaceHolderColor;
     colorExpectedColor = colorPlaceHolderColor;
     colorPreviousColor = colorPlaceHolderColor;
+    colorTracker = 0;
     fullRevolutions = vV.kRevolutionsWanted;
     currentRevolutions = 0.0;
     activateChangeColor = false;
@@ -76,11 +80,32 @@ public class Colorwheel extends SubsystemBase {
     colorWheelMotor = new VictorSP(vV.kColorWheelMotorID);
     colorSensor = new ColorSensorV3(vV.iPort);
     colorMatcher = new ColorMatch();
+
+    colorMatcher.addColorMatch(vV.kClearGlass);
     colorMatcher.addColorMatch(vV.kBlue);
     colorMatcher.addColorMatch(vV.kGreen);
     colorMatcher.addColorMatch(vV.kRed);
     colorMatcher.addColorMatch(vV.kYellow);
+    colorCurrentColor = colorMatcher.matchClosestColor(colorSensor.getColor()).color;
+  }
 
+  public void initRotate() {
+    if (getCurrentColor() == vV.kGreen){
+      colorWheelMotor.set(-0.2);
+        Timer.delay(0.2);
+        colorWheelMotor.stopMotor();
+    }
+    Timer.delay(0.2);
+    colorCurrentColor = colorMatcher.matchClosestColor(colorSensor.getColor()).color;
+    if (getCurrentColor() == vV.kBlue){
+      colorTracker = 1;
+    } else if (getCurrentColor() == vV.kYellow){
+      colorTracker = 2;
+    } else if (getCurrentColor() == vV.kRed){
+      colorTracker = 3;
+    } else if (getCurrentColor() == vV.kGreen){
+      colorTracker = 4;
+    }
   }
 
   /**
@@ -98,7 +123,11 @@ public class Colorwheel extends SubsystemBase {
 
     } else if (activateRotateWheel == true){
 
-      rotateWheel();
+      // rotateWheel();
+      // colorWheelMotor.set(vV.kColorWheelMotorSpeed);
+      // double startTime = Timer.getMatchTime()
+
+      // colorWheelMotor.stopMotor();
 
     } else {}
 
@@ -107,16 +136,59 @@ public class Colorwheel extends SubsystemBase {
 
   }
 
+  public void startTheMotor(){
+    colorWheelMotor.set(1.0);
+    Timer.delay(4);
+    colorWheelMotor.stopMotor();
+  }
+
   /**
    * Changes the current color to the color that our sensor should have to match
    * the one under theirs
    */
   private void changeColor() {
-    if (colorMatchsGame()){
-      colorWheelMotor.stopMotor();
-      activateChangeColor = false;
-    } else {
-      colorWheelMotor.set(vV.kColorWheelMotorSpeed);
+    // if (colorMatchsGame()){
+    //   colorWheelMotor.stopMotor();
+    //   activateChangeColor = false;
+    // } else {
+    //   colorWheelMotor.set(vV.kColorWheelMotorSpeed);
+    // }
+    if (colorTracker == 1){ // If color should be blue
+      if (colorCurrentColor == vV.kYellow){
+        if (colorMatchsGame()){
+          colorWheelMotor.set(0.2);
+          colorWheelMotor.stopMotor();
+          activateChangeColor = false;
+        }
+        colorTracker++;
+      }
+    } else if (colorTracker == 2){ // If color should be Yellow
+      if (colorCurrentColor == vV.kRed){
+        if (colorMatchsGame()){
+          colorWheelMotor.set(0.2);
+          colorWheelMotor.stopMotor();
+          activateChangeColor = false;
+        }
+        colorTracker++;      
+      }
+    } else if (colorTracker == 3){ // If color should be Red
+      if (colorCurrentColor == vV.kGreen){
+        if (colorMatchsGame()){
+          colorWheelMotor.set(0.2);
+          colorWheelMotor.stopMotor();
+          activateChangeColor = false;
+        }
+        colorTracker++;     
+      }
+    } else if (colorTracker == 4){ // If color should be Green
+      if (colorCurrentColor == vV.kBlue){
+        if (colorMatchsGame()){
+          colorWheelMotor.set(0.2);
+          colorWheelMotor.stopMotor();
+          activateChangeColor = false;
+        }
+        colorTracker = 1;        
+      }
     }
   }
 
@@ -157,15 +229,34 @@ public class Colorwheel extends SubsystemBase {
    * Rotates the wheel a set number of times
    */
   private void rotateWheel() {
-    if (currentRevolutions <= fullRevolutions){
-      if (colorCurrentColor != colorPreviousColor){
-        currentRevolutions += 0.125;
+    if (currentRevolutions < (fullRevolutions - 0.25)){
+      if (colorTracker == 1){ // If color should be blue
+        if (colorCurrentColor == vV.kYellow){
+          colorTracker++;
+          currentRevolutions = currentRevolutions + 0.125;
+        }
+      } else if (colorTracker == 2){ // If color should be Yellow
+        if (colorCurrentColor == vV.kRed){
+          colorTracker++;
+          currentRevolutions = currentRevolutions + 0.125;        
+        }
+      } else if (colorTracker == 3){ // If color should be Red
+        if (colorCurrentColor == vV.kGreen){
+          colorTracker++;
+          currentRevolutions = currentRevolutions + 0.125;       
+        }
+      } else if (colorTracker == 4){ // If color should be Green
+        if (colorCurrentColor == vV.kBlue){
+          colorTracker = 1;
+          currentRevolutions = currentRevolutions + 0.125;        
+        }
       }
       colorWheelMotor.set(vV.kColorWheelMotorSpeed);
     } else {
-      colorWheelMotor.stopMotor();
       activateRotateWheel = false;
       currentRevolutions = 0;
+      colorTracker = 0;
+      colorWheelMotor.stopMotor();
     }
   }
 
@@ -185,6 +276,8 @@ public class Colorwheel extends SubsystemBase {
       finalColor = "Red";
     } else if (color == vV.kYellow){
       finalColor = "Yellow";
+    } else if (color == vV.kClearGlass){
+      finalColor = "Clear Glass";
     } else {
       finalColor = "Not Recongized";
     }
@@ -203,6 +296,9 @@ public class Colorwheel extends SubsystemBase {
    * Items to initialize after periodic
    */
   private void postPeriodic(){
+    // if (colorPreviousColor != vV.kClearGlass){
+    //   colorPreviousColor = colorCurrentColor;
+    // }
     colorPreviousColor = colorCurrentColor;
 
     updateDashboard();
@@ -234,6 +330,8 @@ public class Colorwheel extends SubsystemBase {
     SmartDashboard.putNumber("Motor Speed", colorWheelMotor.get());
     SmartDashboard.putNumber("Current Revolutions", currentRevolutions);
     SmartDashboard.putNumber("Wanted Revolutions", fullRevolutions);
+
+    SmartDashboard.putNumber("Color Tracker", colorTracker);
   }
 
   /**
@@ -277,7 +375,7 @@ public class Colorwheel extends SubsystemBase {
    * Returns the current color as a Color object
    */
   public Color getCurrentColor() {
-    return colorCurrentColor;
+    return colorMatcher.matchClosestColor(colorCurrentColor).color;
   }
 
   /**
@@ -306,6 +404,10 @@ public class Colorwheel extends SubsystemBase {
    */
   public double getCurrentRevolutions(){
     return currentRevolutions;
+  }
+
+  public void setMotorSpeed(double speed){
+    colorWheelMotor.set(speed);
   }
 
   /**
@@ -358,12 +460,17 @@ public class Colorwheel extends SubsystemBase {
     currentRevolutions = revolutions;
   }
 
+  public void setColorTracker(int number){
+    colorTracker = number;
+  }
+
   /**
    * Sets activateChangeColor to true/false
    */
   public void activateChangeColorSwitch(){
     if (activateChangeColor == true){
       activateChangeColor = false;
+      colorWheelMotor.stopMotor();
     } else {
       activateChangeColor = true;
     }
@@ -375,6 +482,8 @@ public class Colorwheel extends SubsystemBase {
   public void activateRotateWheelSwitch(){
     if (activateRotateWheel == true){
       activateRotateWheel = false;
+      currentRevolutions = 0;
+      colorWheelMotor.stopMotor();
     } else {
       activateRotateWheel = true;
     }
