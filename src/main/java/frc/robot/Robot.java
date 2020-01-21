@@ -55,9 +55,9 @@ public class Robot extends TimedRobot {
     RobotContainer = new RobotContainer();
     Drivetrain DT = new Drivetrain();
     // RTurning = new RadiusTurning(DT);
-    // RTT = new RadiusTurningTester(DT);
-    RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
-    new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
+    RTT = new RadiusTurningTester(DT);
+    // RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
+    // new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
     stick = new Joystick(0);
 
     // RTG = new RadiusTurnCommand(DT, 45, .1, 2.0, "Right");
@@ -99,12 +99,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     DrivetrainGyro.reset();
-    RTT.schedule();
     m_autonomousCommand = null;
+    RTT.schedule();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      // m_autonomousCommand.schedule();
     }
   }
 

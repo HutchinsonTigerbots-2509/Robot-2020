@@ -26,8 +26,8 @@ public class AlignWithTarget extends CommandBase {
     sVision = pVision;
     sDrivetrain = pDrivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sVision);
     addRequirements(sDrivetrain);
+    addRequirements(sVision);
   }
 
   // Called when the command is initially scheduled.
