@@ -26,6 +26,10 @@ public final class Constants {
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
 
+    // Turret
+    public static int kTurretMotorID = 0;
+    public static double kTurretMinVoltage = 0.2;
+
     /* Vision Constants */
 
     // Network
