@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AlignTurret;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -35,7 +35,7 @@ public class RobotContainer {
    // Subsystems - Create all subsystems here, and then pass them into Commands
   public static Drivetrain sDrivetrain = new Drivetrain();
   public static Vision sVision = new Vision();
-  public static Turret sTurret = new Turret();
+  public static Shooter sShooter = new Shooter();
 
   
    // Joysticks - Joysticks are made here
@@ -66,7 +66,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
   AlignButton = new JoystickButton(OpStick, 1);
   // AlignButton.whenPressed(new AlignTurret(sVision, sTurret));
-  AlignButton.toggleWhenPressed(new AlignTurret(sVision, sTurret));
+  AlignButton.toggleWhenPressed(new AlignTurret(sVision, sShooter));
   }
 
 

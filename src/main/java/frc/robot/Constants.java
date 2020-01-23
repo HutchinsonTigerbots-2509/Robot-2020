@@ -25,16 +25,24 @@ public final class Constants {
     public static int kLeftRearID = 1;
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
+    // Shooter
+    public static int kTurretMotorID = 0;
+    public static int kLeftShooterMotorID;
+    public static int kRightShooterMotorID;
+    // Climber
+    public static int kClimbMotor1ID;
+    public static int kClimbMotor2ID;
+    public static int kClimbMoverID;
+    // Intake
+    public static int kIntakeMotorID;
+    public static int kConveyorMotorID;
 
     //RobotThings
     public static double kWheelGap = 22;
     public static double kWheelDiameter = 7;
 
     //EncoderTicks
-    public static double TicksPerRevolution = 256;
-    // Turret
-    public static int kTurretMotorID = 0;
-    public static double kTurretMinVoltage = 0.2;
+    public static double kTicksPerRevolution = 256;
 
     /* Vision Constants */
 

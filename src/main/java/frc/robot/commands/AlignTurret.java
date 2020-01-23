@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Vision;
 import frc.robot.Constants;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Shooter;
 
 public class AlignTurret extends CommandBase {
   private final Vision sVision;
-  private final Turret sTurret;
+  private final Shooter sShooter;
   private double TargetX;
   private double Speed;
   private boolean Aligned;
@@ -23,12 +23,12 @@ public class AlignTurret extends CommandBase {
   /**
    * Creates a new AlignTurret.
    */
-  public AlignTurret(Vision pVision, Turret pTurret) {
+  public AlignTurret(Vision pVision, Shooter pShooter) {
     sVision = pVision;
-    sTurret = pTurret;
+    sShooter = pShooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sVision);
-    addRequirements(sTurret);
+    addRequirements(sShooter);
   }
 
   // Called when the command is initially scheduled.
@@ -54,13 +54,13 @@ public class AlignTurret extends CommandBase {
     }
 
     if(TargetX > 2.5){
-      sTurret.TurnLeft(Speed);
+      sShooter.TurnLeft(Speed);
       Aligned = false;
     } else if(TargetX < -2.5){
-      sTurret.TurnRight(Speed);
+      sShooter.TurnRight(Speed);
       Aligned = false;
     } else {
-      sTurret.StopMotor();
+      sShooter.StopTurretMotor();
       Aligned = true;
 
     }
@@ -69,7 +69,7 @@ public class AlignTurret extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    sTurret.StopMotor();
+    sShooter.StopTurretMotor();
   }
 
   // Returns true when the command should end.

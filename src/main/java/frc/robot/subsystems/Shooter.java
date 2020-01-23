@@ -7,21 +7,23 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
-public class Turret extends SubsystemBase {
+public class Shooter extends SubsystemBase {
   
   private final VictorSP TurretMotor = new VictorSP(Constants.kTurretMotorID);
+  private static WPI_TalonSRX LeftShooterMotor = new WPI_TalonSRX(Constants.kLeftShooterMotorID);
+  private static WPI_TalonSRX RightShooterMotor = new WPI_TalonSRX(Constants.kRightShooterMotorID);
   /**
    * Creates a new Turret.
    */
-  public Turret() {
+  public Shooter() {
 
   }
 
@@ -33,7 +35,7 @@ public class Turret extends SubsystemBase {
     } else if (RobotContainer.OpStick.getRawAxis(4) > 0.5){
       TurnRight(0.15);
     } else {
-      StopMotor();
+      StopTurretMotor();
     }
   }
 
@@ -45,7 +47,7 @@ public class Turret extends SubsystemBase {
     TurretMotor.set(-pSpeed);
   }
 
-  public void StopMotor(){
+  public void StopTurretMotor(){
     TurretMotor.set(0);
   }
 }

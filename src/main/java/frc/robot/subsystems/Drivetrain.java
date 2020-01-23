@@ -23,10 +23,10 @@ import frc.robot.RobotContainer;
 
 public class Drivetrain extends SubsystemBase {
   
-  public static WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
-  public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
-  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
-  public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
+  private static WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
+  private final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
+  private final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
+  private final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
 
   public final SpeedControllerGroup Right = new SpeedControllerGroup(LeftFront, LeftRear);
   public final SpeedControllerGroup Left = new SpeedControllerGroup(RightFront, RightRear);
