@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.OPDrive;
 import frc.robot.commands.RadiusTurnCommand;
 import frc.robot.commands.RadiusTurning;
 import frc.robot.commands.RadiusTurningTester;
@@ -36,7 +35,6 @@ public class Robot extends TimedRobot {
   public static RadiusTurning RTurning;
   public static RadiusTurnCommand RTG;
   public static RadiusTurnCommand RTG2;
-  public static OPDrive Driver;
   public static SequentialCommandGroup RTT;
   public static Joystick stick;
 
@@ -62,7 +60,6 @@ public class Robot extends TimedRobot {
 
     // RTG = new RadiusTurnCommand(DT, 45, .1, 2.0, "Right");
     // RTG2 = new RadiusTurnCommand(DT, 45, .1, 2.0, "Left");
-    Driver = new OPDrive(DT, stick);
     
   }
 
@@ -136,7 +133,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Driver.schedule();
     comp.stop();
   }
 
