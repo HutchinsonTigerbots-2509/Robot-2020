@@ -20,7 +20,9 @@ public class RadiusTurningTester extends SequentialCommandGroup {
   public RadiusTurningTester(Drivetrain pDT) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new RadiusTurnCommand(pDT, 45, .1, 3.0, "Right"), 
-    new RadiusTurnCommand(pDT, 45, .1, 3.0, "Left"));
+    // super(new RadiusTurnCommand(pDT, 45, .1, 3.0, "Right"), 
+    // new RadiusTurnCommand(pDT, 45, .1, 3.0, "Left"));
+    addCommands(new RadiusTurnCommand(pDT, 45, 0.1, 3.0, "Right"), 
+    new RadiusTurningCommandLeft(pDT, 45, 0.1, 3.0, "Left"));
   }
 }

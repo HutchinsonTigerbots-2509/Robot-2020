@@ -55,9 +55,10 @@ public class Robot extends TimedRobot {
     RobotContainer = new RobotContainer();
     Drivetrain DT = new Drivetrain();
     // RTurning = new RadiusTurning(DT);
-    // RTT = new RadiusTurningTester(DT);
-    RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
-    new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
+    RTT = new RadiusTurningTester(DT);
+    // RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
+    // new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
+    // RTT = new RadiusTurnCommand(DT, 25, 0.1, 3.0, "Right").andThen(new RadiusTurnCommand(DT, 25, 0.1, 3.0, "Left"));
     stick = new Joystick(0);
 
     // RTG = new RadiusTurnCommand(DT, 45, .1, 2.0, "Right");
@@ -99,8 +100,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     DrivetrainGyro.reset();
-    RTT.schedule();
+    // RTT.schedule();
     m_autonomousCommand = null;
+    RTT.schedule();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -124,11 +126,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    comp.stop();
     DrivetrainGyro.reset();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    comp.stop();
   }
 
   /**
