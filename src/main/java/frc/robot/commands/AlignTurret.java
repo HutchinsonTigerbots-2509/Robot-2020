@@ -7,27 +7,28 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.Constants;
+import frc.robot.subsystems.Turret;
 
-public class AlignWithTarget extends CommandBase {
+public class AlignTurret extends CommandBase {
   private final Vision sVision;
-  private final Drivetrain sDrivetrain;
+  private final Turret sTurret;
   private double TargetX;
-  private boolean Aligned;
   private double Speed;
+  private boolean Aligned;
+
+
   /**
-   * Creates a new AlignWithTarget.
+   * Creates a new AlignTurret.
    */
-  public AlignWithTarget(Vision pVision, Drivetrain pDrivetrain) {
+  public AlignTurret(Vision pVision, Turret pTurret) {
     sVision = pVision;
-    sDrivetrain = pDrivetrain;
+    sTurret = pTurret;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sVision);
-    addRequirements(sDrivetrain);
+    addRequirements(sTurret);
   }
 
   // Called when the command is initially scheduled.
@@ -41,30 +42,42 @@ public class AlignWithTarget extends CommandBase {
   @Override
   public void execute() {
     TargetX = sVision.getTargetX();
-    Speed = Math.max(TargetX * 0.1, 0.75);
-
-    if(TargetX > 2){
-      sDrivetrain.TurnLeft(Speed);
-    } else if (TargetX < -2) {
-      sDrivetrain.TurnRight(Speed);
+    // Speed = Math.max(TargetX * 0.0002, Constants.kTurretMinVoltage);
+    if(TargetX < 4 && TargetX > -4){
+      Speed = 0.01;
+    } else if (TargetX < 6 && TargetX > -6){
+      Speed = 0.03;
+    } else if (TargetX < 13 && TargetX > -13) {
+      Speed = 0.07;
     } else {
-      sDrivetrain.StopMotors();
-      Aligned = true;
+      Speed = 0.12;
     }
-    
+
+    if(TargetX > 2.5){
+      sTurret.TurnLeft(Speed);
+      Aligned = false;
+    } else if(TargetX < -2.5){
+      sTurret.TurnRight(Speed);
+      Aligned = false;
+    } else {
+      sTurret.StopMotor();
+      Aligned = true;
+
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    sDrivetrain.StopMotors();
+    sTurret.StopMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Aligned == true){
-      return true;
+    if (Aligned = true){
+      // return true;
+      return false;
     } else {
       return false;
     }

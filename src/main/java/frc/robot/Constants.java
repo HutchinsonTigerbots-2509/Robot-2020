@@ -32,6 +32,10 @@ public final class Constants {
 
     //EncoderTicks
     public static double TicksPerRevolution = 256;
+    // Turret
+    public static int kTurretMotorID = 0;
+    public static double kTurretMinVoltage = 0.2;
+
     /* Vision Constants */
 
     // Network

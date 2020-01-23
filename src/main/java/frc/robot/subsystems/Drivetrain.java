@@ -64,11 +64,24 @@ public class Drivetrain extends SubsystemBase {
    * @param stick_2
    */
   public void MarioDrive(Joystick stick) {
-		double SpeedMulti = 0.7;
-		double TurnSpeedMulti = 1;
+    double SpeedMulti = 1;
+		double TurnSpeedMulti = .75;
+    double Speed = 0.0;
+    
+		if(stick.getRawAxis(3) > 0) {
+			Speed = stick.getRawAxis(3) * -SpeedMulti;
+		} else if(stick.getRawAxis(2) > 0) {
+			Speed = stick.getRawAxis(2)  * SpeedMulti;
+		}
 		
-		Drive.arcadeDrive(stick.getRawAxis(1)*SpeedMulti, stick.getRawAxis(2) * -TurnSpeedMulti);
+		if(Speed > 0) {
+		  Drive.arcadeDrive(Speed, stick.getRawAxis(0) * TurnSpeedMulti);
+		}
+		else {
+			Drive.arcadeDrive(Speed, stick.getRawAxis(0) * TurnSpeedMulti);
+    }
   }
+		// Drive.arcadeDrive(stick.getRawAxis(1)*SpeedMulti, stick.getRawAxis(2) * -TurnSpeedMulti);
 
   public void MoveWithTicks(double ticks){
     if(RightFront.getSelectedSensorPosition() > -ticks){
@@ -82,6 +95,7 @@ public class Drivetrain extends SubsystemBase {
       DrivetrainGyro.getAngle();
     }
   }
+
 
   public void RadiusTurning(double Angle, double Radius, double Speed, String Direction){
 
