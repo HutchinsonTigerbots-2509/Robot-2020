@@ -7,14 +7,16 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
   private static AnalogInput LightSensor = new AnalogInput(0);
-  private static VictorSP ConveyorMotor = new VictorSP(0);
+  // private static VictorSPX ConveyorMotor = new VictorSPX(4);
+  private static WPI_VictorSPX ConveyorMotor = new WPI_VictorSPX(4);
 
   /**
    * Creates a new Intake.
@@ -25,15 +27,18 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
+
     if(GetSensorValue() == true) {
       ConveyorForward();
     }else {
       StopMotor();
     }
+
   }
 
   private boolean GetSensorValue(){
-    if(LightSensor.getVoltage() > 0.5) {
+    SmartDashboard.putNumber("Analog value", LightSensor.getVoltage());
+    if(LightSensor.getVoltage() < 0.5) {
       SmartDashboard.putBoolean("Detecting a Thing", true);
       return true;
     } else {
@@ -43,7 +48,7 @@ public class Intake extends SubsystemBase {
   } 
 
   public void ConveyorForward(){
-    ConveyorMotor.set(1);
+    ConveyorMotor.set(0.8);
   }
 
   public void ConveyorReverse(){
