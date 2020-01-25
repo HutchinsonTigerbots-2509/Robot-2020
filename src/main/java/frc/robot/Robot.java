@@ -99,6 +99,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    comp.stop();
     DrivetrainGyro.reset();
     // RTT.schedule();
     m_autonomousCommand = null;
