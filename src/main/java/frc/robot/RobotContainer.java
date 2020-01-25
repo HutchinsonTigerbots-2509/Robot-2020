@@ -23,6 +23,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AlignTurret;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Intake;
+import frc.robot.commands.RunConveyorMax;
+import frc.robot.commands.ConveyorReverse;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -33,6 +35,8 @@ import frc.robot.subsystems.Intake;
 public class RobotContainer {
   // Declare buttons here
   private static JoystickButton AlignButton;
+  private static JoystickButton RunConveyorMaxButton;
+  private static JoystickButton ConveyorReverseButton;
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
   public static Drivetrain sDrivetrain = new Drivetrain();
@@ -67,6 +71,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
   AlignButton = new JoystickButton(OpStick, 1);
   AlignButton.whenPressed(new AlignTurret(sVision, sTurret));
+
+  RunConveyorMaxButton = new JoystickButton(OpStick, 11);
+  RunConveyorMaxButton.whileHeld(new RunConveyorMax(sIntake));
+
+  ConveyorReverseButton = new JoystickButton(OpStick, 12);
+  ConveyorReverseButton.whileHeld(new ConveyorReverse(sIntake));
   }
 
 

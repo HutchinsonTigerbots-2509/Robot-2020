@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.RunConveyorMax;
 
 public class Intake extends SubsystemBase {
   private static AnalogInput LightSensor = new AnalogInput(0);
@@ -29,7 +30,7 @@ public class Intake extends SubsystemBase {
   public void periodic() {
 
     if(GetSensorValue() == true) {
-      ConveyorForward();
+      ConveyorForward(0.5);
     }else {
       StopMotor();
     }
@@ -47,8 +48,8 @@ public class Intake extends SubsystemBase {
     }
   } 
 
-  public void ConveyorForward(){
-    ConveyorMotor.set(0.8);
+  public void ConveyorForward(double pSpeed){
+    ConveyorMotor.set(pSpeed);
   }
 
   public void ConveyorReverse(){
