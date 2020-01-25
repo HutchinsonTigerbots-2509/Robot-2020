@@ -67,7 +67,7 @@ public class AlignTurret extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Aligned = true){
+    if (Aligned == true){
       // return true;
       return false;
     } else {

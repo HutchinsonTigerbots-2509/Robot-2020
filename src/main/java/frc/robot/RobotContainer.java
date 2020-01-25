@@ -13,7 +13,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.OPDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
@@ -22,7 +21,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AlignTurret;
 import frc.robot.subsystems.Turret;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.commands.RunConveyorMax;
 import frc.robot.commands.ConveyorReverse;
 
@@ -42,7 +41,7 @@ public class RobotContainer {
   public static Drivetrain sDrivetrain = new Drivetrain();
   public static Vision sVision = new Vision();
   public static Turret sTurret = new Turret();
-  public static Intake sIntake = new Intake();
+  public static Conveyor sConveyor = new Conveyor();
 
   
    // Joysticks - Joysticks are made here
@@ -73,10 +72,10 @@ public class RobotContainer {
   AlignButton.whenPressed(new AlignTurret(sVision, sTurret));
 
   RunConveyorMaxButton = new JoystickButton(OpStick, 11);
-  RunConveyorMaxButton.whileHeld(new RunConveyorMax(sIntake));
+  RunConveyorMaxButton.whileHeld(new RunConveyorMax(sConveyor));
 
   ConveyorReverseButton = new JoystickButton(OpStick, 12);
-  ConveyorReverseButton.whileHeld(new ConveyorReverse(sIntake));
+  ConveyorReverseButton.whileHeld(new ConveyorReverse(sConveyor));
   }
 
 
