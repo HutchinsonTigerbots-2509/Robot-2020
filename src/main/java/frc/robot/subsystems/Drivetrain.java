@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
@@ -19,14 +20,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 
 public class Drivetrain extends SubsystemBase {
   
-  public static WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
-  public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
-  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
-  public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
+  // public static WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
+  // public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
+  // public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
+  // public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
+
+  public static WPI_TalonFX LeftFront = new WPI_TalonFX(Constants.kLeftFrontID);
+  public final WPI_TalonFX LeftRear = new WPI_TalonFX(Constants.kLeftRearID);
+  public final WPI_TalonFX RightFront = new WPI_TalonFX(Constants.kRightFrontID);
+  public final WPI_TalonFX RightRear = new WPI_TalonFX(Constants.kRightRearID);
 
   public final SpeedControllerGroup Right = new SpeedControllerGroup(LeftFront, LeftRear);
   public final SpeedControllerGroup Left = new SpeedControllerGroup(RightFront, RightRear);
@@ -42,7 +49,22 @@ public class Drivetrain extends SubsystemBase {
    * Creates a new Drivetrain.
    */
   public Drivetrain() {
+    // Sets the PID values for the motors
+    LeftFront.config_kP(0,Constants.kDrivetrainPGain);
+    LeftFront.config_kI(0, Constants.kDrivetrainIGain);
+    LeftFront.config_kD(0, Constants.kDrivetrainDGain);
 
+    LeftRear.config_kP(0,Constants.kDrivetrainPGain);
+    LeftRear.config_kI(0, Constants.kDrivetrainIGain);
+    LeftRear.config_kD(0, Constants.kDrivetrainDGain);
+
+    RightFront.config_kP(0,Constants.kDrivetrainPGain);
+    RightFront.config_kI(0, Constants.kDrivetrainIGain);
+    RightFront.config_kD(0, Constants.kDrivetrainDGain);
+
+    RightRear.config_kP(0,Constants.kDrivetrainPGain);
+    RightRear.config_kI(0, Constants.kDrivetrainIGain);
+    RightRear.config_kD(0, Constants.kDrivetrainDGain);
   }
 
   public void TurnLeft(double pSpeed) {
@@ -189,7 +211,13 @@ public class Drivetrain extends SubsystemBase {
       Left.set(0);
       return;
     }
+  }
 
+  public void ResetEncoders(){
+    LeftFront.setSelectedSensorPosition(0);
+    LeftRear.setSelectedSensorPosition(0);
+    RightFront.setSelectedSensorPosition(0);
+    RightRear.setSelectedSensorPosition(0);
   }
 
 }

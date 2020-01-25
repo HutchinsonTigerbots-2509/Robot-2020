@@ -26,12 +26,20 @@ public final class Constants {
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
 
+    public static double kDrivetrainPGain = 0.15;
+    public static double kDrivetrainIGain = 0.0;
+    public static double kDrivetrainDGain = 4.0;
+    public static double kDrivetrainMinSpeed = 0.5;
+
     //RobotThings
     public static double kWheelGap = 22;
     public static double kWheelDiameter = 7;
 
     //EncoderTicks
     public static double TicksPerRevolution = 256;
+    public static int kDrivetrainTicksPerRevolution = 2048; // Using Talon FX motor controllers / encoders
+    public static double kDrivetrainTicksPerInch = kDrivetrainTicksPerRevolution / (kWheelDiameter * Math.PI);
+
     /* Vision Constants */
 
     // Network
