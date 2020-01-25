@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -58,7 +59,6 @@ public class Robot extends TimedRobot {
     RTT = new RadiusTurningTester(DT);
     // RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
     // new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
-    // RTT = new RadiusTurnCommand(DT, 25, 0.1, 3.0, "Right").andThen(new RadiusTurnCommand(DT, 25, 0.1, 3.0, "Left"));
     stick = new Joystick(0);
 
     // RTG = new RadiusTurnCommand(DT, 45, .1, 2.0, "Right");
@@ -101,13 +101,12 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     comp.stop();
     DrivetrainGyro.reset();
-    // RTT.schedule();
     m_autonomousCommand = null;
     RTT.schedule();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      // m_autonomousCommand.schedule();
     }
   }
 
