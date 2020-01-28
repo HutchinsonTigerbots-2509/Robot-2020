@@ -5,58 +5,59 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Drivetrain;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.VariableVault;
-import frc.robot.RobotContainer;
-import com.ctre.phoenix.motorcontrol.ControlMode;
+import frc.robot.subsystems.Drivetrain;
 
-// THIS COMMAND SHOULD ONLY BE RUN BY THE DriveToDistance COMMAND GROUP!!!
-// DO NOT RUN IT ON ITS OWN!!!
-public class DrivetrainRightPosition extends CommandBase {
-  private static int Ticks;
+public class RadiusTurning extends CommandBase {
+  private final Drivetrain DT;
+  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(VariableVault.kRightFrontID);
+  public static AHRS DrivetrainGyro = new AHRS(SPI.Port.kMXP);
+
+
   /**
-   * Creates a new DrivetrainFrontRightPosition.
+   * Creates a new RadiusTurning.
    */
-  public DrivetrainRightPosition(int pTicks) {
-    Ticks = pTicks;
+  public RadiusTurning(Drivetrain p_DT) {
+    DT = p_DT;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(DT);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Encoders are reset in the DrivetrainFrontLeftPosition command
+    DT.RadiusTurningFinally(45, .1, 2, "Left");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.sDrivetrain.RightFront.set(ControlMode.Position, Ticks);
-    RobotContainer.sDrivetrain.RightRear.set(ControlMode.Follower, VariableVault.kRightFrontID);
+    SmartDashboard.putString("IM HERE", "FIRST MOVE");
+    DT.RadiusTurningFinally(45, .1, 3, "Left");
+    // Timer.delay(1);
+    // DrivetrainGyro.reset();
+    // SmartDashboard.putString("IM HERE", "SECOND MOVE");
+    // DT.RadiusTurningFinally(45, .1, 2, "Right");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    SmartDashboard.putString("IM HERE", "DONE");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Ticks > 0){
-      if(RobotContainer.sDrivetrain.RightFront.getSelectedSensorPosition() >= Ticks){
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if(RobotContainer.sDrivetrain.RightFront.getSelectedSensorPosition() <= Ticks){
-        return true;
-      } else {
-        return false;
-      }
-    }
+    return false;
   }
 }

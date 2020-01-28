@@ -5,29 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Drivetrain;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class RadiusTurnCommand extends CommandBase {
+public class RadiusTurnRight extends CommandBase {
   private static Drivetrain DT;
   private static int Angle;
   private static double Speed;
   private static double Radius;
-  private static String Direction;
   private static double LongSpeed;
   private boolean Finished;
   /**
    * Creates a new RadiusTurnCommand.
    */
-  public RadiusTurnCommand(Drivetrain pDT, int pAngle, double pSpeed, double pRadius, String pDirection) {
+  public RadiusTurnRight(Drivetrain pDT, int pAngle, double pSpeed, double pRadius) {
     DT = pDT;
     Angle = pAngle;
     Speed = pSpeed;
     Radius = pRadius;
-    Direction = pDirection;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(DT);
   }
@@ -44,32 +42,26 @@ public class RadiusTurnCommand extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putNumber("Gyro",DT.DrivetrainGyro.getAngle());
-    SmartDashboard.putString("Going", Direction);
-    if(Direction == "Right"){
+    SmartDashboard.putNumber("Gyro Yaw", DT.DrivetrainGyro.getYaw());
+    SmartDashboard.putString("Going", "Right (cmd)");
+    if(Speed > 0){
       if(DT.DrivetrainGyro.getAngle() < Angle){
         DT.Right.set(-LongSpeed);
         DT.Left.set(Speed);
       }else{
         DT.Right.set(0);
         DT.Left.set(0);
-        //Finished = true;
-        end(false);
+        Finished = true;
       }
-    }else if(Direction == "Left"){
+    } else {
       if(DT.DrivetrainGyro.getAngle() > -Angle){
-        DT.Left.set(LongSpeed);
-        DT.Right.set(-Speed);
+        DT.Right.set(-LongSpeed);
+        DT.Left.set(Speed);
       }else{
         DT.Right.set(0);
         DT.Left.set(0);
-        //Finished = true;
-        end(false);
+        Finished = true;
       }
-    }else{
-      DT.Right.set(0);
-      DT.Left.set(0);
-      //Finished = true;
-      end(false);
     }
   }
 

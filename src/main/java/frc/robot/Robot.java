@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.RadiusTurnCommand;
-import frc.robot.commands.RadiusTurning;
-import frc.robot.commands.RadiusTurningTester;
-import frc.robot.commands.TurnOnCenter;
+import frc.robot.commands.Drivetrain.RadiusTurnCommand;
+import frc.robot.commands.Drivetrain.RadiusTurning;
+import frc.robot.commands.Drivetrain.RadiusTurningTester;
+import frc.robot.commands.Drivetrain.TurnOnCenter;
 import frc.robot.subsystems.Drivetrain;
 
 /**

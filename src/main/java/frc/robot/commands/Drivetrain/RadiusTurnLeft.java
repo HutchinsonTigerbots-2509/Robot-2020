@@ -5,13 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class RadiusTurnRight extends CommandBase {
+public class RadiusTurnLeft extends CommandBase {
   private static Drivetrain DT;
   private static int Angle;
   private static double Speed;
@@ -21,7 +21,7 @@ public class RadiusTurnRight extends CommandBase {
   /**
    * Creates a new RadiusTurnCommand.
    */
-  public RadiusTurnRight(Drivetrain pDT, int pAngle, double pSpeed, double pRadius) {
+  public RadiusTurnLeft(Drivetrain pDT, int pAngle, double pSpeed, double pRadius) {
     DT = pDT;
     Angle = pAngle;
     Speed = pSpeed;
@@ -43,20 +43,20 @@ public class RadiusTurnRight extends CommandBase {
   public void execute() {
     SmartDashboard.putNumber("Gyro",DT.DrivetrainGyro.getAngle());
     SmartDashboard.putNumber("Gyro Yaw", DT.DrivetrainGyro.getYaw());
-    SmartDashboard.putString("Going", "Right (cmd)");
+    SmartDashboard.putString("Going", "Left (cmd)");
     if(Speed > 0){
-      if(DT.DrivetrainGyro.getAngle() < Angle){
-        DT.Right.set(-LongSpeed);
-        DT.Left.set(Speed);
+      if(DT.DrivetrainGyro.getAngle() > -Angle){
+        DT.Left.set(LongSpeed);
+        DT.Right.set(-Speed);
       }else{
         DT.Right.set(0);
         DT.Left.set(0);
         Finished = true;
       }
     } else {
-      if(DT.DrivetrainGyro.getAngle() > -Angle){
-        DT.Right.set(-LongSpeed);
-        DT.Left.set(Speed);
+      if(DT.DrivetrainGyro.getAngle() < Angle){
+        DT.Left.set(LongSpeed);
+        DT.Right.set(-Speed);
       }else{
         DT.Right.set(0);
         DT.Left.set(0);

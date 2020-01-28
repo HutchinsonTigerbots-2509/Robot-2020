@@ -18,7 +18,7 @@ import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.VariableVault;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AlignTurret;
+import frc.robot.commands.Turret.AlignTurret;
 import frc.robot.subsystems.Shooter;
 
 /**
