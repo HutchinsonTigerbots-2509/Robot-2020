@@ -112,7 +112,7 @@ public class Drivetrain extends SubsystemBase {
       Right.set(Speed);
     }else if(Angle > DrivetrainGyro.getYaw()){
       Left.set(Speed);
-      Right.set(-TSpeed);
+      Right.set(-Speed);
     }else{
       Left.set(0);
       Right.set(0);
