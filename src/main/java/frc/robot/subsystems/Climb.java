@@ -24,6 +24,15 @@ public class Climb extends SubsystemBase {
   public Climb() {
   }
 
+  public void move(double speed) {
+    ClimbMover.set(speed);
+  }
+
+  public void climb(double speed) {
+    ClimbMotor1.set(speed);
+    ClimbMotor2.set(speed);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
