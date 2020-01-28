@@ -7,18 +7,20 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 // THIS COMMAND SHOULD ONLY BE RUN BY THE DriveToDistance COMMAND GROUP!!!
 // DO NOT RUN IT ON ITS OWN!!!
-public class DrivetrainRearRightPosition extends CommandBase {
-  private static int Ticks;
+public class DrivetrainLeftPosition extends CommandBase {
+  private int Ticks;
   /**
-   * Creates a new DrivetrainRearRightPosition.
+   * Creates a new DrivetrainFrontLeftPosition.
    */
-  public DrivetrainRearRightPosition(int pTicks) {
+  public DrivetrainLeftPosition(int pTicks) {
     Ticks = pTicks;
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -26,31 +28,33 @@ public class DrivetrainRearRightPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Encoders are reset in DrivetrainFrontLeftPosition
+    RobotContainer.sDrivetrain.ResetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.sDrivetrain.RightRear.set(ControlMode.Position, Ticks);
+    RobotContainer.sDrivetrain.LeftFront.set(ControlMode.Position, Ticks);
+    RobotContainer.sDrivetrain.LeftRear.set(ControlMode.Follower, Constants.kLeftFrontID);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.sDrivetrain.StopMotors();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     if(Ticks > 0){
-      if(RobotContainer.sDrivetrain.RightRear.getSelectedSensorPosition() >= Ticks){
+      if(RobotContainer.sDrivetrain.LeftFront.getSelectedSensorPosition() >= Ticks){
         return true;
       } else {
         return false;
       }
     } else {
-      if(RobotContainer.sDrivetrain.RightRear.getSelectedSensorPosition() <= Ticks){
+      if(RobotContainer.sDrivetrain.LeftFront.getSelectedSensorPosition() <= Ticks){
         return true;
       } else {
         return false;
