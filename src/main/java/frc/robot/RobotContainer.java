@@ -23,7 +23,10 @@ import frc.robot.commands.AlignTurret;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.commands.RunConveyorMax;
+import frc.robot.commands.ShootAll;
 import frc.robot.commands.ConveyorReverse;
+import frc.robot.subsystems.Shooter;
+import frc.robot.commands.RunShooterMax;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,12 +39,15 @@ public class RobotContainer {
   private static JoystickButton AlignButton;
   private static JoystickButton RunConveyorMaxButton;
   private static JoystickButton ConveyorReverseButton;
+  private static JoystickButton ShootAllButton;
+  private static JoystickButton RunShooterMaxButton;
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
   public static Drivetrain sDrivetrain = new Drivetrain();
   public static Vision sVision = new Vision();
   public static Turret sTurret = new Turret();
   public static Conveyor sConveyor = new Conveyor();
+  public static Shooter sShooter = new Shooter();
 
   
    // Joysticks - Joysticks are made here
@@ -76,6 +82,12 @@ public class RobotContainer {
 
   ConveyorReverseButton = new JoystickButton(OpStick, 12);
   ConveyorReverseButton.whileHeld(new ConveyorReverse(sConveyor));
+
+  ShootAllButton = new JoystickButton(OpStick, 10);
+  ShootAllButton.whileHeld(new ShootAll(sShooter, sConveyor));
+
+  RunShooterMaxButton = new JoystickButton(OpStick, 9);
+  RunShooterMaxButton.whileHeld(new RunShooterMax(sShooter));
   }
 
 

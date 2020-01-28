@@ -7,13 +7,13 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
-  private static WPI_VictorSPX ShooterMotor1 = new WPI_VictorSPX(Constants.kShooterMotor1ID);
-  private static WPI_VictorSPX ShooterMotor2 = new WPI_VictorSPX(Constants.kShooterMotor2ID);
+  private static WPI_TalonSRX ShooterMotor1 = new WPI_TalonSRX(Constants.kShooterMotor1ID);
+  private static WPI_TalonSRX ShooterMotor2 = new WPI_TalonSRX(Constants.kShooterMotor2ID);
   /**
    * Creates a new Shooter.
    */
@@ -26,9 +26,9 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void ShooterForward(){
-    ShooterMotor1.set(1);
-    ShooterMotor2.set(1);
+  public void ShooterForward(double pSpeed){
+    ShooterMotor1.set(pSpeed);
+    ShooterMotor2.set(pSpeed);
   }
 
   public void ShooterReverse(){

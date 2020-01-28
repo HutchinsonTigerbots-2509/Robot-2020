@@ -15,7 +15,7 @@ import frc.robot.RobotContainer;
 
 public class Turret extends SubsystemBase {
   
-  private final VictorSP TurretMotor = new VictorSP(Constants.kTurretMotorID);
+  // private final VictorSP TurretMotor = new VictorSP(Constants.kTurretMotorID);
   /**
    * Creates a new Turret.
    */
@@ -36,14 +36,14 @@ public class Turret extends SubsystemBase {
   }
 
   public void TurnLeft(double pSpeed) {
-    TurretMotor.set(pSpeed);
+    // TurretMotor.set(pSpeed);
   }
 
   public void TurnRight(double pSpeed){
-    TurretMotor.set(-pSpeed);
+    // TurretMotor.set(-pSpeed);
   }
 
   public void StopMotor(){
-    TurretMotor.set(0);
+    // TurretMotor.set(0);
   }
 }
