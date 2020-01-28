@@ -65,7 +65,6 @@ public class Drivetrain extends SubsystemBase {
     RightRear.config_kP(0,Constants.kDrivetrainPGain);
     RightRear.config_kI(0, Constants.kDrivetrainIGain);
     RightRear.config_kD(0, Constants.kDrivetrainDGain);
-    RightRear.follow(RightFront);
   }
 
   public void TurnLeft(double pSpeed) {
