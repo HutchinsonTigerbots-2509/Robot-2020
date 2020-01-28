@@ -11,15 +11,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.VariableVault;
 import frc.robot.RobotContainer;
 
 
 public class Shooter extends SubsystemBase {
   
-  private final VictorSP TurretMotor = new VictorSP(Constants.kTurretMotorID);
-  private static WPI_TalonSRX LeftShooterMotor = new WPI_TalonSRX(Constants.kLeftShooterMotorID);
-  private static WPI_TalonSRX RightShooterMotor = new WPI_TalonSRX(Constants.kRightShooterMotorID);
+  private final VictorSP TurretMotor = new VictorSP(VariableVault.kTurretMotorID);
+  private static WPI_TalonSRX LeftShooterMotor = new WPI_TalonSRX(VariableVault.kLeftShooterMotorID);
+  private static WPI_TalonSRX RightShooterMotor = new WPI_TalonSRX(VariableVault.kRightShooterMotorID);
   /**
    * Creates a new Turret.
    */

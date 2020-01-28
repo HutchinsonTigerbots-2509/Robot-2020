@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.VariableVault;
 import frc.robot.subsystems.Drivetrain;
 
 public class RadiusTurning extends CommandBase {
   private final Drivetrain DT;
-  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
+  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(VariableVault.kRightFrontID);
   public static AHRS DrivetrainGyro = new AHRS(SPI.Port.kMXP);
 
 

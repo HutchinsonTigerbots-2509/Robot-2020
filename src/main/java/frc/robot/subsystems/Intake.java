@@ -8,13 +8,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.Constants;
+import frc.robot.VariableVault;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
-  private static WPI_TalonSRX IntakeMotor = new WPI_TalonSRX(Constants.kIntakeMotorID);
-  private static WPI_TalonSRX ConveyorMotor = new WPI_TalonSRX(Constants.kConveyorMotorID);
+  private static WPI_TalonSRX IntakeMotor = new WPI_TalonSRX(VariableVault.kIntakeMotorID);
+  private static WPI_TalonSRX ConveyorMotor = new WPI_TalonSRX(VariableVault.kConveyorMotorID);
   /**
    * Creates a new Intake.
    */

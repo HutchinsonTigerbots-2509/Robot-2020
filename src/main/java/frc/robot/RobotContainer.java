@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import frc.robot.VariableVault;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AlignTurret;
 import frc.robot.subsystems.Shooter;
@@ -39,7 +39,7 @@ public class RobotContainer {
 
   
    // Joysticks - Joysticks are made here
-  public static Joystick OpStick = new Joystick(Constants.kOpStickID);
+  public static Joystick OpStick = new Joystick(VariableVault.kOpStickID);
 
   public static JoystickButton ChangeColorWheelButton;
   public static JoystickButton ChangeRotateWheelButton;

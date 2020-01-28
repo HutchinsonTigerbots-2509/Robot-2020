@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.RadiusTurnCommand;
 import frc.robot.commands.RadiusTurning;
 import frc.robot.commands.RadiusTurningTester;
+import frc.robot.commands.TurnOnCenter;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -35,6 +36,7 @@ public class Robot extends TimedRobot {
   public static RadiusTurning RTurning;
   public static RadiusTurnCommand RTG;
   public static RadiusTurnCommand RTG2;
+  public static TurnOnCenter TURNER;
   public static SequentialCommandGroup RTT;
   public static Joystick stick;
 
@@ -53,14 +55,14 @@ public class Robot extends TimedRobot {
     RobotContainer = new RobotContainer();
     Drivetrain DT = new Drivetrain();
     // RTurning = new RadiusTurning(DT);
-    // RTT = new RadiusTurningTester(DT);
-    RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
-    new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
+    RTT = new RadiusTurningTester(DT);
+    // RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
+    // new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
     stick = new Joystick(0);
 
     // RTG = new RadiusTurnCommand(DT, 45, .1, 2.0, "Right");
     // RTG2 = new RadiusTurnCommand(DT, 45, .1, 2.0, "Left");
-    
+    TURNER = new TurnOnCenter(DT);
   }
 
   /**
@@ -95,13 +97,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    comp.stop();
     DrivetrainGyro.reset();
-    RTT.schedule();
     m_autonomousCommand = null;
+    // RTT.schedule();
+    TURNER.schedule();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      // m_autonomousCommand.schedule();
     }
   }
 
@@ -121,11 +125,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    comp.stop();
     DrivetrainGyro.reset();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    comp.stop();
   }
 
   /**

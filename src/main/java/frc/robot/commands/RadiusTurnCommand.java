@@ -7,9 +7,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RadiusTurnCommand extends CommandBase {
   private static Drivetrain DT;
@@ -52,7 +52,8 @@ public class RadiusTurnCommand extends CommandBase {
       }else{
         DT.Right.set(0);
         DT.Left.set(0);
-        Finished = true;
+        //Finished = true;
+        end(false);
       }
     }else if(Direction == "Left"){
       if(DT.DrivetrainGyro.getAngle() > -Angle){
@@ -61,12 +62,14 @@ public class RadiusTurnCommand extends CommandBase {
       }else{
         DT.Right.set(0);
         DT.Left.set(0);
-        Finished = true;
+        //Finished = true;
+        end(false);
       }
     }else{
       DT.Right.set(0);
       DT.Left.set(0);
-      Finished = true;
+      //Finished = true;
+      end(false);
     }
   }
 

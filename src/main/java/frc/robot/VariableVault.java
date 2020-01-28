@@ -15,7 +15,7 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {
+public final class VariableVault {
 
     /* ID NUMBERS */
     // Joystick
@@ -37,12 +37,20 @@ public final class Constants {
     public static int kIntakeMotorID;
     public static int kConveyorMotorID;
 
+    public static double kDrivetrainPGain = 0.15;
+    public static double kDrivetrainIGain = 0.0;
+    public static double kDrivetrainDGain = 4.0;
+    public static double kDrivetrainMinSpeed = 0.5;
+
     //RobotThings
     public static double kWheelGap = 22;
     public static double kWheelDiameter = 7;
 
     //EncoderTicks
     public static double kTicksPerRevolution = 256;
+    public static double TicksPerRevolution = 256;
+    public static int kDrivetrainTicksPerRevolution = 2048; // Using Talon FX motor controllers / encoders
+    public static double kDrivetrainTicksPerInch = kDrivetrainTicksPerRevolution / (kWheelDiameter * Math.PI);
 
     /* Vision Constants */
 
