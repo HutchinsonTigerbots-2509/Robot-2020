@@ -13,7 +13,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.OPDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -54,8 +53,8 @@ public class RobotContainer {
   public static Joystick OpStick = new Joystick(Constants.kOpStickID);
 
    // Commands - Create Command Objects
-   // NOTE: it should be private, but if you need to reference it elsewhere, then 
-  public final OPDrive OPDrive = new OPDrive(sDrivetrain, OpStick);
+   // NOTE: it should be private, but if you need to reference it elsewhere, then
+   private Command cAlignTurret = new AlignTurret(sVision, sTurret);
 
 
 
@@ -75,21 +74,20 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
   AlignButton = new JoystickButton(OpStick, 1);
-  AlignButton.whenPressed(new AlignTurret(sVision, sTurret));
+  AlignButton.toggleWhenPressed(new AlignTurret(sVision, sTurret));
 
-  RunConveyorMaxButton = new JoystickButton(OpStick, 11);
+  RunConveyorMaxButton = new JoystickButton(OpStick, 5);
   RunConveyorMaxButton.whileHeld(new RunConveyorMax(sConveyor));
 
-  ConveyorReverseButton = new JoystickButton(OpStick, 12);
+  ConveyorReverseButton = new JoystickButton(OpStick, 6);
   ConveyorReverseButton.whileHeld(new ConveyorReverse(sConveyor));
 
-  ShootAllButton = new JoystickButton(OpStick, 10);
+  ShootAllButton = new JoystickButton(OpStick, 2);
   ShootAllButton.whileHeld(new ShootAll(sShooter, sConveyor));
 
-  RunShooterMaxButton = new JoystickButton(OpStick, 9);
-  RunShooterMaxButton.whileHeld(new RunShooterMax(sShooter));
+  RunShooterMaxButton = new JoystickButton(OpStick, 3);
+  RunShooterMaxButton.toggleWhenPressed(new RunShooterMax(sShooter));
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -98,6 +96,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // NOTE: Put in an actual command
-    return OPDrive;
+    return cAlignTurret;
   }
 }

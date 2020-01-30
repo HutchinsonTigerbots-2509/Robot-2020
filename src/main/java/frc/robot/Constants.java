@@ -31,6 +31,8 @@ public final class Constants {
     public static double kTurretMinVoltage = 0.2;
     public static int kShooterMotor1ID = 4;
     public static int kShooterMotor2ID = 5;
+    public static int kTopLightSensorID = 1;
+    public static int kBottomLightSensorID = 0;
 
     /* Vision Constants */
 

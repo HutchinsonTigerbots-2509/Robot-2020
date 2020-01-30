@@ -11,11 +11,13 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Conveyor extends SubsystemBase {
-  private static AnalogInput LightSensor = new AnalogInput(0);
+  private static AnalogInput BottomLightSensor = new AnalogInput(Constants.kBottomLightSensorID);
+  private static AnalogInput TopLightSensor = new AnalogInput(Constants.kTopLightSensorID);
   // private static VictorSPX ConveyorMotor = new VictorSPX(4);
-  private static VictorSP ConveyorMotor = new VictorSP(0);
+  private static VictorSP ConveyorMotor = new VictorSP(Constants.kConveyorMotorID);
 
   /**
    * Creates a new Intake.
@@ -26,18 +28,20 @@ public class Conveyor extends SubsystemBase {
 
   @Override
   public void periodic() {
-
-    if(GetSensorValue() == true) {
-      ConveyorForward(0.5);
-    }else {
+    if(GetTopSensorValue() == false){
+      if(GetBottomSensorValue() == true) {
+        ConveyorForward(0.5);
+      }else {
+        StopMotor();
+      }
+    } else{
       StopMotor();
     }
 
   }
 
-  private boolean GetSensorValue(){
-    SmartDashboard.putNumber("Analog value", LightSensor.getVoltage());
-    if(LightSensor.getVoltage() < 0.5) {
+  private boolean GetBottomSensorValue(){
+    if(BottomLightSensor.getVoltage() < 0.5) {
       SmartDashboard.putBoolean("Detecting a Thing", true);
       return true;
     } else {
@@ -45,6 +49,16 @@ public class Conveyor extends SubsystemBase {
       return false;
     }
   } 
+
+  private boolean GetTopSensorValue(){
+    if(TopLightSensor.getVoltage() < 0.5){
+      SmartDashboard.putBoolean("Top Sensor", true);
+      return true;
+    } else{
+      SmartDashboard.putBoolean("Top Sensor", false);
+      return false;
+    }
+  }
 
   public void ConveyorForward(double pSpeed){
     ConveyorMotor.set(1);

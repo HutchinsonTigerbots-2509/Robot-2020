@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -22,10 +23,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Drivetrain extends SubsystemBase {
   
-  public final WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
-  public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
-  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
-  public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
+  // public final WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
+  // public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
+  // public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
+  // public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
+
+  public final WPI_TalonFX LeftFront = new WPI_TalonFX(Constants.kLeftFrontID);
+  public final WPI_TalonFX LeftRear = new WPI_TalonFX(Constants.kLeftRearID);
+  public final WPI_TalonFX RightFront = new WPI_TalonFX(Constants.kRightFrontID);
+  public final WPI_TalonFX RightRear = new WPI_TalonFX(Constants.kRightRearID);
 
   public final SpeedControllerGroup Right = new SpeedControllerGroup(LeftFront, LeftRear);
   public final SpeedControllerGroup Left = new SpeedControllerGroup(RightFront, RightRear);
