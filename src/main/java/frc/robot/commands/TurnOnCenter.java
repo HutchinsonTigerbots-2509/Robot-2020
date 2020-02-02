@@ -7,11 +7,13 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class TurnOnCenter extends CommandBase {
   private final Drivetrain DT;
+  private boolean Turned;
   // public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
   // public static AHRS DrivetrainGyro = new AHRS(SPI.Port.kMXP);
   /**
@@ -27,13 +29,15 @@ public class TurnOnCenter extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putBoolean("ENDED", false);
     DT.DrivetrainGyro.reset(); 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    DT.TurnOnCenter(90, 0.3);
+    DT.TurnOnCenter(-50, 0.4);
+    Turned = DT.TurnOnCenter(-50, 0.4);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +48,10 @@ public class TurnOnCenter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(Turned){
+      return true;
+    } else {
     return false;
+    }
   }
 }

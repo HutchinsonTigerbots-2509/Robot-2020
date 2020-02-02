@@ -105,17 +105,18 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
-  public void TurnOnCenter(double Angle, double Speed){
+  public boolean TurnOnCenter(double Angle, double Speed){
     SmartDashboard.putNumber("Angle", DrivetrainGyro.getYaw());
-    if(Angle <  DrivetrainGyro.getYaw()){
+    if(Angle < DrivetrainGyro.getYaw() - 4){
       Left.set(-Speed);
-      Right.set(Speed);
-    }else if(Angle > DrivetrainGyro.getYaw()){
-      Left.set(Speed);
       Right.set(-Speed);
+      return false;
+    }else if(Angle > DrivetrainGyro.getYaw() + 4){
+      return false;
     }else{
       Left.set(0);
       Right.set(0);
+      return true;
     }
   }
 
