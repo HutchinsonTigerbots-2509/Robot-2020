@@ -72,6 +72,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+  
   private void configureButtonBindings() {
   AlignButton = new JoystickButton(OpStick, 1);
   AlignButton.toggleWhenPressed(new AlignTurret(sVision, sTurret));
@@ -87,6 +88,7 @@ public class RobotContainer {
 
   RunShooterMaxButton = new JoystickButton(OpStick, 3);
   RunShooterMaxButton.toggleWhenPressed(new RunShooterMax(sShooter));
+
   }
 
   /**
@@ -94,8 +96,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // NOTE: Put in an actual command
-    return cAlignTurret;
-  }
+  // public Command getAutonomousCommand() {
+  //   // NOTE: Put in an actual command
+  //   return cAlignTurret;
+  // }
 }

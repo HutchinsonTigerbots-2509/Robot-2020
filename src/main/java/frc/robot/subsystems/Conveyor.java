@@ -8,16 +8,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Conveyor extends SubsystemBase {
   private static AnalogInput BottomLightSensor = new AnalogInput(Constants.kBottomLightSensorID);
   private static AnalogInput TopLightSensor = new AnalogInput(Constants.kTopLightSensorID);
   // private static VictorSPX ConveyorMotor = new VictorSPX(4);
-  private static VictorSP ConveyorMotor = new VictorSP(Constants.kConveyorMotorID);
+  private static WPI_VictorSPX TopConveyorMotor = new WPI_VictorSPX(Constants.kTopConveyorMotorID);
+  private static WPI_VictorSPX BottomConveyorMotor = new WPI_VictorSPX(Constants.kBottomConveyorMotorID);
 
   /**
    * Creates a new Intake.
@@ -28,24 +29,27 @@ public class Conveyor extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(GetTopSensorValue() == false){
-      if(GetBottomSensorValue() == true) {
-        ConveyorForward(0.5);
-      }else {
-        StopMotor();
-      }
-    } else{
-      StopMotor();
-    }
-
+    // if(GetTopSensorValue() == false){
+    //   if(GetBottomSensorValue() == true) {
+    //     FullConveyorForward(0.5);
+    //   }else {
+    //     StopMotors();
+    //   }
+    // } else {
+    //   if(GetBottomSensorValue() == true) {
+    //     BottomConveyorForward(0.5);
+    //   }else {
+    //     StopMotors();
+    //   }
+    // }
   }
 
   private boolean GetBottomSensorValue(){
     if(BottomLightSensor.getVoltage() < 0.5) {
-      SmartDashboard.putBoolean("Detecting a Thing", true);
+      SmartDashboard.putBoolean("Bottom Sensor", true);
       return true;
     } else {
-      SmartDashboard.putBoolean("Detecting a Thing", false);
+      SmartDashboard.putBoolean("Bottom Sensor", false);
       return false;
     }
   } 
@@ -60,15 +64,22 @@ public class Conveyor extends SubsystemBase {
     }
   }
 
-  public void ConveyorForward(double pSpeed){
-    ConveyorMotor.set(1);
+  public void BottomConveyorForward(double pSpeed){
+    BottomConveyorMotor.set(pSpeed);
+  }
+
+  public void FullConveyorForward(double pTopSpeed, double pBottomSpeed){
+    TopConveyorMotor.set(pTopSpeed);
+    BottomConveyorMotor.set(pBottomSpeed);
   }
 
   public void ConveyorReverse(){
-    ConveyorMotor.set(-1);
+    TopConveyorMotor.set(-1);
+    BottomConveyorMotor.set(-1);
   }
 
-  public void StopMotor(){
-    ConveyorMotor.set(0);
+  public void StopMotors(){
+    TopConveyorMotor.set(0);
+    BottomConveyorMotor.set(0);
   }
 }

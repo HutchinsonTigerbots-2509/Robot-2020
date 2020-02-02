@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Vision;
 import frc.robot.Constants;
@@ -35,6 +36,7 @@ public class AlignTurret extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putBoolean("Align Target", true);
     TargetX = sVision.getTargetX();
     Aligned = false;
   }
@@ -43,7 +45,7 @@ public class AlignTurret extends CommandBase {
   @Override
   public void execute() {
     TargetX = sVision.getTargetX();
-    Speed = Math.max(TargetX * 0.1, Constants.kTurretMinVoltage);
+    Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
 
     if(TargetX > 2){
       sTurret.TurnLeft(Speed);
@@ -61,6 +63,7 @@ public class AlignTurret extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    SmartDashboard.putBoolean("Align Target", false);
     sTurret.StopMotor();
   }
 

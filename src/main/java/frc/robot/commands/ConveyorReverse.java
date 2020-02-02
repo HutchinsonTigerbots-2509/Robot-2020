@@ -37,7 +37,7 @@ public class ConveyorReverse extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    sConveyor.StopMotor();
+    sConveyor.StopMotors();
   }
 
   // Returns true when the command should end.

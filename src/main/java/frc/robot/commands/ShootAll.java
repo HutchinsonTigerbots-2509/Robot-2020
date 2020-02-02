@@ -29,21 +29,21 @@ public class ShootAll extends CommandBase {
   @Override
   public void initialize() {
     sShooter.ShooterForward(1);
-    sConveyor.ConveyorForward(1);
+    sConveyor.FullConveyorForward(1, 0.8);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     sShooter.ShooterForward(1);
-    sConveyor.ConveyorForward(1);
+    sConveyor.FullConveyorForward(1, 0.8);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     sShooter.StopShooter();
-    sConveyor.StopMotor();
+    sConveyor.StopMotors();
   }
 
   // Returns true when the command should end.

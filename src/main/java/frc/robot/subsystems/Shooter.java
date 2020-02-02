@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
@@ -23,6 +24,10 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Velocity? (1)", ShooterMotor1.getActiveTrajectoryVelocity());
+    SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
+    SmartDashboard.putNumber("RPM? (1)", ShooterMotor1.getActiveTrajectoryVelocity() * 600);
+    SmartDashboard.putNumber("RPM? (2)", ShooterMotor2.getActiveTrajectoryVelocity() * 600);
     // This method will be called once per scheduler run
   }
 

@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -44,7 +45,18 @@ public class Drivetrain extends SubsystemBase {
    * Creates a new Drivetrain.
    */
   public Drivetrain() {
+    LeftFront.setNeutralMode(NeutralMode.Coast);
+    LeftFront.setInverted(true);
+    RightFront.setNeutralMode(NeutralMode.Coast);
+    RightFront.setInverted(true);
+    LeftRear.setNeutralMode(NeutralMode.Coast);
+    LeftRear.setInverted(true);
+    RightRear.setNeutralMode(NeutralMode.Coast);
+    RightRear.setInverted(true);
+  }
 
+  public void SetSpeed(double pSpeed){
+    Drive.tankDrive(pSpeed, pSpeed);
   }
 
   public void TurnLeft(double pSpeed) {
@@ -67,7 +79,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public void MarioDrive(Joystick stick) {
 		double SpeedMulti = 1;
-		double TurnSpeedMulti = 1;
+		double TurnSpeedMulti = 0.4;
 		double Speed = 0.0;
 		
 		if(stick.getRawAxis(3) > 0) {
@@ -76,11 +88,14 @@ public class Drivetrain extends SubsystemBase {
 			Speed = stick.getRawAxis(2)  * SpeedMulti;
 		}
 		
-		if(Speed > 0) {
+		if(Speed > 0.05) {
 		  Drive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
 		}
-		else {
-			Drive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
+		else if (Speed < -0.05) {
+      Drive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
+    }
+    else {
+      Drive.arcadeDrive(0, 0);
     }
   }
 
@@ -88,8 +103,16 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     MarioDrive(RobotContainer.OpStick);
-    SmartDashboard.putNumber("Gyro Roll", Gyro.getRoll());
-    SmartDashboard.putNumber("Gyro Yaw", Gyro.getYaw());
-    SmartDashboard.putNumber("Gyro Pitch", Gyro.getPitch());
+    // if(RobotContainer.OpStick.getRawAxis(3) >= 0.2){
+    //   SetSpeed(0.5);
+    // }
+    // else if(RobotContainer.OpStick.getRawAxis(2) >= 0.2){
+    //   SetSpeed(-0.5);
+    // } else {
+    //   StopMotors();
+    // }
+    // SmartDashboard.putNumber("Gyro Roll", Gyro.getRoll());
+    // SmartDashboard.putNumber("Gyro Yaw", Gyro.getYaw());
+    // SmartDashboard.putNumber("Gyro Pitch", Gyro.getPitch());
   }
 }
