@@ -28,7 +28,7 @@ public class ChangeColorWheel extends InstantCommand {
   @Override
   public void initialize() {
     sColorWheel.initGetStartingColor();
-    sColorWheel.setMotorSpeed(vV.kColorWheelMotorSpeedSlow);
+    sColorWheel.setMotorSpeed(-0.35);
     sColorWheel.activateChangeColorSwitch();
   }
 }

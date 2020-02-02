@@ -106,9 +106,9 @@ public class Colorwheel extends SubsystemBase {
       colorTracker = 1;
     } else if (getCurrentColor() == vV.kYellow){
       colorTracker = 2;
-    } else if (getCurrentColor() == vV.kRed){
-      colorTracker = 3;
     } else if (getCurrentColor() == vV.kGreen){
+      colorTracker = 3;
+    } else if (getCurrentColor() == vV.kRed){
       colorTracker = 4;
     }
   }
@@ -133,6 +133,59 @@ public class Colorwheel extends SubsystemBase {
 
   }
 
+  // /**
+  //  * Starts rotating the wheel for a set amount of time
+  //  */
+  // public void rotateWheel(){
+  //   colorWheelMotor.set(vV.kColorWheelMotorSpeedFast);
+  //   Timer.delay(vV.kRotateDelay);
+  //   colorWheelMotor.stopMotor();
+  // }
+
+  // /**
+  //  * Changes the current color to the color that our sensor should have to match
+  //  * the one under theirs  !Competition!
+  //  */
+  // private void changeColor() {
+  //   if (colorTracker == 1){ // If color should be blue
+  //     if (colorCurrentColor == vV.kYellow){
+  //       if (colorMatchsGame()){
+  //         colorWheelMotor.set(0.2);
+  //         colorWheelMotor.stopMotor();
+  //         activateChangeColor = false;
+  //       }
+  //       colorTracker++;
+  //     }
+  //   } else if (colorTracker == 2){ // If color should be Yellow
+  //     if (colorCurrentColor == vV.kRed){
+  //       if (colorMatchsGame()){
+  //         colorWheelMotor.set(0.2);
+  //         colorWheelMotor.stopMotor();
+  //         activateChangeColor = false;
+  //       }
+  //       colorTracker++;      
+  //     }
+  //   } else if (colorTracker == 3){ // If color should be Red
+  //     if (colorCurrentColor == vV.kGreen){
+  //       if (colorMatchsGame()){
+  //         colorWheelMotor.set(0.2);
+  //         colorWheelMotor.stopMotor();
+  //         activateChangeColor = false;
+  //       }
+  //       colorTracker++;     
+  //     }
+  //   } else if (colorTracker == 4){ // If color should be Green
+  //     if (colorCurrentColor == vV.kBlue){
+  //       if (colorMatchsGame()){
+  //         colorWheelMotor.set(0.2);
+  //         colorWheelMotor.stopMotor();
+  //         activateChangeColor = false;
+  //       }
+  //       colorTracker = 1;        
+  //     }
+  //   }
+  // }
+
   /**
    * Starts rotating the wheel for a set amount of time
    */
@@ -144,11 +197,11 @@ public class Colorwheel extends SubsystemBase {
 
   /**
    * Changes the current color to the color that our sensor should have to match
-   * the one under theirs
+   * the one under theirs  !Practice!
    */
   private void changeColor() {
-    if (colorTracker == 1){ // If color should be blue
-      if (colorCurrentColor == vV.kYellow){
+    if (colorTracker == 1){ // If color should be Green
+      if (colorCurrentColor == vV.kBlue){
         if (colorMatchsGame()){
           colorWheelMotor.set(0.2);
           colorWheelMotor.stopMotor();
@@ -156,8 +209,8 @@ public class Colorwheel extends SubsystemBase {
         }
         colorTracker++;
       }
-    } else if (colorTracker == 2){ // If color should be Yellow
-      if (colorCurrentColor == vV.kRed){
+    } else if (colorTracker == 2){ // If color should be Red
+      if (colorCurrentColor == vV.kYellow){
         if (colorMatchsGame()){
           colorWheelMotor.set(0.2);
           colorWheelMotor.stopMotor();
@@ -165,7 +218,7 @@ public class Colorwheel extends SubsystemBase {
         }
         colorTracker++;      
       }
-    } else if (colorTracker == 3){ // If color should be Red
+    } else if (colorTracker == 3){ // If color should be Blue
       if (colorCurrentColor == vV.kGreen){
         if (colorMatchsGame()){
           colorWheelMotor.set(0.2);
@@ -174,8 +227,8 @@ public class Colorwheel extends SubsystemBase {
         }
         colorTracker++;     
       }
-    } else if (colorTracker == 4){ // If color should be Green
-      if (colorCurrentColor == vV.kBlue){
+    } else if (colorTracker == 4){ // If color should be Yellow
+      if (colorCurrentColor == vV.kRed){
         if (colorMatchsGame()){
           colorWheelMotor.set(0.2);
           colorWheelMotor.stopMotor();
@@ -194,25 +247,25 @@ public class Colorwheel extends SubsystemBase {
     getGameColor();
     if (colorExpectedColor == vV.kBlue){
 
+      if (colorCurrentColor == vV.kGreen){
+        return true;
+      } else { return false; }
+
+    } else if (colorExpectedColor == vV.kYellow){
+
       if (colorCurrentColor == vV.kRed){
         return true;
       } else { return false; }
 
     } else if (colorExpectedColor == vV.kGreen){
 
-      if (colorCurrentColor == vV.kYellow){
+      if (colorCurrentColor == vV.kBlue){
         return true;
       } else { return false; }
 
     } else if (colorExpectedColor == vV.kRed){
 
-      if (colorCurrentColor == vV.kBlue){
-        return true;
-      } else { return false; }
-
-    } else if (colorExpectedColor == vV.kYellow){
-
-      if (colorCurrentColor == vV.kGreen){
+      if (colorCurrentColor == vV.kYellow){
         return true;
       } else { return false; }
 
@@ -286,6 +339,10 @@ public class Colorwheel extends SubsystemBase {
     SmartDashboard.putNumber("Wanted Revolutions", fullRevolutions);
 
     SmartDashboard.putNumber("Color Tracker", colorTracker);
+
+    // SmartDashboard.putNumber("Red", colorSensor.getRed());
+    // SmartDashboard.putNumber("Green", colorSensor.getGreen());
+    // SmartDashboard.putNumber("Blue", colorSensor.getBlue());
   }
 
   /**
