@@ -35,6 +35,7 @@ public final class Constants {
     public static int kTopLightSensorID = 1;
     public static int kBottomLightSensorID = 0;
 
+    public static int kShooterTicksPerRotation = 4096; // or 1024???
     /* Vision Constants */
 
     // Network

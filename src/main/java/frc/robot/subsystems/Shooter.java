@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,15 +20,17 @@ public class Shooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   public Shooter() {
-
+    ShooterMotor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Velocity? (1)", ShooterMotor1.getActiveTrajectoryVelocity());
-    SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
-    SmartDashboard.putNumber("RPM? (1)", ShooterMotor1.getActiveTrajectoryVelocity() * 600);
-    SmartDashboard.putNumber("RPM? (2)", ShooterMotor2.getActiveTrajectoryVelocity() * 600);
+    // SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
+    SmartDashboard.putNumber("RPM? (1)", (ShooterMotor1.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);
+    SmartDashboard.putNumber("Encoder", ShooterMotor2.getSelectedSensorPosition());
+    // SmartDashboard.putNumber("RPM? (2)", (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);
+    // SmartDashboard.putNumber("RPM? (Average)", ((ShooterMotor1.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) + (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation)) * 300);
     // This method will be called once per scheduler run
   }
 
