@@ -43,14 +43,6 @@ public class Colorwheel extends SubsystemBase {
   private static double fullRevolutions;
   private static double currentRevolutions;
 
-<<<<<<< HEAD
-  public static Color currentColor;
-  public static String currentColorString;
-  public static String expectedColor;
-  public static String previousColor;
-  public static String targetColor;
-  public static String colorString;
-=======
   // Activator Variables
   private static boolean activateChangeColor;
   private static boolean activateRotateWheel;
@@ -62,18 +54,12 @@ public class Colorwheel extends SubsystemBase {
 
   // Motors
   public static VictorSP colorWheelMotor;
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
 
   // Color Sensor Variables
   public static ColorSensorV3 colorSensor;
   public static ColorMatch colorMatcher;
-<<<<<<< HEAD
-  
-  public static int currentHalfRevolutions;
-=======
 
   //#endregion
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
 
   /**
    * Creates a new Colorwheel subsystem
@@ -90,16 +76,6 @@ public class Colorwheel extends SubsystemBase {
     currentRevolutions = 0.0;
     activateChangeColor = false;
     activateRotateWheel = false;
-<<<<<<< HEAD
-
-    currentHalfRevolutions = 0;
-
-    targetColor = "Unknown";
-
-    colorMatcher = new ColorMatch();
-
-    currentColor = colorSensor.getColor();
-=======
     
     colorWheelMotor = new VictorSP(vV.kColorWheelMotorID);
     colorSensor = new ColorSensorV3(vV.iPort);
@@ -111,7 +87,6 @@ public class Colorwheel extends SubsystemBase {
     colorMatcher.addColorMatch(vV.kYellow);
     colorCurrentColor = colorMatcher.matchClosestColor(colorSensor.getColor()).color;
   }
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
 
   /**
    * Initiates the color wheel rotating process
@@ -143,15 +118,6 @@ public class Colorwheel extends SubsystemBase {
    */
   @Override
   public void periodic() {
-<<<<<<< HEAD
-    currentColor = colorSensor.getColor();
-    ColorMatchResult match = colorMatcher.matchClosestColor(currentColor);
-    currentColorString = getColor(match);
-    
-    if(activateChangeColor == true){
-      changeColor(currentColorString, expectedColor);
-=======
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
 
     prePeriodic();
     // Periodic Method Start
@@ -160,24 +126,11 @@ public class Colorwheel extends SubsystemBase {
 
       changeColor();
 
-<<<<<<< HEAD
-    previousColor = currentColorString;
-
-    SmartDashboard.putBoolean("Changing Color", activateChangeColor);
-    SmartDashboard.putBoolean("Rotating Wheel", activateRotateWheel);
-    SmartDashboard.putString("Color", currentColorString);
-    SmartDashboard.putString("Expected Color", expectedColor);
-    SmartDashboard.putString("Color Under Sensor", colorSensor.toString());
-    SmartDashboard.putString("Previous Color", previousColor);
-    SmartDashboard.putString("Target Color", targetColor);
-    SmartDashboard.putNumber("Current Half Revolutions", currentHalfRevolutions);
-=======
     } else {}
 
     // Periodic Method End
     postPeriodic();
 
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
   }
 
   // /**
@@ -290,17 +243,6 @@ public class Colorwheel extends SubsystemBase {
    * Checks to make sure that the color under their sensor matchs the color that should
    * be under our sensor
    */
-<<<<<<< HEAD
-  public void rotateWheel(double fullRotations){
-    if(rotationChecker(fullRotations)){
-      colorWheelMotor.set(0);
-      activateRotateWheel = false;
-      currentHalfRevolutions = 0;
-
-    }else{
-      if(currentColorString != previousColor && currentColorString == targetColor){ //Checks to make sure that the current color is not equal to the previous color
-        currentHalfRevolutions++;
-=======
   private boolean colorMatchsGame(){
     getGameColor();
     if (colorExpectedColor == vV.kBlue){
@@ -308,7 +250,6 @@ public class Colorwheel extends SubsystemBase {
       if (colorCurrentColor == vV.kGreen){
         return true;
       } else { return false; }
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
 
     } else if (colorExpectedColor == vV.kYellow){
 
@@ -336,11 +277,6 @@ public class Colorwheel extends SubsystemBase {
    * (Color needs to already be matched to a closest color)
    * @param color
    */
-<<<<<<< HEAD
-  public boolean rotationChecker(double fullRotations){
-    if(currentHalfRevolutions == fullRotations * 2){
-      return true;
-=======
   private String colorToString(Color color){
     String finalColor;
 
@@ -355,7 +291,6 @@ public class Colorwheel extends SubsystemBase {
     } else {
       finalColor = "Not Recongized";
     }
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
 
     return finalColor;
   }
@@ -524,18 +459,12 @@ public class Colorwheel extends SubsystemBase {
     colorExpectedColor = colorMatcher.matchClosestColor(color).color;
   }
 
-<<<<<<< HEAD
-  public void setTargetColor(){
-    ColorMatchResult match = colorMatcher.matchClosestColor(currentColor);
-    targetColor = getColor(match);
-=======
   /**
    * Sets the revolutions wanted
    * @param revolutions
    */
   public void setRevolutionsWanted(double revolutions){
     fullRevolutions = revolutions;
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
   }
 
   /**

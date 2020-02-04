@@ -17,10 +17,7 @@ import frc.robot.subsystems.Colorwheel;
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class ChangeColorWheel extends InstantCommand {
   static Colorwheel sColorWheel = RobotContainer.sColorWheel;
-<<<<<<< HEAD
-=======
   static VariableVault vV = new VariableVault();
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
   public ChangeColorWheel() {
     
     // Use addRequirements() here to declare subsystem dependencies.
@@ -30,13 +27,9 @@ public class ChangeColorWheel extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-<<<<<<< HEAD
-    sColorWheel.activateCW();
-=======
     sColorWheel.initGetStartingColor();
     sColorWheel.setMotorSpeed(-0.35);
     sColorWheel.activateChangeColorSwitch();
->>>>>>> 62b5c05555fed1ea9f8e9703ed734abdd1de18d1
   }
 }
 
