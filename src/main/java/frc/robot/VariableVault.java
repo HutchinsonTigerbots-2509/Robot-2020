@@ -27,7 +27,7 @@ public final class VariableVault {
 
 	/* ID NUMBERS */
     // Joystick
-    public static int kOpStickID = 0;
+    public static int kOpStickID = 1;
     // Drivetrain
     public static int kLeftFrontID = 0;
     public static int kLeftRearID = 1;
@@ -39,6 +39,7 @@ public final class VariableVault {
     public final double kColorWheelMotorSpeedSlow = -.2;
     public final I2C.Port iPort = Port.kOnboard;
     public final double kRevolutionsWanted = 3.0;
+    public final double kColorWheelMotorMicroSpeed = 0.15;
     // Delays
     public final double kJoltDelay = 0.2;
     public final double kDelay = 0.3;

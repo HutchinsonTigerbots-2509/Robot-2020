@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ChangeColorWheel;
 import frc.robot.commands.ChangeRotateWheel;
+import frc.robot.commands.MicroChange;
+import frc.robot.commands.MicroChangeNegative;
 import frc.robot.subsystems.Colorwheel;
 
 /**
@@ -43,6 +45,8 @@ public class RobotContainer {
 
   public static JoystickButton ChangeColorWheelButton;
   public static JoystickButton ChangeRotateWheelButton;
+  public static JoystickButton MicroChangeButton;
+  public static JoystickButton MicroChangeNegativeButton;
 
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then 
@@ -58,6 +62,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    
   }
 
   /**
@@ -73,6 +78,11 @@ public class RobotContainer {
     ChangeRotateWheelButton = new JoystickButton(OpStick, 2);
     ChangeRotateWheelButton.whenPressed(new ChangeRotateWheel());
 
+    MicroChangeButton = new JoystickButton(OpStick, 3);
+    MicroChangeButton.whenHeld(new MicroChange());
+
+    MicroChangeNegativeButton = new JoystickButton(OpStick, 4);
+    MicroChangeNegativeButton.whenHeld(new MicroChangeNegative());
   }
 
 
