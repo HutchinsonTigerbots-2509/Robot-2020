@@ -8,20 +8,20 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.VariableVault;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Vision extends SubsystemBase {
   // The Network Table contains all values relevant to working with vision
-  private NetworkTable mLimelightTable = NetworkTableInstance.getDefault().getTable(Constants.kLimelightNetworkID);
+  private NetworkTable mLimelightTable = NetworkTableInstance.getDefault().getTable(VariableVault.kLimelightNetworkID);
   // Network Table entry variables to hold data in the form of a NetworkTableEntry
-  private NetworkTableEntry mTableX = mLimelightTable.getEntry(Constants.kLimelightTargetXID);
-  private NetworkTableEntry mTableY = mLimelightTable.getEntry(Constants.kLimelightTargetYID);
-  private NetworkTableEntry mTableSkew = mLimelightTable.getEntry(Constants.kLimelightTargetSkewID);
-  private NetworkTableEntry mTableArea = mLimelightTable.getEntry(Constants.kLimelightTargetAreaID);
-  private NetworkTableEntry mTableVert = mLimelightTable.getEntry(Constants.kLimelightTargetVertID);
-  private NetworkTableEntry mTableHor = mLimelightTable.getEntry(Constants.kLimelightTargetHorID);
+  private NetworkTableEntry mTableX = mLimelightTable.getEntry(VariableVault.kLimelightTargetXID);
+  private NetworkTableEntry mTableY = mLimelightTable.getEntry(VariableVault.kLimelightTargetYID);
+  private NetworkTableEntry mTableSkew = mLimelightTable.getEntry(VariableVault.kLimelightTargetSkewID);
+  private NetworkTableEntry mTableArea = mLimelightTable.getEntry(VariableVault.kLimelightTargetAreaID);
+  private NetworkTableEntry mTableVert = mLimelightTable.getEntry(VariableVault.kLimelightTargetVertID);
+  private NetworkTableEntry mTableHor = mLimelightTable.getEntry(VariableVault.kLimelightTargetHorID);
   //private NetworkTableEntry mTableCorners = mLimelightTable.getEntry("tcornx");
   // private NetworkTableEntry mTableTargetFound = mLimelightTable.getEntry(Constants.kLimelightTargetID);
   
@@ -38,50 +38,50 @@ public class Vision extends SubsystemBase {
    * Creates a new Vision.
    */
   public Vision() {
-    mLimelightTable.getEntry("ledMode").setNumber(Constants.kLimelightLED);
-    mLimelightTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
-    mLimelightTable.getEntry("stream").setNumber(Constants.kLimelightStream);
-    mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightStartingPipeline);
+    mLimelightTable.getEntry("ledMode").setNumber(VariableVault.kLimelightLED);
+    mLimelightTable.getEntry("camMode").setNumber(VariableVault.kLimelightMode);
+    mLimelightTable.getEntry("stream").setNumber(VariableVault.kLimelightStream);
+    mLimelightTable.getEntry("pipeline").setNumber(VariableVault.kLimelightStartingPipeline);
   }
 
   // Returns the horizontal offset from crosshair to target (+/- 27 degrees)
   public double getTargetX() {
-    mTableX = mLimelightTable.getEntry(Constants.kLimelightTargetXID); 
+    mTableX = mLimelightTable.getEntry(VariableVault.kLimelightTargetXID); 
     mTargetX = mTableX.getDouble(0.0); 
     return mTargetX; 
   }
 
   // Returns the vertical offset from crosshair to target (+/- 20.5 degrees)
   public double getTargetY() {
-    mTableY = mLimelightTable.getEntry(Constants.kLimelightTargetYID);
+    mTableY = mLimelightTable.getEntry(VariableVault.kLimelightTargetYID);
     mTargetY = mTableY.getDouble(0.0);
     return mTargetY;
   }
 
   // Returns target area (0-100 % of image)
   public double getTargetArea() {
-    mTableArea = mLimelightTable.getEntry(Constants.kLimelightTargetAreaID);
+    mTableArea = mLimelightTable.getEntry(VariableVault.kLimelightTargetAreaID);
     mTargetArea = mTableArea.getDouble(0.0);
     return mTargetArea;
   }
 
   // Returns the target skew/rotation (-90 to 0 degrees)
   public double getTargetSkew() {
-    mTableSkew = mLimelightTable.getEntry(Constants.kLimelightTargetSkewID);
+    mTableSkew = mLimelightTable.getEntry(VariableVault.kLimelightTargetSkewID);
     mTargetSkew = mTableSkew.getDouble(0.0);
     return mTargetSkew;
   }
 
   // Returns the vertical sidelength of the bounding box (0-320 pixels)
   public double getTargetVert() {
-    mTableVert = mLimelightTable.getEntry(Constants.kLimelightTargetVertID);
+    mTableVert = mLimelightTable.getEntry(VariableVault.kLimelightTargetVertID);
     mTargetVert = mTableVert.getDouble(0.0);
     return mTargetVert;
   }
 
   // Returns the horizontal sidelength of the bounding box (0-320 pixels)
   public double getTargetHor() {
-    mTableHor = mLimelightTable.getEntry(Constants.kLimelightTargetHorID);
+    mTableHor = mLimelightTable.getEntry(VariableVault.kLimelightTargetHorID);
     mTargetHor = mTableHor.getDouble(0.0);
     return mTargetHor;
   }
