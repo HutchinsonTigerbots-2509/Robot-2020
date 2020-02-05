@@ -26,6 +26,7 @@ import frc.robot.commands.ShootAll;
 import frc.robot.commands.ConveyorReverse;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.RunShooterMax;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -47,6 +48,7 @@ public class RobotContainer {
   public static Turret sTurret = new Turret();
   public static Conveyor sConveyor = new Conveyor();
   public static Shooter sShooter = new Shooter();
+  public static Intake sIntake = new Intake();
 
   
    // Joysticks - Joysticks are made here

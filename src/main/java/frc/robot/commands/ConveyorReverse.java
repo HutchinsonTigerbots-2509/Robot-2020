@@ -26,6 +26,7 @@ public class ConveyorReverse extends CommandBase {
   @Override
   public void initialize() {
     sConveyor.ConveyorReverse();
+    sConveyor.CanSensorMove = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,6 +39,7 @@ public class ConveyorReverse extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     sConveyor.StopMotors();
+    sConveyor.CanSensorMove = true;
   }
 
   // Returns true when the command should end.

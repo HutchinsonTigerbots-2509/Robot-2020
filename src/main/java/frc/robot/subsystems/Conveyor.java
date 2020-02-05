@@ -20,11 +20,11 @@ public class Conveyor extends SubsystemBase {
   private static WPI_VictorSPX TopConveyorMotor = new WPI_VictorSPX(Constants.kTopConveyorMotorID);
   private static WPI_VictorSPX BottomConveyorMotor = new WPI_VictorSPX(Constants.kBottomConveyorMotorID);
 
+  public boolean CanSensorMove = true;
   /**
    * Creates a new Intake.
    */
   public Conveyor() {
-
   }
 
   @Override
@@ -33,19 +33,17 @@ public class Conveyor extends SubsystemBase {
     GetBottomSensorValue();
     SmartDashboard.putNumber("Top Sensor int", TopLightSensor.getVoltage());
     SmartDashboard.putNumber("Bottom sensor int", BottomLightSensor.getVoltage());
-    // if(GetTopSensorValue() == false){
-    //   if(GetBottomSensorValue() == true) {
-    //     FullConveyorForward(0.5);
-    //   }else {
-    //     StopMotors();
-    //   }
-    // } else {
-    //   if(GetBottomSensorValue() == true) {
-    //     BottomConveyorForward(0.5);
-    //   }else {
-    //     StopMotors();
-    //   }
-    // }
+    if(CanSensorMove == true){
+      if(GetTopSensorValue() == false && GetBottomSensorValue() == true){
+          FullConveyorForward(0.2, 0.5);
+      } else {
+        if(GetBottomSensorValue() == true) {
+          BottomConveyorForward(0.5);
+        }else {
+          StopMotors();
+        }
+      }
+    }
   }
 
   private boolean GetBottomSensorValue(){

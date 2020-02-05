@@ -78,7 +78,7 @@ public class Drivetrain extends SubsystemBase {
    * @param stick_2
    */
   public void MarioDrive(Joystick stick) {
-		double SpeedMulti = 1;
+		double SpeedMulti = .7;
 		double TurnSpeedMulti = 0.4;
 		double Speed = 0.0;
 		
@@ -95,7 +95,7 @@ public class Drivetrain extends SubsystemBase {
       Drive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
     }
     else {
-      Drive.arcadeDrive(0, 0);
+      Drive.arcadeDrive(0, stick.getRawAxis(0) * -TurnSpeedMulti);
     }
   }
 

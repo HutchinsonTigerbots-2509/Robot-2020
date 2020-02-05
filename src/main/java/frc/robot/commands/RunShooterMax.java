@@ -24,13 +24,13 @@ public class RunShooterMax extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    sShooter.ShooterForward(1);
+    sShooter.ShooterForward(0.7);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    sShooter.ShooterForward(1);
+    sShooter.ShooterForward(0.7);
   }
 
   // Called once the command ends or is interrupted.

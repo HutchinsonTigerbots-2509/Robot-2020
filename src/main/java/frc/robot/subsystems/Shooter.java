@@ -25,13 +25,17 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Velocity? (1)", ShooterMotor1.getActiveTrajectoryVelocity());
+    SmartDashboard.putNumber("Velocity? (1)", ShooterMotor1.getSelectedSensorVelocity());
     // SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
-    SmartDashboard.putNumber("RPM? (1)", (ShooterMotor1.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);
-    SmartDashboard.putNumber("Encoder", ShooterMotor2.getSelectedSensorPosition());
+    SmartDashboard.putNumber("RPM? (1)", (ShooterMotor1.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
+    SmartDashboard.putNumber("Encoder", ShooterMotor1.getSelectedSensorPosition());
     // SmartDashboard.putNumber("RPM? (2)", (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);
     // SmartDashboard.putNumber("RPM? (Average)", ((ShooterMotor1.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) + (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation)) * 300);
     // This method will be called once per scheduler run
+  }
+
+  public int GetRPM(){
+    return (ShooterMotor1.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation;
   }
 
   public void ShooterForward(double pSpeed){

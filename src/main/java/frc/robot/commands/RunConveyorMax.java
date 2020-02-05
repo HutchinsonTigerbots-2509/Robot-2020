@@ -24,6 +24,7 @@ public class RunConveyorMax extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    sConveyor.CanSensorMove = false;
     sConveyor.FullConveyorForward(1, 0.9);
   }
 
@@ -37,6 +38,7 @@ public class RunConveyorMax extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     sConveyor.StopMotors();
+    sConveyor.CanSensorMove = true;
   }
 
   // Returns true when the command should end.
