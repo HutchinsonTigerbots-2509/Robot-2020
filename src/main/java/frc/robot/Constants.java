@@ -19,13 +19,16 @@ public final class Constants {
 
     /* ID NUMBERS */
     // Joystick
-    public static int kOpStickID = 0;
+    public static int kOpStickID = 1;
     // Drivetrain
     public static int kLeftFrontID = 0;
     public static int kLeftRearID = 1;
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
-
+    //Colorwheel
+    public final int kColorWheelMotorID = 0;
+    public final double kColorWheelMotorMicroSpeed = 0.15;
+    public final double kColorWheelMotorMacroSpeed = 0.5;
     /* Vision Constants */
 
     // Network

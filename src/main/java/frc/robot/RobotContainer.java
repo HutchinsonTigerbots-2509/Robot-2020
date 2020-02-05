@@ -13,10 +13,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.OPDrive;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Vision;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
 
 /**
@@ -30,14 +30,19 @@ public class RobotContainer {
   public final Vision sVision = new Vision();
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
-  private final Drivetrain DT = new Drivetrain();
+  // private final Drivetrain DT = new Drivetrain();
+  public static Colorwheel sColorwheel = new Colorwheel();
    
    // Joysticks - Joysticks are made here
   public static Joystick OpStick = new Joystick(Constants.kOpStickID);
 
+  public static JoystickButton MicroChangeButton;
+  public static JoystickButton MicroChangeNegativeButton;
+  public static JoystickButton SwitchButton;
+
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then 
-  public final OPDrive OPDrive = new OPDrive(DT, OpStick);
+  // public final OPDrive OPDrive = new OPDrive(DT, OpStick);
 
 
 
@@ -56,6 +61,14 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    MicroChangeButton = new JoystickButton(OpStick, 3);
+    MicroChangeButton.whenHeld(new PositiveChange());
+
+    MicroChangeNegativeButton = new JoystickButton(OpStick, 4);
+    MicroChangeNegativeButton.whenHeld(new NegativeChange());
+    
+    SwitchButton = new JoystickButton(OpStick, 5);
+    SwitchButton.whenPressed(new Switch());
   }
 
 
@@ -66,6 +79,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // NOTE: Put in an actual command
-    return OPDrive;
+    return null;
   }
 }
