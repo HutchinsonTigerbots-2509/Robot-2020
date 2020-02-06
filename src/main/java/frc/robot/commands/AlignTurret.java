@@ -19,6 +19,7 @@ public class AlignTurret extends CommandBase {
   private double TargetX;
   private double Speed;
   private boolean Aligned;
+  private double TargetDegrees;
 
 
   /**
@@ -39,24 +40,33 @@ public class AlignTurret extends CommandBase {
     SmartDashboard.putBoolean("Align Target", true);
     TargetX = sVision.getTargetX();
     Aligned = false;
+    TargetDegrees = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     TargetX = sVision.getTargetX();
-    Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
-
-    if(TargetX > 1){ //2
+    // Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
+    if(TargetX > TargetDegrees + 6){
+      Speed = Math.max(TargetX * 0.2, Constants.kTurretMinVoltage);
       sTurret.TurnLeft(Speed);
       Aligned = false;
-    } else if(TargetX < -2){ //-2
+    } else if(TargetX < TargetDegrees - 6){
+      Speed = Math.max(TargetX * 0.2, Constants.kTurretMinVoltage);
+      sTurret.TurnRight(Speed);
+      Aligned = false;
+    } else if(TargetX > TargetDegrees + 1.5){ //2
+      Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
+      sTurret.TurnLeft(Speed);
+      Aligned = false;
+    } else if(TargetX < TargetDegrees - 1.5){ //-2
+      Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
       sTurret.TurnRight(Speed);
       Aligned = false;
     } else {
       sTurret.StopMotor();
       Aligned = true;
-
     }
   }
 

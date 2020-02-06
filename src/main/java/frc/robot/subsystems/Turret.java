@@ -37,9 +37,9 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(RobotContainer.OpStick.getRawAxis(4) < -0.2){
+    if(RobotContainer.CoOpStick.getRawAxis(4) < -0.2){
       TurnLeft(0.5);
-    } else if (RobotContainer.OpStick.getRawAxis(4) > 0.2){
+    } else if (RobotContainer.CoOpStick.getRawAxis(4) > 0.2){
       TurnRight(0.5);
     } else {
       StopMotor();

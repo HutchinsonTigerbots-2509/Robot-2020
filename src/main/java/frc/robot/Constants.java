@@ -20,6 +20,7 @@ public final class Constants {
     /* ID NUMBERS */
     // Joystick
     public static int kOpStickID = 0;
+    public static int kCoOpStickID = 1;
     // Drivetrain
     public static int kLeftFrontID = 0;
     public static int kLeftRearID = 1;
@@ -35,6 +36,7 @@ public final class Constants {
     public static int kShooterMotor2ID = 5;
     public static int kTopLightSensorID = 1;
     public static int kBottomLightSensorID = 0;
+    public static int kColorMotorID = 10;
 
     public static int kShooterTicksPerRotation = 4096; // or 1024???
     /* Vision Constants */
@@ -46,8 +48,9 @@ public final class Constants {
     // Settings
     public static int kLimelightLED = 0; // Sets LED. 0 = Set by Pipline, 1 = Force off, 2 = Force blink, 3 = Force on
     public static int kLimelightMode = 0; // Sets camera mode. 0 = Vision processor, 1 = Driver Camera
-    public static int kLimelightStream = 0; // Sets streaming mode. 0 = Side-by-Side, 1 = PiP main, 2 = PiP secondary
+    public static int kLimelightStream = 2; // Sets streaming mode. 0 = Side-by-Side, 1 = PiP main, 2 = PiP secondary
     public static int kLimelightStartingPipeline = 0; // The default pipeline to stream
+    public static int kLimelightDriverPipeline = 6; // The pipeline to be used by the driver for the colorwheel
     
     // Table IDs (for getting values from the Network Table)
     public static String kLimelightLatencyID = "tl"; // Pipeline latency in milliseconds

@@ -20,6 +20,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AlignTurret;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.commands.RunConveyorMax;
 import frc.robot.commands.ShootAll;
@@ -27,7 +28,9 @@ import frc.robot.commands.ConveyorReverse;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.RunShooterMax;
 import frc.robot.subsystems.Intake;
-
+import frc.robot.commands.ColorWheelForward;
+import frc.robot.commands.ColorWheelReverse;
+import frc.robot.commands.SwitchPipeline;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -41,6 +44,9 @@ public class RobotContainer {
   private static JoystickButton ConveyorReverseButton;
   private static JoystickButton ShootAllButton;
   private static JoystickButton RunShooterMaxButton;
+  private static JoystickButton ColorWheelForward;
+  private static JoystickButton ColorWheelReverse;
+  private static JoystickButton SwitchPipelineButton;
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
   public static Drivetrain sDrivetrain = new Drivetrain();
@@ -49,10 +55,12 @@ public class RobotContainer {
   public static Conveyor sConveyor = new Conveyor();
   public static Shooter sShooter = new Shooter();
   public static Intake sIntake = new Intake();
+  public static ColorWheel sColorWheel = new ColorWheel();
 
   
    // Joysticks - Joysticks are made here
   public static Joystick OpStick = new Joystick(Constants.kOpStickID);
+  public static Joystick CoOpStick = new Joystick(Constants.kCoOpStickID);
 
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then
@@ -76,21 +84,29 @@ public class RobotContainer {
    */
   
   private void configureButtonBindings() {
-  AlignButton = new JoystickButton(OpStick, 1);
+  AlignButton = new JoystickButton(CoOpStick, 1);
   AlignButton.toggleWhenPressed(new AlignTurret(sVision, sTurret));
 
-  RunConveyorMaxButton = new JoystickButton(OpStick, 5);
+  RunConveyorMaxButton = new JoystickButton(CoOpStick, 5);
   RunConveyorMaxButton.whileHeld(new RunConveyorMax(sConveyor));
 
-  ConveyorReverseButton = new JoystickButton(OpStick, 6);
+  ConveyorReverseButton = new JoystickButton(CoOpStick, 6);
   ConveyorReverseButton.whileHeld(new ConveyorReverse(sConveyor));
 
-  ShootAllButton = new JoystickButton(OpStick, 2);
+  ShootAllButton = new JoystickButton(CoOpStick, 2);
   ShootAllButton.whileHeld(new ShootAll(sShooter, sConveyor));
 
-  RunShooterMaxButton = new JoystickButton(OpStick, 3);
+  RunShooterMaxButton = new JoystickButton(CoOpStick, 3);
   RunShooterMaxButton.toggleWhenPressed(new RunShooterMax(sShooter));
 
+  ColorWheelForward = new JoystickButton(OpStick, 2);
+  ColorWheelForward.whileHeld(new ColorWheelForward(sColorWheel));
+
+  ColorWheelReverse = new JoystickButton(OpStick, 4);
+  ColorWheelReverse.whileHeld(new ColorWheelReverse(sColorWheel));
+
+  SwitchPipelineButton = new JoystickButton(CoOpStick, 4);
+  SwitchPipelineButton.whenPressed(new SwitchPipeline(sVision));
   }
 
   /**

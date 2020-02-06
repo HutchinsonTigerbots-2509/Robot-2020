@@ -32,6 +32,8 @@ public class Vision extends SubsystemBase {
   private double mTargetArea = 0;
   private double mTargetVert = 0;
   private double mTargetHor = 0;
+
+  private boolean TargetPipeline = true;
   // private double mTargetFound = 0;
 
   /**
@@ -86,6 +88,28 @@ public class Vision extends SubsystemBase {
     return mTargetHor;
   }
 
+  public void SwitchToDriverPipeline(){
+    mLimelightTable.getEntry("camMode").setNumber(1);
+    mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightDriverPipeline);
+  }
+
+  public void SwitchToTargetPipeline(){
+    mLimelightTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
+    mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightStartingPipeline);
+  }
+
+  public void SwitchPipeline(){
+    if(TargetPipeline){
+      mLimelightTable.getEntry("camMode").setNumber(1);
+      mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightDriverPipeline);
+      TargetPipeline = false;
+    } else {
+      mLimelightTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
+      mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightStartingPipeline);
+      TargetPipeline = true;
+    }
+  }
+
 
   @Override
   public void periodic() {
@@ -94,8 +118,6 @@ public class Vision extends SubsystemBase {
     // Puts all the vision numbers on the Shuffleboard
     SmartDashboard.putNumber("Target X", getTargetX());
     SmartDashboard.putNumber("Target Y", getTargetY());
-    SmartDashboard.putNumber("Target Area", getTargetArea());
     SmartDashboard.putNumber("Target Skew", getTargetSkew());
-    SmartDashboard.putNumber("Target Vert", getTargetVert());
-    SmartDashboard.putNumber("Target Hor", getTargetHor());  }
+  }
 }

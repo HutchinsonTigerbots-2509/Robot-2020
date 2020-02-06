@@ -14,6 +14,7 @@ import frc.robot.subsystems.Conveyor;
 public class ShootAll extends CommandBase {
   private static Shooter sShooter;
   private static Conveyor sConveyor;
+  private static boolean ReadyToShoot;
   /**
    * Creates a new ShootAll.
    */
@@ -28,6 +29,7 @@ public class ShootAll extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    ReadyToShoot = false;
     sShooter.ShooterForward(0.7);
     if(sShooter.GetRPM() >= 3600 || sShooter.GetRPM() <= -3600){
       sConveyor.FullConveyorForward(1, 0.8);
@@ -43,7 +45,8 @@ public class ShootAll extends CommandBase {
     sShooter.ShooterForward(.7);
     if(sShooter.GetRPM() >= 3600 || sShooter.GetRPM() <= -3600){
       sConveyor.FullConveyorForward(1, 0.8);
-    } else {
+      ReadyToShoot = true;
+    } else if(!ReadyToShoot){
       sConveyor.StopMotors();
     }
   }
