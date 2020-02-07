@@ -182,7 +182,9 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    MarioDrive(RobotContainer.OpStick);
+    // MarioDrive(RobotContainer.OpStick);
+    SmartDashboard.putNumber("RightFrontTicks", RightFront.getSelectedSensorPosition());
+    SmartDashboard.putNumber("RightFront Revolutions", ticksToRevolutions(RightFront.getSelectedSensorPosition()));
   }
 
   public void RadiusTurningFinally(int Angle, double Speed, double Radius, String Direction){
@@ -219,5 +221,11 @@ public class Drivetrain extends SubsystemBase {
     RightFront.setSelectedSensorPosition(0);
     RightRear.setSelectedSensorPosition(0);
   }
+
+  public double ticksToRevolutions(double ticks) {
+    return (ticks / 2048) * (14 / 50);
+  }
+
+  
 
 }
