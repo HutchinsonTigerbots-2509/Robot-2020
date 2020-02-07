@@ -25,15 +25,15 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Drivetrain extends SubsystemBase {
   
-  public static WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
-  public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
-  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
-  public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
+  // public static WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
+  // public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
+  // public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
+  // public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
 
-  // public static WPI_TalonFX LeftFront = new WPI_TalonFX(Constants.kLeftFrontID);
-  // public final WPI_TalonFX LeftRear = new WPI_TalonFX(Constants.kLeftRearID);
-  // public final WPI_TalonFX RightFront = new WPI_TalonFX(Constants.kRightFrontID);
-  // public final WPI_TalonFX RightRear = new WPI_TalonFX(Constants.kRightRearID);
+  public static WPI_TalonFX LeftFront = new WPI_TalonFX(Constants.kLeftFrontID);
+  public final WPI_TalonFX LeftRear = new WPI_TalonFX(Constants.kLeftRearID);
+  public final WPI_TalonFX RightFront = new WPI_TalonFX(Constants.kRightFrontID);
+  public final WPI_TalonFX RightRear = new WPI_TalonFX(Constants.kRightRearID);
 
   public final SpeedControllerGroup Right = new SpeedControllerGroup(LeftFront, LeftRear);
   public final SpeedControllerGroup Left = new SpeedControllerGroup(RightFront, RightRear);
@@ -87,7 +87,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public void MarioDrive(Joystick stick) {
 		double SpeedMulti = 0.7;
-		double TurnSpeedMulti = 1;
+		double TurnSpeedMulti = 0.5;
 		
 		Drive.arcadeDrive(stick.getRawAxis(1)*SpeedMulti, stick.getRawAxis(2) * -TurnSpeedMulti);
   }

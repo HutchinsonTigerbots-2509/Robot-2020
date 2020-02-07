@@ -21,6 +21,7 @@ import frc.robot.commands.RadiusTurnCommand;
 import frc.robot.commands.RadiusTurning;
 import frc.robot.commands.RadiusTurningTester;
 import frc.robot.commands.TurnOnCenter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -42,7 +43,7 @@ public class Robot extends TimedRobot {
   public static SequentialCommandGroup RTT;
   public static Joystick stick;
 
-  public static Compressor comp = new Compressor();
+  // public static Compressor comp = new Compressor();
   public static AHRS DrivetrainGyro = new AHRS(SPI.Port.kMXP);
 
 
@@ -64,7 +65,7 @@ public class Robot extends TimedRobot {
 
     // RTG = new RadiusTurnCommand(DT, 45, .1, 2.0, "Right");
     // RTG2 = new RadiusTurnCommand(DT, 45, .1, 2.0, "Left");
-    TURNER = new TurnOnCenter(DT);
+    // TURNER = new TurnOnCenter(DT);
     Driver = new OPDrive(DT, stick);
     
   }
@@ -78,6 +79,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Gyro",DT.DrivetrainGyro.getAngle());
+    SmartDashboard.putNumber("Gyro Yaw", DT.DrivetrainGyro.getYaw());
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -101,11 +104,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    comp.stop();
+    // comp.stop();
     DrivetrainGyro.reset();
     m_autonomousCommand = null;
-    // RTT.schedule();
-    TURNER.schedule();
+    RTT.schedule();
+    // TURNER.schedule();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -129,7 +132,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    comp.stop();
+    // comp.stop();
     DrivetrainGyro.reset();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
@@ -142,7 +145,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Driver.schedule();
-    comp.stop();
+    // comp.stop();
   }
 
   @Override
