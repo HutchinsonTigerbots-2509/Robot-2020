@@ -87,7 +87,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public void MarioDrive(Joystick stick) {
 		double SpeedMulti = 0.7;
-		double TurnSpeedMulti = 1;
+		double TurnSpeedMulti = 0.5;
 		
 		Drive.arcadeDrive(stick.getRawAxis(1)*SpeedMulti, stick.getRawAxis(2) * -TurnSpeedMulti);
   }
@@ -102,6 +102,21 @@ public class Drivetrain extends SubsystemBase {
       Right.set(0);
       Left.set(0);
       DrivetrainGyro.getAngle();
+    }
+  }
+
+  public boolean TurnOnCenter(double Angle, double Speed){
+    SmartDashboard.putNumber("Angle", DrivetrainGyro.getYaw());
+    if(Angle < DrivetrainGyro.getYaw() - 4){
+      Left.set(-Speed);
+      Right.set(-Speed);
+      return false;
+    }else if(Angle > DrivetrainGyro.getYaw() + 4){
+      return false;
+    }else{
+      Left.set(0);
+      Right.set(0);
+      return true;
     }
   }
 

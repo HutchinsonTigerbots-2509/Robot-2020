@@ -26,7 +26,6 @@ public class RadiusTurningTester extends SequentialCommandGroup {
     // new RadiusTurnCommand(pDT, 45, .1, 3.0, "Left"));
 
     // DO NOT CHANGE - Correct values for the A3 auto path (2019 robot)
-    addCommands(new RadiusTurnRight(pDT, 67, -0.05, 0.5), 
-    new RadiusTurnLeft(pDT, 37, -0.05, 0.5));
+    addCommands(new RadiusTurnRight(pDT, 90, -0.05, 5));
   }
 }
