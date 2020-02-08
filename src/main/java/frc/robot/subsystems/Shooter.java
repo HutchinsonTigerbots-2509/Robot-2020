@@ -14,43 +14,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
-  private static WPI_TalonSRX ShooterMotor1 = new WPI_TalonSRX(Constants.kShooterMotor1ID);
-  private static WPI_TalonSRX ShooterMotor2 = new WPI_TalonSRX(Constants.kShooterMotor2ID);
+  private static WPI_TalonSRX ShooterMotorMaster = new WPI_TalonSRX(Constants.kShooterMotorMasterID);
+  private static WPI_TalonSRX ShooterMotorSlave = new WPI_TalonSRX(Constants.kShooterMotorSlaveID);
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
-    ShooterMotor2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Velocity? (1)", ShooterMotor1.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Velocity? (1)", ShooterMotorMaster.getSelectedSensorVelocity());
     // SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
-    SmartDashboard.putNumber("RPM? (1)", (ShooterMotor1.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
-    SmartDashboard.putNumber("Encoder", ShooterMotor1.getSelectedSensorPosition());
+    SmartDashboard.putNumber("RPM? (1)", (ShooterMotorMaster.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
+    SmartDashboard.putNumber("Encoder", ShooterMotorMaster.getSelectedSensorPosition());
     // SmartDashboard.putNumber("RPM? (2)", (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);
     // SmartDashboard.putNumber("RPM? (Average)", ((ShooterMotor1.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) + (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation)) * 300);
     // This method will be called once per scheduler run
   }
 
   public int GetRPM(){
-    return (ShooterMotor1.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation;
+    return (ShooterMotorMaster.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation;
   }
 
   public void ShooterForward(double pSpeed){
-    ShooterMotor1.set(pSpeed);
-    ShooterMotor2.set(pSpeed);
+    ShooterMotorMaster.set(pSpeed);
+    ShooterMotorSlave.set(pSpeed);
   }
 
   public void ShooterReverse(){
-    ShooterMotor1.set(-1);
-    ShooterMotor2.set(-1);
+    ShooterMotorMaster.set(-1);
+    ShooterMotorSlave.set(-1);
   }
 
   public void StopShooter(){
-    ShooterMotor1.set(0);
-    ShooterMotor2.set(0);
+    ShooterMotorMaster.set(0);
+    ShooterMotorSlave.set(0);
   }
 
 }

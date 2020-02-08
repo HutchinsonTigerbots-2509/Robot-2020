@@ -26,14 +26,16 @@ public final class Constants {
     public static int kLeftRearID = 1;
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
+
+    public static double kDrivetrainMinVoltage = 0.15;
     // Shooter
     public static int kTurretMotorID = 8;
     public static int kTopConveyorMotorID = 6;
     public static int kBottomConveyorMotorID = 7;
     public static int kIntakeMotorID = 9;
     public static double kTurretMinVoltage = 0.15;
-    public static int kShooterMotor1ID = 4;
-    public static int kShooterMotor2ID = 5;
+    public static int kShooterMotorMasterID = 4;
+    public static int kShooterMotorSlaveID = 5;
     public static int kTopLightSensorID = 1;
     public static int kBottomLightSensorID = 0;
     public static int kColorMotorID = 10;
