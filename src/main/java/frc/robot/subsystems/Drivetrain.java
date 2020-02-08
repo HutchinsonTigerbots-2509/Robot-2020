@@ -258,4 +258,10 @@ public class Drivetrain extends SubsystemBase {
     RightRear.setSelectedSensorPosition(0);
   }
 
+  public double ticksToRevolutions(double ticks) {
+    return (ticks / 2048) * (14 / 50);
+  }
+
+  
+
 }
