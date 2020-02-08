@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 
 public class Drivetrain extends SubsystemBase {
@@ -183,46 +182,12 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
     MarioDriveRamp(RobotContainer.OpStick);
-    // if(RobotContainer.OpStick.getRawAxis(3) >= 0.2){
-    //   SetSpeed(0.5);
-    // }
-    // else if(RobotContainer.OpStick.getRawAxis(2) >= 0.2){
-    //   SetSpeed(-0.5);
-    // } else {
-    //   StopMotors();
-    // }
+
     // SmartDashboard.putNumber("Gyro Roll", Gyro.getRoll());
     // SmartDashboard.putNumber("Gyro Yaw", Gyro.getYaw());
     // SmartDashboard.putNumber("Gyro Pitch", Gyro.getPitch());
-  }
-
-  public void RadiusTurningFinally(int Angle, double Speed, double Radius, String Direction){
-    SmartDashboard.putNumber("Gyro",DrivetrainGyro.getAngle());
-    double LongSpeed = (Speed * (Math.PI *(Radius + 22)*2))/(Math.PI*Radius*2);
-    if(Direction == "Right"){
-      if(DrivetrainGyro.getAngle() < Angle){
-        Right.set(-LongSpeed);
-        Left.set(Speed);
-      }else{
-        Right.set(0);
-        Left.set(0);
-        return;
-      }
-    }else if(Direction == "Left"){
-      if(DrivetrainGyro.getAngle() > -Angle){
-        Left.set(LongSpeed);
-        Right.set(-Speed);
-      }else{
-        Right.set(0);
-        Left.set(0);
-        return;
-      }
-    }else{
-      Right.set(0);
-      Left.set(0);
-      return;
-    }
   }
 
   public void ResetEncoders(){
