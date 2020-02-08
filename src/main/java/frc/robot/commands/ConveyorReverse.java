@@ -5,40 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Drivetrain;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Conveyor;
 
-public class TurnOnCenter extends CommandBase {
-  private final Drivetrain DT;
-  // public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
-  // public static AHRS DrivetrainGyro = new AHRS(SPI.Port.kMXP);
+public class ConveyorReverse extends CommandBase {
+  private static Conveyor sConveyor;
+
   /**
-   * Creates a new TurnOnCenter.
+   * Creates a new ConveyorReverse.
    */
-  public TurnOnCenter(Drivetrain p_DT) {
-    DT = p_DT;
-
-    addRequirements(DT);
+  public ConveyorReverse(Conveyor pConveyor) {
+    sConveyor = pConveyor;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sConveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    DT.DrivetrainGyro.reset(); 
+    sConveyor.ConveyorReverse();
+    sConveyor.CanSensorMove = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    DT.TurnOnCenter(90, 0.3);
+    sConveyor.ConveyorReverse();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    sConveyor.StopMotors();
+    sConveyor.CanSensorMove = true;
   }
 
   // Returns true when the command should end.

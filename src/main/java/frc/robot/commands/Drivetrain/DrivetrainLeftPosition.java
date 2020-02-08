@@ -10,7 +10,7 @@ package frc.robot.commands.Drivetrain;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.VariableVault;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 // THIS COMMAND SHOULD ONLY BE RUN BY THE DriveToDistance COMMAND GROUP!!!
@@ -35,7 +35,7 @@ public class DrivetrainLeftPosition extends CommandBase {
   @Override
   public void execute() {
     RobotContainer.sDrivetrain.LeftFront.set(ControlMode.Position, Ticks);
-    RobotContainer.sDrivetrain.LeftRear.set(ControlMode.Follower, VariableVault.kLeftFrontID);
+    RobotContainer.sDrivetrain.LeftRear.set(ControlMode.Follower, Constants.kLeftFrontID);
   }
 
   // Called once the command ends or is interrupted.

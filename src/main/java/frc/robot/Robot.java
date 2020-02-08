@@ -7,20 +7,10 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Drivetrain.RadiusTurnCommand;
-import frc.robot.commands.Drivetrain.RadiusTurning;
-import frc.robot.commands.Drivetrain.RadiusTurningTester;
-import frc.robot.commands.Drivetrain.TurnOnCenter;
-import frc.robot.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -32,16 +22,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   public static RobotContainer RobotContainer;
-  public static Drivetrain DT;
-  public static RadiusTurning RTurning;
-  public static RadiusTurnCommand RTG;
-  public static RadiusTurnCommand RTG2;
-  public static TurnOnCenter TURNER;
-  public static SequentialCommandGroup RTT;
-  public static Joystick stick;
-
-  public static Compressor comp = new Compressor();
-  public static AHRS DrivetrainGyro = new AHRS(SPI.Port.kMXP);
 
 
   /**
@@ -53,16 +33,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     RobotContainer = new RobotContainer();
-    Drivetrain DT = new Drivetrain();
-    // RTurning = new RadiusTurning(DT);
-    RTT = new RadiusTurningTester(DT);
-    // RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
-    // new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
-    stick = new Joystick(0);
-
-    // RTG = new RadiusTurnCommand(DT, 45, .1, 2.0, "Right");
-    // RTG2 = new RadiusTurnCommand(DT, 45, .1, 2.0, "Left");
-    TURNER = new TurnOnCenter(DT);
   }
 
   /**
@@ -79,6 +49,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putBoolean("Left Limit", RobotContainer.sTurret.GetLeftLimit());
+    SmartDashboard.putBoolean("Right Limit", RobotContainer.sTurret.GetRightLimit());
   }
 
   /**
@@ -97,11 +69,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    comp.stop();
-    DrivetrainGyro.reset();
-    m_autonomousCommand = null;
-    // RTT.schedule();
-    TURNER.schedule();
+    // m_autonomousCommand = RobotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -125,11 +93,9 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    comp.stop();
-    DrivetrainGyro.reset();
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.cancel();
+    // }
   }
 
   /**
@@ -137,7 +103,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    comp.stop();
   }
 
   @Override

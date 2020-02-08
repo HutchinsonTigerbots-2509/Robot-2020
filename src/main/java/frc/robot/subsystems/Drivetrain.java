@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -18,22 +19,22 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.VariableVault;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 
 public class Drivetrain extends SubsystemBase {
   
-  public final WPI_TalonSRX LeftFront = new WPI_TalonSRX(VariableVault.kLeftFrontID);
-  public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(VariableVault.kLeftRearID);
-  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(VariableVault.kRightFrontID);
-  public final WPI_VictorSPX RightRear = new WPI_VictorSPX(VariableVault.kRightRearID);
+  public final WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
+  public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
+  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
+  public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
 
-  // public final WPI_TalonFX LeftFront = new WPI_TalonFX(VariableVault.kLeftFrontID);
-  // public final WPI_TalonFX LeftRear = new WPI_TalonFX(VariableVault.kLeftRearID);
-  // public final WPI_TalonFX RightFront = new WPI_TalonFX(VariableVault.kRightFrontID);
-  // public final WPI_TalonFX RightRear = new WPI_TalonFX(VariableVault.kRightRearID);
+  // public final WPI_TalonFX LeftFront = new WPI_TalonFX(Constants.kLeftFrontID);
+  // public final WPI_TalonFX LeftRear = new WPI_TalonFX(Constants.kLeftRearID);
+  // public final WPI_TalonFX RightFront = new WPI_TalonFX(Constants.kRightFrontID);
+  // public final WPI_TalonFX RightRear = new WPI_TalonFX(Constants.kRightRearID);
 
   public final SpeedControllerGroup Right = new SpeedControllerGroup(LeftFront, LeftRear);
   public final SpeedControllerGroup Left = new SpeedControllerGroup(RightFront, RightRear);
@@ -48,23 +49,24 @@ public class Drivetrain extends SubsystemBase {
   /**
    * Creates a new Drivetrain.
    */
+  
   public Drivetrain() {
     // Sets the PID values for the motors
-    LeftFront.config_kP(0,VariableVault.kDrivetrainPGain);
-    LeftFront.config_kI(0, VariableVault.kDrivetrainIGain);
-    LeftFront.config_kD(0, VariableVault.kDrivetrainDGain);
+    LeftFront.config_kP(0,Constants.kDrivetrainPGain);
+    LeftFront.config_kI(0, Constants.kDrivetrainIGain);
+    LeftFront.config_kD(0, Constants.kDrivetrainDGain);
 
-    LeftRear.config_kP(0,VariableVault.kDrivetrainPGain);
-    LeftRear.config_kI(0, VariableVault.kDrivetrainIGain);
-    LeftRear.config_kD(0, VariableVault.kDrivetrainDGain);
+    LeftRear.config_kP(0,Constants.kDrivetrainPGain);
+    LeftRear.config_kI(0, Constants.kDrivetrainIGain);
+    LeftRear.config_kD(0, Constants.kDrivetrainDGain);
 
-    RightFront.config_kP(0,VariableVault.kDrivetrainPGain);
-    RightFront.config_kI(0, VariableVault.kDrivetrainIGain);
-    RightFront.config_kD(0, VariableVault.kDrivetrainDGain);
+    RightFront.config_kP(0,Constants.kDrivetrainPGain);
+    RightFront.config_kI(0, Constants.kDrivetrainIGain);
+    RightFront.config_kD(0, Constants.kDrivetrainDGain);
 
-    RightRear.config_kP(0,VariableVault.kDrivetrainPGain);
-    RightRear.config_kI(0, VariableVault.kDrivetrainIGain);
-    RightRear.config_kD(0, VariableVault.kDrivetrainDGain);
+    RightRear.config_kP(0,Constants.kDrivetrainPGain);
+    RightRear.config_kI(0, Constants.kDrivetrainIGain);
+    RightRear.config_kD(0, Constants.kDrivetrainDGain);
   }
 
   public void TurnLeft(double pSpeed) {
@@ -86,130 +88,113 @@ public class Drivetrain extends SubsystemBase {
    * @param stick_2
    */
   public void MarioDrive(Joystick stick) {
-    double SpeedMulti = 1;
-		double TurnSpeedMulti = .75;
-    double Speed = 0.0;
-    
-		if(stick.getRawAxis(3) > 0) {
-			Speed = stick.getRawAxis(3) * -SpeedMulti;
-		} else if(stick.getRawAxis(2) > 0) {
-			Speed = stick.getRawAxis(2)  * SpeedMulti;
-		}
+		double SpeedMulti = .75;
+		double TurnSpeedMulti = 0.4;
+		double Speed = 0.0;
 		
-		if(Speed > 0) {
-		  Drive.arcadeDrive(Speed, stick.getRawAxis(0) * TurnSpeedMulti);
+		// if(stick.getRawAxis(3) > 0) {
+		// 	Speed = stick.getRawAxis(3) * -SpeedMulti;
+		// } else if(stick.getRawAxis(2) > 0) {
+		// 	Speed = stick.getRawAxis(2)  * SpeedMulti;
+    // }
+
+    if(stick.getRawAxis(1) != 0){
+      Speed = stick.getRawAxis(1) * SpeedMulti;
+    }
+
+		if(Speed > 0.05) {
+		  Drive.arcadeDrive(Speed, stick.getRawAxis(4) * -TurnSpeedMulti);
 		}
-		else {
-			Drive.arcadeDrive(Speed, stick.getRawAxis(0) * TurnSpeedMulti);
+		else if (Speed < -0.05) {
+      Drive.arcadeDrive(Speed, stick.getRawAxis(4) * -TurnSpeedMulti);
     }
-  }
-		// Drive.arcadeDrive(stick.getRawAxis(1)*SpeedMulti, stick.getRawAxis(2) * -TurnSpeedMulti);
-
-  public void MoveWithTicks(double ticks){
-    if(RightFront.getSelectedSensorPosition() > -ticks){
-      SmartDashboard.putNumber("EncoderTicks", RightFront.getSelectedSensorPosition());
-      Right.set(0.-6);
-      Left.set(0.6);
-
-    }else{
-      Right.set(0);
-      Left.set(0);
-      DrivetrainGyro.getAngle();
+    else {
+      Drive.arcadeDrive(0, stick.getRawAxis(4) * -TurnSpeedMulti);
     }
+
+
   }
 
-  public void TurnOnCenter(double Angle, double Speed){
-    SmartDashboard.putNumber("Angle", DrivetrainGyro.getYaw());
-    if(Angle <  DrivetrainGyro.getYaw()){
-      Left.set(-Speed);
-      Right.set(Speed);
-    }else if(Angle > DrivetrainGyro.getYaw()){
-      Left.set(Speed);
-      Right.set(-Speed);
-    }else{
-      Left.set(0);
-      Right.set(0);
+  private double PreviousValue = 0;
+  private double CurrentValue = 0;
+  private double PreviousTurnValue = 0;
+  private double CurrentTurnValue = 0;
+  private double Change = 0;
+  private double TurnChange = 0;
+
+  public void MarioDriveRamp(Joystick stick){
+    double SpeedMulti = 0.8;
+    double TurnSpeedMulti = 0.8;
+    double ForwardGain = 0.028; //0.007
+    double ReverseGain = -0.7;
+    double ReverseTurnGain = -0.5;
+    double Target = (stick.getRawAxis(1) * SpeedMulti);
+    double TurnTarget = -(stick.getRawAxis(4) * TurnSpeedMulti);
+
+    // Sets the target to zero if the target is too low
+    if(Math.abs(Target) < Constants.kDrivetrainMinVoltage) {
+      Target = 0.0;
     }
-  }
+    if(Math.abs(TurnTarget) < Constants.kDrivetrainMinVoltage) {
+      TurnTarget = 0.0;
+    }
 
-  public void RadiusTurning(double Angle, double Radius, double Speed, String Direction){
+    // Determines how much to add/subtract from the current voltage
+    if (Target == 0.0) {
+      Change = (ReverseGain * PreviousValue);
+    } else {
+      Change = -(ForwardGain * (Target - PreviousValue));
+    }
+    if (TurnTarget == 0.0) {
+      TurnChange = (ReverseTurnGain * PreviousTurnValue);
+    } else {
+      TurnChange = -(ForwardGain * (TurnTarget - PreviousTurnValue));
+    }
 
-    double ShortMove = Math.PI*Radius*2;
-    double LongMove = Math.PI*(Radius+22)*2;
+    // Updates the values to give to the motors
+    CurrentValue = CurrentValue + Change;
+    CurrentTurnValue = CurrentTurnValue + TurnChange;
 
-    double LongSpeed = (Speed*LongMove)/ShortMove;
-    double ShortSpeed = Speed;
+    // Sets the maximum output voltage to 1
+    if (CurrentValue > 1){
+      CurrentValue = 1;
+    } else if (CurrentValue < -1){
+      CurrentValue = -1;
+    }
+    if (CurrentTurnValue > 1){
+      CurrentTurnValue = 1;
+    } else if (CurrentTurnValue < -1){
+      CurrentTurnValue = -1;
+    }
 
-    double CircumferencePercent = Angle/360;
-
-    double ShortAngleMove = ShortMove * CircumferencePercent; //inches
-    double LongAngleMove = LongMove * CircumferencePercent; //inches
-
-    double RightCurrentInches = RightFront.getSelectedSensorPosition() / -299.4011976; // inch per tick
-
-    SmartDashboard.putNumber("Postion", RightCurrentInches);
-
-    if(Direction == "Right"){
-      SmartDashboard.putString("Going", "Right");
-        if(RightCurrentInches < ShortAngleMove){
-          SmartDashboard.putNumber("Target in Inches", ShortAngleMove);
-          Right.set(-LongSpeed);
-          Left.set(ShortSpeed);
-        }else{
-          Right.set(0);
-          Left.set(0);
-        }
-    }else if(Direction == "Left"){
-      SmartDashboard.putString("Going", "Left");
-      if(RightCurrentInches < LongAngleMove){
-        Left.set(ShortSpeed);
-        Right.set(LongSpeed);
-      }else{
-        Left.set(0);
-        Right.set(0);
-      }
-    }else{
-      SmartDashboard.putString("Going", "ERROR");
-      //User did something wrong
+    // Drives the motors
+    if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
+      Drive.arcadeDrive(CurrentValue, CurrentTurnValue);
+    } else if (Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
+      Drive.arcadeDrive(0, CurrentTurnValue);
+    } else {
       Drive.arcadeDrive(0, 0);
     }
 
-
-  }
-
-  public void Move(){
-    SmartDashboard.putNumber("Gyro",DrivetrainGyro.getAngle());
-    //double TargetTicks = (Math.PI*.5*2)*299.4011976*77;
-    int TargetAngle = 90;
-    if(DrivetrainGyro.getAngle() < TargetAngle){
-      //SmartDashboard.putNumber("TargetTicksREAL", TargetTicks);
-      //SmartDashboard.putNumber("CurrentTicksREAL", -RightFront.getSelectedSensorPosition());
-      Right.set(CalcLongSpeed(-.1));
-      Left.set(.1);
-    }else{
-      Right.set(0);
-      Left.set(0);
-    }
-    // if(-RightFront.getSelectedSensorPosition() < TargetTicks){
-    //   SmartDashboard.putNumber("TargetTicksREAL", TargetTicks);
-    //   SmartDashboard.putNumber("CurrentTicksREAL", -RightFront.getSelectedSensorPosition());
-    //   Right.set(CalcLongSpeed(-.1));
-    //   Left.set(.1);
-    // }else{
-    //   Right.set(0);
-    //   Left.set(0);
-    // }
-  }
-
-  public double CalcLongSpeed(double ShortSpeed){
-    double r = 5;//.5
-    return (ShortSpeed * (Math.PI *(r + 22)*2))/(Math.PI*r*2);
+    PreviousValue = CurrentValue;
+    PreviousTurnValue = CurrentTurnValue;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    MarioDrive(RobotContainer.OpStick);
+    MarioDriveRamp(RobotContainer.OpStick);
+    // if(RobotContainer.OpStick.getRawAxis(3) >= 0.2){
+    //   SetSpeed(0.5);
+    // }
+    // else if(RobotContainer.OpStick.getRawAxis(2) >= 0.2){
+    //   SetSpeed(-0.5);
+    // } else {
+    //   StopMotors();
+    // }
+    // SmartDashboard.putNumber("Gyro Roll", Gyro.getRoll());
+    // SmartDashboard.putNumber("Gyro Yaw", Gyro.getYaw());
+    // SmartDashboard.putNumber("Gyro Pitch", Gyro.getPitch());
   }
 
   public void RadiusTurningFinally(int Angle, double Speed, double Radius, String Direction){

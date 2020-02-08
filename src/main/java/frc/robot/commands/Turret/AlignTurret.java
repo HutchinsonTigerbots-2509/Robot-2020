@@ -7,75 +7,78 @@
 
 package frc.robot.commands.Turret;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Vision;
-import frc.robot.VariableVault;
-import frc.robot.subsystems.Shooter;
+import frc.robot.Constants;
+import frc.robot.subsystems.Turret;
 
 public class AlignTurret extends CommandBase {
   private final Vision sVision;
-  private final Shooter sShooter;
+  private final Turret sTurret;
   private double TargetX;
   private double Speed;
   private boolean Aligned;
+  private double TargetDegrees;
 
 
   /**
    * Creates a new AlignTurret.
    */
-  public AlignTurret(Vision pVision, Shooter pShooter) {
+  public AlignTurret(Vision pVision, Turret pTurret) {
     sVision = pVision;
-    sShooter = pShooter;
+    sTurret = pTurret;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sShooter);
+    addRequirements(sTurret);
     addRequirements(sVision);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putBoolean("Align Target", true);
     TargetX = sVision.getTargetX();
     Aligned = false;
+    TargetDegrees = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     TargetX = sVision.getTargetX();
-    // Speed = Math.max(TargetX * 0.0002, Constants.kTurretMinVoltage);
-    if(TargetX < 4 && TargetX > -4){
-      Speed = 0.01;
-    } else if (TargetX < 6 && TargetX > -6){
-      Speed = 0.03;
-    } else if (TargetX < 13 && TargetX > -13) {
-      Speed = 0.07;
-    } else {
-      Speed = 0.12;
-    }
-
-    if(TargetX > 2.5){
-      sShooter.TurnLeft(Speed);
+    // Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
+    if(TargetX > TargetDegrees + 6){
+      Speed = Math.max(TargetX * 0.2, Constants.kTurretMinVoltage);
+      sTurret.TurnLeft(Speed);
       Aligned = false;
-    } else if(TargetX < -2.5){
-      sShooter.TurnRight(Speed);
+    } else if(TargetX < TargetDegrees - 6){
+      Speed = Math.max(TargetX * 0.2, Constants.kTurretMinVoltage);
+      sTurret.TurnRight(Speed);
+      Aligned = false;
+    } else if(TargetX > TargetDegrees + 1.5){ //2
+      Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
+      sTurret.TurnLeft(Speed);
+      Aligned = false;
+    } else if(TargetX < TargetDegrees - 1.5){ //-2
+      Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
+      sTurret.TurnRight(Speed);
       Aligned = false;
     } else {
-      sShooter.StopTurretMotor();
+      sTurret.StopTurretMotor();
       Aligned = true;
-
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    sShooter.StopTurretMotor();
+    sTurret.StopTurretMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Aligned = true){
+    if (Aligned == true){
       // return true;
       return false;
     } else {

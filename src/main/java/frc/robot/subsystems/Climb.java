@@ -8,15 +8,15 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.VariableVault;
+import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climb extends SubsystemBase {
 
-  private static WPI_TalonSRX ClimbMotor1 = new WPI_TalonSRX(VariableVault.kClimbMotor1ID);
-  private static WPI_TalonSRX ClimbMotor2 = new WPI_TalonSRX(VariableVault.kClimbMotor2ID);
-  private static WPI_TalonSRX ClimbMover = new WPI_TalonSRX(VariableVault.kClimbMoverID);
+  private static WPI_TalonSRX ClimbMotor1 = new WPI_TalonSRX(Constants.kClimbMotor1ID);
+  private static WPI_TalonSRX ClimbMotor2 = new WPI_TalonSRX(Constants.kClimbMotor2ID);
+  private static WPI_TalonSRX ClimbMover = new WPI_TalonSRX(Constants.kClimbMoverID);
   
   /**
    * Creates a new Climb.

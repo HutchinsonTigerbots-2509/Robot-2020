@@ -7,47 +7,49 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.wpilibj.VictorSP;
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.VariableVault;
-import frc.robot.RobotContainer;
-
 
 public class Shooter extends SubsystemBase {
-  
-  private final VictorSP TurretMotor = new VictorSP(VariableVault.kTurretMotorID);
-  private static WPI_TalonSRX LeftShooterMotor = new WPI_TalonSRX(VariableVault.kLeftShooterMotorID);
-  private static WPI_TalonSRX RightShooterMotor = new WPI_TalonSRX(VariableVault.kRightShooterMotorID);
+  private static WPI_TalonSRX ShooterMotorMaster = new WPI_TalonSRX(Constants.kShooterMotorMasterID);
+  private static WPI_TalonSRX ShooterMotorSlave = new WPI_TalonSRX(Constants.kShooterMotorSlaveID);
   /**
-   * Creates a new Turret.
+   * Creates a new Shooter.
    */
   public Shooter() {
-
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Velocity? (1)", ShooterMotorMaster.getSelectedSensorVelocity());
+    // SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
+    SmartDashboard.putNumber("RPM? (1)", (ShooterMotorMaster.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
+    SmartDashboard.putNumber("Encoder", ShooterMotorMaster.getSelectedSensorPosition());
+    // SmartDashboard.putNumber("RPM? (2)", (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);
+    // SmartDashboard.putNumber("RPM? (Average)", ((ShooterMotor1.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) + (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation)) * 300);
     // This method will be called once per scheduler run
-    if(RobotContainer.OpStick.getRawAxis(4) < -0.5){
-      TurnLeft(0.15);
-    } else if (RobotContainer.OpStick.getRawAxis(4) > 0.5){
-      TurnRight(0.15);
-    } else {
-      StopTurretMotor();
-    }
   }
 
-  public void TurnLeft(double pSpeed) {
-    TurretMotor.set(pSpeed);
+  public int GetRPM(){
+    return (ShooterMotorMaster.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation;
   }
 
-  public void TurnRight(double pSpeed){
-    TurretMotor.set(-pSpeed);
+  public void ShooterForward(double pSpeed){
+    ShooterMotorMaster.set(pSpeed);
+    ShooterMotorSlave.set(pSpeed);
   }
 
-  public void StopTurretMotor(){
-    TurretMotor.set(0);
+  public void ShooterReverse(){
+    ShooterMotorMaster.set(-1);
+    ShooterMotorSlave.set(-1);
   }
+
+  public void StopShooter(){
+    ShooterMotorMaster.set(0);
+    ShooterMotorSlave.set(0);
+  }
+
 }

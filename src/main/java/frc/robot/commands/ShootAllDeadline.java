@@ -5,25 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Drivetrain;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Conveyor;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class DriveToDistance extends ParallelRaceGroup {
+public class ShootAllDeadline extends ParallelDeadlineGroup {
   /**
-   * Creates a new DriveToDistance.
+   * Creates a new ShootAllDeadline.
    */
-
-   // Moves the robot a distance in inches
-  public DriveToDistance(Drivetrain pDrivetrain, double pDistance) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new DrivetrainLeftPosition((int) (pDistance * Constants.kDrivetrainTicksPerInch)),
-    new DrivetrainRightPosition((int)(pDistance * Constants.kDrivetrainTicksPerInch)));
+  public ShootAllDeadline(Shooter pShooter, Conveyor pConveyor, double pTime) {
+    // Add your commands in the super() call.  Add the deadline first.
+    super(
+        new WaitCommand(pTime),
+        new RunShooterMax(pShooter),
+        new RunConveyorMax(pConveyor)
+    );
   }
 }

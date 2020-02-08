@@ -5,58 +5,45 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Drivetrain;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import com.ctre.phoenix.motorcontrol.ControlMode;
+import frc.robot.subsystems.Conveyor;
 
-// THIS COMMAND SHOULD ONLY BE RUN BY THE DriveToDistance COMMAND GROUP!!!
-// DO NOT RUN IT ON ITS OWN!!!
-public class DrivetrainRightPosition extends CommandBase {
-  private static int Ticks;
+public class RunConveyorMax extends CommandBase {
+  private static Conveyor sConveyor;
   /**
-   * Creates a new DrivetrainFrontRightPosition.
+   * Creates a new RunConveyorMax.
    */
-  public DrivetrainRightPosition(int pTicks) {
-    Ticks = pTicks;
+  public RunConveyorMax(Conveyor pConveyor) {
+    sConveyor = pConveyor;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sConveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Encoders are reset in the DrivetrainFrontLeftPosition command
+    sConveyor.CanSensorMove = false;
+    sConveyor.FullConveyorForward(1, 0.9);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.sDrivetrain.RightFront.set(ControlMode.Position, Ticks);
-    RobotContainer.sDrivetrain.RightRear.set(ControlMode.Follower, Constants.kRightFrontID);
+    sConveyor.FullConveyorForward(1, 0.9);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    sConveyor.StopMotors();
+    sConveyor.CanSensorMove = true;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Ticks > 0){
-      if(RobotContainer.sDrivetrain.RightFront.getSelectedSensorPosition() >= Ticks){
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if(RobotContainer.sDrivetrain.RightFront.getSelectedSensorPosition() <= Ticks){
-        return true;
-      } else {
-        return false;
-      }
-    }
+    return false;
   }
 }

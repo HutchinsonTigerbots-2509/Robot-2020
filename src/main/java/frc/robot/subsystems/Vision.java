@@ -8,23 +8,22 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.VariableVault;
+import frc.robot.Constants;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Vision extends SubsystemBase {
   // The Network Table contains all values relevant to working with vision
-  private NetworkTable mLimelightTable = NetworkTableInstance.getDefault().getTable(VariableVault.kLimelightNetworkID);
+  private NetworkTable mLimelightTable = NetworkTableInstance.getDefault().getTable(Constants.kLimelightNetworkID);
   // Network Table entry variables to hold data in the form of a NetworkTableEntry
-  private NetworkTableEntry mTableX = mLimelightTable.getEntry(VariableVault.kLimelightTargetXID);
-  private NetworkTableEntry mTableY = mLimelightTable.getEntry(VariableVault.kLimelightTargetYID);
-  private NetworkTableEntry mTableSkew = mLimelightTable.getEntry(VariableVault.kLimelightTargetSkewID);
-  private NetworkTableEntry mTableArea = mLimelightTable.getEntry(VariableVault.kLimelightTargetAreaID);
-  private NetworkTableEntry mTableVert = mLimelightTable.getEntry(VariableVault.kLimelightTargetVertID);
-  private NetworkTableEntry mTableHor = mLimelightTable.getEntry(VariableVault.kLimelightTargetHorID);
+  private NetworkTableEntry mTableX = mLimelightTable.getEntry(Constants.kLimelightTargetXID);
+  private NetworkTableEntry mTableY = mLimelightTable.getEntry(Constants.kLimelightTargetYID);
+  private NetworkTableEntry mTableSkew = mLimelightTable.getEntry(Constants.kLimelightTargetSkewID);
+  private NetworkTableEntry mTableArea = mLimelightTable.getEntry(Constants.kLimelightTargetAreaID);
+  private NetworkTableEntry mTableVert = mLimelightTable.getEntry(Constants.kLimelightTargetVertID);
+  private NetworkTableEntry mTableHor = mLimelightTable.getEntry(Constants.kLimelightTargetHorID);
   //private NetworkTableEntry mTableCorners = mLimelightTable.getEntry("tcornx");
-  // private NetworkTableEntry mTableTargetFound = mLimelightTable.getEntry(VariableVault.kLimelightTargetID);
+  // private NetworkTableEntry mTableTargetFound = mLimelightTable.getEntry(Constants.kLimelightTargetID);
   
   // Variables to hold Network Table values in the form of Doubles
   private double mTargetX = 0;
@@ -33,65 +32,82 @@ public class Vision extends SubsystemBase {
   private double mTargetArea = 0;
   private double mTargetVert = 0;
   private double mTargetHor = 0;
+
+  private boolean TargetPipeline = true;
   // private double mTargetFound = 0;
 
   /**
    * Creates a new Vision.
    */
   public Vision() {
-    mLimelightTable.getEntry("ledMode").setNumber(VariableVault.kLimelightLED);
-    mLimelightTable.getEntry("camMode").setNumber(VariableVault.kLimelightMode);
-    mLimelightTable.getEntry("stream").setNumber(VariableVault.kLimelightStream);
-    mLimelightTable.getEntry("pipeline").setNumber(VariableVault.kLimelightStartingPipeline);
-    SmartDashboard.putNumber("here",2);
+    mLimelightTable.getEntry("ledMode").setNumber(Constants.kLimelightLED);
+    mLimelightTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
+    mLimelightTable.getEntry("stream").setNumber(Constants.kLimelightStream);
+    mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightStartingPipeline);
   }
 
   // Returns the horizontal offset from crosshair to target (+/- 27 degrees)
   public double getTargetX() {
-    mTableX = mLimelightTable.getEntry(VariableVault.kLimelightTargetXID); 
+    mTableX = mLimelightTable.getEntry(Constants.kLimelightTargetXID); 
     mTargetX = mTableX.getDouble(0.0); 
     return mTargetX; 
   }
 
   // Returns the vertical offset from crosshair to target (+/- 20.5 degrees)
   public double getTargetY() {
-    mTableY = mLimelightTable.getEntry(VariableVault.kLimelightTargetYID);
+    mTableY = mLimelightTable.getEntry(Constants.kLimelightTargetYID);
     mTargetY = mTableY.getDouble(0.0);
     return mTargetY;
   }
 
   // Returns target area (0-100 % of image)
   public double getTargetArea() {
-    mTableArea = mLimelightTable.getEntry(VariableVault.kLimelightTargetAreaID);
+    mTableArea = mLimelightTable.getEntry(Constants.kLimelightTargetAreaID);
     mTargetArea = mTableArea.getDouble(0.0);
     return mTargetArea;
   }
 
   // Returns the target skew/rotation (-90 to 0 degrees)
   public double getTargetSkew() {
-    mTableSkew = mLimelightTable.getEntry(VariableVault.kLimelightTargetSkewID);
+    mTableSkew = mLimelightTable.getEntry(Constants.kLimelightTargetSkewID);
     mTargetSkew = mTableSkew.getDouble(0.0);
     return mTargetSkew;
   }
 
   // Returns the vertical sidelength of the bounding box (0-320 pixels)
   public double getTargetVert() {
-    mTableVert = mLimelightTable.getEntry(VariableVault.kLimelightTargetVertID);
+    mTableVert = mLimelightTable.getEntry(Constants.kLimelightTargetVertID);
     mTargetVert = mTableVert.getDouble(0.0);
     return mTargetVert;
   }
 
   // Returns the horizontal sidelength of the bounding box (0-320 pixels)
   public double getTargetHor() {
-    mTableHor = mLimelightTable.getEntry(VariableVault.kLimelightTargetHorID);
+    mTableHor = mLimelightTable.getEntry(Constants.kLimelightTargetHorID);
     mTargetHor = mTableHor.getDouble(0.0);
     return mTargetHor;
   }
 
-  // Returns the estimated distance from the target in inches
-  // Uses the formula D=177*(Target Area)^-0.56
-  public double getEstimatedDistance() {
-    return (177 * Math.pow(getTargetArea(), -0.56));
+  public void SwitchToDriverPipeline(){
+    mLimelightTable.getEntry("camMode").setNumber(1);
+    mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightDriverPipeline);
+  }
+
+  public void SwitchToTargetPipeline(){
+    mLimelightTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
+    mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightStartingPipeline);
+  }
+
+  public void SwitchPipeline(){
+    if(TargetPipeline){
+      mLimelightTable.getEntry("camMode").setNumber(1);
+      mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightDriverPipeline);
+      TargetPipeline = false;
+    } else {
+      mLimelightTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
+      mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightStartingPipeline);
+      TargetPipeline = true;
+    }
   }
 
 
@@ -102,10 +118,6 @@ public class Vision extends SubsystemBase {
     // Puts all the vision numbers on the Shuffleboard
     SmartDashboard.putNumber("Target X", getTargetX());
     SmartDashboard.putNumber("Target Y", getTargetY());
-    SmartDashboard.putNumber("Target Area", getTargetArea());
     SmartDashboard.putNumber("Target Skew", getTargetSkew());
-    SmartDashboard.putNumber("Target Vert", getTargetVert());
-    SmartDashboard.putNumber("Target Hor", getTargetHor());  
-    SmartDashboard.putNumber("Estimated Distance", getEstimatedDistance());
   }
 }
