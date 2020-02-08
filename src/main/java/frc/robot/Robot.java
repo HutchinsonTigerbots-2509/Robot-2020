@@ -15,7 +15,9 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.DriveToDistance;
 import frc.robot.commands.OPDrive;
 import frc.robot.commands.RadiusTurnCommand;
 import frc.robot.commands.RadiusTurning;
@@ -42,6 +44,7 @@ public class Robot extends TimedRobot {
   public static OPDrive Driver;
   public static SequentialCommandGroup RTT;
   public static Joystick stick;
+  public static ParallelRaceGroup DTD;
 
   // public static Compressor comp = new Compressor();
   public static AHRS DrivetrainGyro = new AHRS(SPI.Port.kMXP);
@@ -59,6 +62,7 @@ public class Robot extends TimedRobot {
     Drivetrain DT = new Drivetrain();
     // RTurning = new RadiusTurning(DT);
     RTT = new RadiusTurningTester(DT);
+    // DTD = new DriveToDistance(DT, 20);
     // RTT = new SequentialCommandGroup(new RadiusTurnCommand(DT, 45, .1, 3.0, "Right"), 
     // new RadiusTurnCommand(DT, 45, .1, 3.0, "Left"));
     stick = new Joystick(0);
@@ -107,6 +111,7 @@ public class Robot extends TimedRobot {
     // comp.stop();
     DrivetrainGyro.reset();
     m_autonomousCommand = null;
+    // DTD.schedule();
     RTT.schedule();
     // TURNER.schedule();
 

@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -21,21 +22,22 @@ public class DrivetrainLeftPosition extends CommandBase {
    * Creates a new DrivetrainFrontLeftPosition.
    */
   public DrivetrainLeftPosition(int pTicks) {
-    Ticks = pTicks;
+    Ticks = -pTicks;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putNumber("Left Goal", Ticks);
     RobotContainer.sDrivetrain.ResetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.sDrivetrain.LeftFront.set(ControlMode.Position, Ticks);
-    RobotContainer.sDrivetrain.LeftRear.set(ControlMode.Follower, Constants.kLeftFrontID);
+    RobotContainer.sDrivetrain.LeftRear.set(ControlMode.Position, Ticks);
+    RobotContainer.sDrivetrain.LeftFront.set(ControlMode.Follower, Constants.kLeftFrontID);
   }
 
   // Called once the command ends or is interrupted.
@@ -48,13 +50,13 @@ public class DrivetrainLeftPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     if(Ticks > 0){
-      if(RobotContainer.sDrivetrain.LeftFront.getSelectedSensorPosition() >= Ticks){
+      if(RobotContainer.sDrivetrain.LeftRear.getSelectedSensorPosition() >= Ticks){
         return true;
       } else {
         return false;
       }
     } else {
-      if(RobotContainer.sDrivetrain.LeftFront.getSelectedSensorPosition() <= Ticks){
+      if(RobotContainer.sDrivetrain.LeftRear.getSelectedSensorPosition() <= Ticks){
         return true;
       } else {
         return false;
