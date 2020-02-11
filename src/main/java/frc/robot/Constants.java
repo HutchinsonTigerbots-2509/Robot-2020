@@ -30,6 +30,7 @@ public final class Constants {
     public static int kClimbMotor1ID;
     public static int kClimbMotor2ID;
     public static int kClimbMoverID;
+    public static int kClimbPistonID;
 
     public static double kDrivetrainPGain = 0.15;
     public static double kDrivetrainIGain = 0.0;
