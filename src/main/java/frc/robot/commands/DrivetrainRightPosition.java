@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -27,14 +28,15 @@ public class DrivetrainRightPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putNumber("Right Goal", Ticks);
     // Encoders are reset in the DrivetrainFrontLeftPosition command
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.sDrivetrain.RightFront.set(ControlMode.Position, Ticks);
-    RobotContainer.sDrivetrain.RightRear.set(ControlMode.Follower, Constants.kRightFrontID);
+    RobotContainer.sDrivetrain.RightRear.set(ControlMode.Position, Ticks);
+    RobotContainer.sDrivetrain.RightFront.set(ControlMode.Follower, Constants.kRightFrontID);
   }
 
   // Called once the command ends or is interrupted.
@@ -46,13 +48,13 @@ public class DrivetrainRightPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     if(Ticks > 0){
-      if(RobotContainer.sDrivetrain.RightFront.getSelectedSensorPosition() >= Ticks){
+      if(RobotContainer.sDrivetrain.RightRear.getSelectedSensorPosition() >= Ticks){
         return true;
       } else {
         return false;
       }
     } else {
-      if(RobotContainer.sDrivetrain.RightFront.getSelectedSensorPosition() <= Ticks){
+      if(RobotContainer.sDrivetrain.RightRear.getSelectedSensorPosition() <= Ticks){
         return true;
       } else {
         return false;

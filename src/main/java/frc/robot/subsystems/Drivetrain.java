@@ -30,7 +30,7 @@ public class Drivetrain extends SubsystemBase {
   // public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
   // public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
 
-  public static WPI_TalonFX LeftFront = new WPI_TalonFX(Constants.kLeftFrontID);
+  public final WPI_TalonFX LeftFront = new WPI_TalonFX(Constants.kLeftFrontID);
   public final WPI_TalonFX LeftRear = new WPI_TalonFX(Constants.kLeftRearID);
   public final WPI_TalonFX RightFront = new WPI_TalonFX(Constants.kRightFrontID);
   public final WPI_TalonFX RightRear = new WPI_TalonFX(Constants.kRightRearID);
@@ -65,6 +65,8 @@ public class Drivetrain extends SubsystemBase {
     RightRear.config_kP(0,Constants.kDrivetrainPGain);
     RightRear.config_kI(0, Constants.kDrivetrainIGain);
     RightRear.config_kD(0, Constants.kDrivetrainDGain);
+
+    ResetEncoders();
   }
 
   public void TurnLeft(double pSpeed) {
@@ -86,10 +88,29 @@ public class Drivetrain extends SubsystemBase {
    * @param stick_2
    */
   public void MarioDrive(Joystick stick) {
-		double SpeedMulti = 0.7;
-		double TurnSpeedMulti = 0.5;
+		// double SpeedMulti = 0.7;
+		// double TurnSpeedMulti = 0.5;
 		
-		Drive.arcadeDrive(stick.getRawAxis(1)*SpeedMulti, stick.getRawAxis(2) * -TurnSpeedMulti);
+    // Drive.arcadeDrive(stick.getRawAxis(1)*SpeedMulti, stick.getRawAxis(2) * -TurnSpeedMulti);
+    double SpeedMulti = .7;
+		double TurnSpeedMulti = 0.4;
+		double Speed = 0.0;
+		
+		if(stick.getRawAxis(3) > 0) {
+			Speed = stick.getRawAxis(3) * -SpeedMulti;
+		} else if(stick.getRawAxis(2) > 0) {
+			Speed = stick.getRawAxis(2)  * SpeedMulti;
+		}
+		
+		if(Speed > 0.05) {
+		  Drive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
+		}
+		else if (Speed < -0.05) {
+      Drive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
+    }
+    else {
+      Drive.arcadeDrive(0, stick.getRawAxis(0) * -TurnSpeedMulti);
+    }
   }
 
   public void MoveWithTicks(double ticks){
@@ -197,9 +218,9 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // MarioDrive(RobotContainer.OpStick);
-    SmartDashboard.putNumber("RightFrontTicks", RightFront.getSelectedSensorPosition());
-    SmartDashboard.putNumber("RightFront Revolutions", ticksToRevolutions(RightFront.getSelectedSensorPosition()));
+    MarioDrive(RobotContainer.OpStick);
+    SmartDashboard.putNumber("Left Drive Encoder", LeftRear.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Right Drive Encoder", RightRear.getSelectedSensorPosition());
   }
 
   public void RadiusTurningFinally(int Angle, double Speed, double Radius, String Direction){
