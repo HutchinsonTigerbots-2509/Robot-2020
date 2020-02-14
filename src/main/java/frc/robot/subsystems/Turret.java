@@ -10,7 +10,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -20,8 +22,13 @@ public class Turret extends SubsystemBase {
   
   // private final VictorSP TurretMotor = new VictorSP(Constants.kTurretMotorID);
   private final WPI_TalonSRX TurretMotor = new WPI_TalonSRX(Constants.kTurretMotorID);
-  private final DigitalInput LeftLimit = new DigitalInput(1);
-  private final DigitalInput RightLimit = new DigitalInput(0);
+  private final AnalogInput TurretLimit = new AnalogInput(Constants.kTurretLimitID);
+  private boolean LeftLimit = false;
+  private boolean RightLimit = false;
+  private boolean Direction; // True = Right, false = left
+
+  // private final DigitalInput LeftLimit = new DigitalInput(1);
+  // private final DigitalInput RightLimit = new DigitalInput(0);
   /**
    * Creates a new Turret.
    */
@@ -34,41 +41,72 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(RobotContainer.CoOpStick.getRawAxis(4) < -0.2){
+    GetLimitValue();
+
+    SmartDashboard.putBoolean("Left Limit", LeftLimit);
+    SmartDashboard.putBoolean("Right Limit", RightLimit);
+    // SmartDashboard.putBoolean("Direction", Direction);
+    // SmartDashboard.putNumber("Turret Limit", TurretLimit.getVoltage());
+
+    if(RobotContainer.CoOpStick.getRawAxis(4) < -0.2 && !LeftLimit){
       TurnLeft(0.5);
-    } else if (RobotContainer.CoOpStick.getRawAxis(4) > 0.2){
+      UpdateDirection(false); // True = Right, false = left
+    } else if (RobotContainer.CoOpStick.getRawAxis(4) > 0.2 && !RightLimit){
       TurnRight(0.5);
+      UpdateDirection(true); // True = Right, false = left
     } else {
       StopTurretMotor();
     }
   }
 
-  public boolean GetLeftLimit(){
-    return LeftLimit.get();
-  }
-
-  public boolean GetRightLimit(){
-    return RightLimit.get();
-  }
-
   public void TurnLeft(double pSpeed) {
-    if(LeftLimit.get()) {
+    if(LeftLimit) {
       TurretMotor.set(0.0);
     }
     else {
       TurretMotor.set(pSpeed);
+      UpdateDirection(false); // True = Right, false = left
     }
   }
 
   public void TurnRight(double pSpeed){
-    if(RightLimit.get()){
+    if(RightLimit){
       TurretMotor.set(0.0);
     } else {
       TurretMotor.set(-pSpeed);
+      UpdateDirection(true); // True = Right, false = left
     }
   }
 
   public void StopTurretMotor(){
     TurretMotor.set(0);
   }
+
+  // Updates the Direction of the turret motor if the limit switch is not triggered
+  // True = Right, false = left
+  private void UpdateDirection(boolean pDirection){
+    if(!LeftLimit && !RightLimit){
+      Direction = pDirection;
+    }
+  }
+
+  private void GetLimitValue(){
+    if(TurretLimit.getVoltage() > 2 && Direction == false){
+      LeftLimit = true;
+    } else if(TurretLimit.getVoltage() > 2 && Direction == true){
+      RightLimit = true;
+    } else {
+      LeftLimit = false;
+      RightLimit = false;
+    }
+  }
+
+  
+  // public boolean GetLeftLimit(){
+  //   return LeftLimit.get();
+  // }
+
+  // public boolean GetRightLimit(){
+  //   return RightLimit.get();
+  // }
 }

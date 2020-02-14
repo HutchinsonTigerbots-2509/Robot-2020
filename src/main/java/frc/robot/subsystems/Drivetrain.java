@@ -25,15 +25,15 @@ import frc.robot.RobotContainer;
 
 public class Drivetrain extends SubsystemBase {
   
-  public final WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
-  public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
-  public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
-  public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
+  // public final WPI_TalonSRX LeftFront = new WPI_TalonSRX(Constants.kLeftFrontID);
+  // public final WPI_VictorSPX LeftRear = new WPI_VictorSPX(Constants.kLeftRearID);
+  // public final WPI_TalonSRX RightFront = new WPI_TalonSRX(Constants.kRightFrontID);
+  // public final WPI_VictorSPX RightRear = new WPI_VictorSPX(Constants.kRightRearID);
 
-  // public final WPI_TalonFX LeftFront = new WPI_TalonFX(Constants.kLeftFrontID);
-  // public final WPI_TalonFX LeftRear = new WPI_TalonFX(Constants.kLeftRearID);
-  // public final WPI_TalonFX RightFront = new WPI_TalonFX(Constants.kRightFrontID);
-  // public final WPI_TalonFX RightRear = new WPI_TalonFX(Constants.kRightRearID);
+  public final WPI_TalonFX LeftFront = new WPI_TalonFX(Constants.kLeftFrontID);
+  public final WPI_TalonFX LeftRear = new WPI_TalonFX(Constants.kLeftRearID);
+  public final WPI_TalonFX RightFront = new WPI_TalonFX(Constants.kRightFrontID);
+  public final WPI_TalonFX RightRear = new WPI_TalonFX(Constants.kRightRearID);
 
   public final SpeedControllerGroup Right = new SpeedControllerGroup(LeftFront, LeftRear);
   public final SpeedControllerGroup Left = new SpeedControllerGroup(RightFront, RightRear);
@@ -87,7 +87,7 @@ public class Drivetrain extends SubsystemBase {
    * @param stick_2
    */
   public void MarioDrive(Joystick stick) {
-		double SpeedMulti = .75;
+		double SpeedMulti = .5;
 		double TurnSpeedMulti = 0.4;
 		double Speed = 0.0;
 		
@@ -122,11 +122,11 @@ public class Drivetrain extends SubsystemBase {
   private double TurnChange = 0;
 
   public void MarioDriveRamp(Joystick stick){
-    double SpeedMulti = 0.8;
-    double TurnSpeedMulti = 0.8;
-    double ForwardGain = 0.028; //0.007
-    double ReverseGain = -0.7;
-    double ReverseTurnGain = -0.5;
+    double SpeedMulti = 0.65;
+    double TurnSpeedMulti = 0.65;
+    double ForwardGain = 0.027; //0.007
+    double ReverseGain = 0.1;
+    double ReverseTurnGain = 0.1;
     double Target = (stick.getRawAxis(1) * SpeedMulti);
     double TurnTarget = -(stick.getRawAxis(4) * TurnSpeedMulti);
 
@@ -138,43 +138,65 @@ public class Drivetrain extends SubsystemBase {
       TurnTarget = 0.0;
     }
 
+    // Change = -(ForwardGain * (Target -PreviousValue));
+    // TurnChange = -(ForwardGain * (TurnTarget - PreviousTurnValue));
+
+
     // Determines how much to add/subtract from the current voltage
     if (Target == 0.0) {
-      Change = (ReverseGain * PreviousValue);
+      Change = -(ReverseGain * (Target - PreviousValue));
     } else {
       Change = -(ForwardGain * (Target - PreviousValue));
     }
+
     if (TurnTarget == 0.0) {
-      TurnChange = (ReverseTurnGain * PreviousTurnValue);
+      TurnChange = -(ReverseTurnGain * (TurnTarget - PreviousTurnValue));
     } else {
       TurnChange = -(ForwardGain * (TurnTarget - PreviousTurnValue));
     }
 
     // Updates the values to give to the motors
-    CurrentValue = CurrentValue + Change;
-    CurrentTurnValue = CurrentTurnValue + TurnChange;
+    
+    CurrentValue = CurrentValue - Change;
+    CurrentTurnValue = CurrentTurnValue - TurnChange;
 
     // Sets the maximum output voltage to 1
-    if (CurrentValue > 1){
-      CurrentValue = 1;
-    } else if (CurrentValue < -1){
-      CurrentValue = -1;
-    }
-    if (CurrentTurnValue > 1){
-      CurrentTurnValue = 1;
-    } else if (CurrentTurnValue < -1){
-      CurrentTurnValue = -1;
-    }
+    // if(Target > 0 && CurrentValue < -Target){
+    //   CurrentValue = -Target;
+    // } else if (Target < 0 && CurrentValue > -Target){
+    //   CurrentValue = -Target;
+    // }
+    // if(TurnTarget > 0 && CurrentTurnValue < -TurnTarget){
+    //   CurrentTurnValue = -TurnTarget;
+    // } else if (TurnTarget < 0 && CurrentTurnValue > -TurnTarget){
+    //   CurrentTurnValue = -TurnTarget;
+    // }
+    // if (CurrentValue > 1){
+    //   CurrentValue = 1;
+    // } else if (CurrentValue < -1){
+    //   CurrentValue = -1;
+    // }
+    // if (CurrentTurnValue > 1){
+    //   CurrentTurnValue = 1;
+    // } else if (CurrentTurnValue < -1){
+    //   CurrentTurnValue = -1;
+    // }
 
     // Drives the motors
     if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
-      Drive.arcadeDrive(CurrentValue, CurrentTurnValue);
+      Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
     } else if (Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
-      Drive.arcadeDrive(0, CurrentTurnValue);
+      Drive.arcadeDrive(0, -CurrentTurnValue);
     } else {
       Drive.arcadeDrive(0, 0);
     }
 
+    // SmartDashboard.putNumber("Current Value", CurrentValue);
+    // SmartDashboard.putNumber("Target", Target);
+    // SmartDashboard.putNumber("Stick Value", stick.getRawAxis(1));
+    // SmartDashboard.putNumber("Change", Change);
+    // SmartDashboard.putNumber("Prev Value", PreviousValue);
+    
     PreviousValue = CurrentValue;
     PreviousTurnValue = CurrentTurnValue;
   }

@@ -8,18 +8,22 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
-  private static WPI_TalonSRX ShooterMotorMaster = new WPI_TalonSRX(Constants.kShooterMotorMasterID);
+  public static WPI_TalonSRX ShooterMotorMaster = new WPI_TalonSRX(Constants.kShooterMotorMasterID);
   private static WPI_TalonSRX ShooterMotorSlave = new WPI_TalonSRX(Constants.kShooterMotorSlaveID);
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
+    ShooterMotorMaster.setNeutralMode(NeutralMode.Coast);
+    ShooterMotorSlave.setNeutralMode(NeutralMode.Coast);
   }
 
   @Override
@@ -38,12 +42,12 @@ public class Shooter extends SubsystemBase {
   }
 
   public void ShooterForward(double pSpeed){
-    ShooterMotorMaster.set(pSpeed);
+    ShooterMotorMaster.set(-pSpeed);
     ShooterMotorSlave.set(pSpeed);
   }
 
   public void ShooterReverse(){
-    ShooterMotorMaster.set(-1);
+    ShooterMotorMaster.set(1);
     ShooterMotorSlave.set(-1);
   }
 

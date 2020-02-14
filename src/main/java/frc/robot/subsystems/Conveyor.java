@@ -33,7 +33,8 @@ public class Conveyor extends SubsystemBase {
     GetBottomSensorValue();
     if(CanSensorMove == true){
       if(GetTopSensorValue() == false && GetBottomSensorValue() == true){
-          FullConveyorForward(0.7, 1); //0.3, 0.6
+          // FullConveyorForward(0.6, 1); //0.3, 0.6
+          BottomConveyorForward(1);
       } else {
         if(GetBottomSensorValue() == true) {
           BottomConveyorForward(1); //0.6
@@ -55,7 +56,7 @@ public class Conveyor extends SubsystemBase {
   } 
 
   private boolean GetTopSensorValue(){
-    if(TopLightSensor.getVoltage() < 0.5){
+    if(TopLightSensor.getVoltage() < 0.15){
       SmartDashboard.putBoolean("Top Sensor", true);
       return true;
     } else{

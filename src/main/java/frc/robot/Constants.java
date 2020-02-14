@@ -47,14 +47,15 @@ public final class Constants {
 
     // Shooter
     public static int kTurretMotorID = 8;
+    public static int kTurretLimitID = 2;
     public static int kTopConveyorMotorID = 6;
     public static int kBottomConveyorMotorID = 7;
     public static int kIntakeMotorID = 9;
     public static double kTurretMinVoltage = 0.15;
     public static int kShooterMotorMasterID = 4;
     public static int kShooterMotorSlaveID = 5;
-    public static int kTopLightSensorID = 1;
-    public static int kBottomLightSensorID = 0;
+    public static int kTopLightSensorID = 0;
+    public static int kBottomLightSensorID = 1;
     public static int kColorMotorID = 10;
 
     public static int kShooterTicksPerRotation = 4096; // or 1024???

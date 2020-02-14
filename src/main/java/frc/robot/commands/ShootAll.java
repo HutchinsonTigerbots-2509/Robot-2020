@@ -31,11 +31,11 @@ public class ShootAll extends CommandBase {
   public void initialize() {
     ReadyToShoot = false;
     sShooter.ShooterForward(0.7);
-    if(sShooter.GetRPM() >= 3600 || sShooter.GetRPM() <= -3600){
+    // if(sShooter.GetRPM() >= 3600 || sShooter.GetRPM() <= -3600){
       sConveyor.FullConveyorForward(1, 0.8);
-    } else {
-      sConveyor.StopMotors();
-    }
+    // } else {
+    //   sConveyor.StopMotors();
+    // }
     sConveyor.CanSensorMove = false;
   }
 
