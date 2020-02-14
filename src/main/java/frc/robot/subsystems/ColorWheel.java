@@ -21,13 +21,12 @@ public class ColorWheel extends SubsystemBase {
    * Creates a new ColorWheel.
    */
   public ColorWheel() {
-
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // GetGameData();
+    GetGameData();
   }
 
   public void ColorWheelForward(){
@@ -59,6 +58,7 @@ public class ColorWheel extends SubsystemBase {
           SmartDashboard.putString("Color", "YELLOW");
           break;
         default :
+          SmartDashboard.putString("Color", "ERROR");
           break;
       }
     }

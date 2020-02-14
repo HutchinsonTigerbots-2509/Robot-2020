@@ -9,7 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
-
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climb extends SubsystemBase {
@@ -17,6 +18,7 @@ public class Climb extends SubsystemBase {
   private static WPI_TalonSRX ClimbMotor1 = new WPI_TalonSRX(Constants.kClimbMotor1ID);
   private static WPI_TalonSRX ClimbMotor2 = new WPI_TalonSRX(Constants.kClimbMotor2ID);
   private static WPI_TalonSRX ClimbMover = new WPI_TalonSRX(Constants.kClimbMoverID);
+  private static Relay ClimbPiston = new Relay(Constants.kClimbPistonID);
   
   /**
    * Creates a new Climb.
@@ -31,6 +33,14 @@ public class Climb extends SubsystemBase {
   public void climb(double speed) {
     ClimbMotor1.set(speed);
     ClimbMotor2.set(speed);
+  }
+
+  public void ExtendClimbPiston(){
+    ClimbPiston.set(Value.kForward);
+  }
+
+  public void RetractClimbPiston(){
+    ClimbPiston.set(Value.kReverse);
   }
 
   @Override
