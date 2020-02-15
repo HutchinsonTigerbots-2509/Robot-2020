@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -54,6 +55,11 @@ public class Shooter extends SubsystemBase {
   public void StopShooter(){
     ShooterMotorMaster.set(0);
     ShooterMotorSlave.set(0);
+  }
+
+  public void SetShooterVelocity(int RPM){
+    // ShooterMotorMaster.set(ControlMode.Velocity, 27307);// (RPM * Constants.kShooterTicksPerRotation) / 600);
+    // ShooterMotorSlave.set(ControlMode.Follower, Constants.kShooterMotorMasterID);
   }
 
 }

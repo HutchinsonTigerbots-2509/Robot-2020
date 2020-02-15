@@ -30,11 +30,11 @@ public class ColorWheel extends SubsystemBase {
   }
 
   public void ColorWheelForward(){
-    ColorWheelMotor.set(1);
+    ColorWheelMotor.set(0.5);
   }
 
   public void ColorWheelReverse(){
-    ColorWheelMotor.set(-1);
+    ColorWheelMotor.set(-0.5);
   }
 
   public void StopColorMotor(){

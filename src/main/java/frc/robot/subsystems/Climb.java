@@ -15,8 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climb extends SubsystemBase {
 
-  private static WPI_TalonSRX ClimbMotor1 = new WPI_TalonSRX(Constants.kClimbMotor1ID);
-  private static WPI_TalonSRX ClimbMotor2 = new WPI_TalonSRX(Constants.kClimbMotor2ID);
+  private static WPI_TalonSRX ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
   private static WPI_TalonSRX ClimbMover = new WPI_TalonSRX(Constants.kClimbMoverID);
   private static Relay ClimbPiston = new Relay(Constants.kClimbPistonID);
   
@@ -26,13 +25,12 @@ public class Climb extends SubsystemBase {
   public Climb() {
   }
 
-  public void move(double speed) {
+  public void Creep(double speed) {
     ClimbMover.set(speed);
   }
 
   public void climb(double speed) {
-    ClimbMotor1.set(speed);
-    ClimbMotor2.set(speed);
+    ClimbMotor.set(speed);
   }
 
   public void ExtendClimbPiston(){

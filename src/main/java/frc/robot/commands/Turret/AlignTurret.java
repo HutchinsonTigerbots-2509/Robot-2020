@@ -48,18 +48,18 @@ public class AlignTurret extends CommandBase {
     TargetX = sVision.getTargetX();
     // Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
     if(TargetX > TargetDegrees + 6){
-      Speed = Math.max(TargetX * 0.2, Constants.kTurretMinVoltage);
+      Speed = Math.max(TargetX * 0.1, Constants.kTurretMinVoltage);
       sTurret.TurnLeft(Speed);
       Aligned = false;
     } else if(TargetX < TargetDegrees - 6){
-      Speed = Math.max(TargetX * 0.2, Constants.kTurretMinVoltage);
+      Speed = Math.max(TargetX * 0.1, Constants.kTurretMinVoltage);
       sTurret.TurnRight(Speed);
       Aligned = false;
-    } else if(TargetX > TargetDegrees + 1.5){ //2
+    } else if(TargetX > TargetDegrees + 0.75){ //2
       Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
       sTurret.TurnLeft(Speed);
       Aligned = false;
-    } else if(TargetX < TargetDegrees - 1.5){ //-2
+    } else if(TargetX < TargetDegrees - 2){ //-2
       Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
       sTurret.TurnRight(Speed);
       Aligned = false;

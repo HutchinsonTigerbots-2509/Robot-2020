@@ -27,23 +27,22 @@ public final class Constants {
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
     // Climber
-    public static int kClimbMotor1ID;
-    public static int kClimbMotor2ID;
-    public static int kClimbMoverID;
+    public static int kClimbMotorID = 11;
+    public static int kClimbMoverID = 12;
     public static int kClimbPistonID;
 
     public static double kDrivetrainPGain = 0.15;
     public static double kDrivetrainIGain = 0.0;
     public static double kDrivetrainDGain = 4.0;
-    public static double kDrivetrainMinVoltage = 0.2;
+    public static double kDrivetrainMinVoltage = 0.4;//0.2
 
     //RobotThings
     public static double kWheelGap = 22;
-    public static double kWheelDiameter = 7;
+    public static double kWheelDiameter = 6;
 
     //EncoderTicks
     public static double kTicksPerRevolution = 256;
-    public static int kDrivetrainTicksPerRevolution = 2048; // Using Talon FX motor controllers / encoders
+    public static double kDrivetrainTicksPerRevolution = 2048 * 12.70654297; // Using Talon FX motor controllers / encoders
     public static double kDrivetrainTicksPerInch = kDrivetrainTicksPerRevolution / (kWheelDiameter * Math.PI);
 
     // Shooter

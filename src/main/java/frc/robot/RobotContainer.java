@@ -37,11 +37,15 @@ import frc.robot.subsystems.Intake;
 import frc.robot.commands.ColorWheelForward;
 import frc.robot.commands.ColorWheelReverse;
 import frc.robot.commands.SwitchPipeline;
+import frc.robot.commands.Drivetrain.DriveAutoTime;
 import frc.robot.commands.Drivetrain.DriveToDistance;
 import frc.robot.commands.Drivetrain.MoveDistanceDJ;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.Climb;
+import frc.robot.commands.RunShooterRPM;
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -59,6 +63,10 @@ public class RobotContainer {
   private static JoystickButton ColorWheelForward;
   private static JoystickButton ColorWheelReverse;
   private static JoystickButton SwitchPipelineButton;
+  private static JoystickButton ExtendClimberButton;
+  private static JoystickButton RetractClimberButton;
+  private static JoystickButton CreepLeftButton;
+  private static JoystickButton CreepRightButton;
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
   public static Drivetrain sDrivetrain = new Drivetrain();
@@ -68,6 +76,7 @@ public class RobotContainer {
   public static Shooter sShooter = new Shooter();
   public static Intake sIntake = new Intake();
   public static ColorWheel sColorWheel = new ColorWheel();
+  public static Climb sClimb = new Climb();
 
   
    // Joysticks - Joysticks are made here
@@ -80,13 +89,47 @@ public class RobotContainer {
   //    new AlignTurretAutonomous(sVision, sTurret),
   //    new ShootAllAutonomous(sShooter, sConveyor, 4000)
   //  );
-  private ParallelCommandGroup AutoCommands = new  ParallelCommandGroup(
-    new SequentialCommandGroup(
-      new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(1),
-      new AlignTurret(sVision, sTurret)),
-    new SequentialCommandGroup(
-      new MoveDistanceDJ(25, 0.5)),
-      new ShootAllAutonomous(sShooter, sConveyor, 4000));
+  // private ParallelCommandGroup AutoCommands = new  ParallelCommandGroup(
+  //   new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(4)
+  // );
+
+  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
+  
+
+  // AUTONOMOUS 1A - START RIGHT OF TARGET, STRAIGHT BACK INTO TRENCH
+  // NO INTAKE!!!!!!!!
+  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
+  //   new SequentialCommandGroup(
+  //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(1),
+  //     new AlignTurret(sVision, sTurret)),
+  //   new ShootAllAutonomous(sShooter, sConveyor, 4000),
+  //   new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(5));
+
+
+  // AUTONOMOUS 2A - START IN FRONT OF TARGET, ANGLED TOWARD CONTROL PANEL
+  // NO INTAKE!!!!!!!!!
+  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
+  //   new SequentialCommandGroup(
+  //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.6),
+  //     new AlignTurret(sVision, sTurret)),
+  //   new SequentialCommandGroup(
+  //     new ShootAllAutonomous(sShooter, sConveyor, 4000).withTimeout(4),
+  //     new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(5),
+  //     new ShootAllAutonomous(sShooter, sConveyor, 4000)
+  //   ));
+    
+    
+    
+      // new RunCommand(() -> sShooter.ShooterForward(0.5)).withTimeout(4),
+    // new SequentialCommandGroup(
+    //   new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(4),
+    //   new RunCommand(() -> sConveyor.ConveyorReverse()).withTimeout(0.1),
+    //   new ShootAllAutonomous(sShooter, sConveyor, 4000)));
+
+  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
+  //   new DriveAutoTime(sDrivetrain, 0.5, 2));
+
+    
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -120,15 +163,32 @@ public class RobotContainer {
   RunShooterMaxButton = new JoystickButton(CoOpStick, 3);
   RunShooterMaxButton.toggleWhenPressed(new RunShooterMax(sShooter));
 
-  ColorWheelForward = new JoystickButton(OpStick, 2);
+  ColorWheelForward = new JoystickButton(OpStick, 5);
   ColorWheelForward.whileHeld(new ColorWheelForward(sColorWheel));
 
-  ColorWheelReverse = new JoystickButton(OpStick, 4);
+  ColorWheelReverse = new JoystickButton(OpStick, 6);
   ColorWheelReverse.whileHeld(new ColorWheelReverse(sColorWheel));
 
   SwitchPipelineButton = new JoystickButton(CoOpStick, 4);
   SwitchPipelineButton.whenPressed(new SwitchPipeline(sVision));
+
+  ExtendClimberButton = new JoystickButton(CoOpStick, 8);
+  ExtendClimberButton.whileHeld(new RunCommand(() -> sClimb.climb(1)));
+  ExtendClimberButton.whenReleased(new InstantCommand(() -> sClimb.climb(0)));
+
+  RetractClimberButton = new JoystickButton(CoOpStick, 7);
+  RetractClimberButton.whileHeld(new RunCommand(() -> sClimb.climb(-1)));
+  RetractClimberButton.whenReleased(new InstantCommand(() -> sClimb.climb(0)));
+
+  CreepLeftButton = new JoystickButton(OpStick, 3);
+  CreepLeftButton.whileHeld(new RunCommand(() -> sClimb.Creep(1)));
+  CreepLeftButton.whenReleased(new InstantCommand(() -> sClimb.Creep(0)));
+
+  CreepRightButton = new JoystickButton(OpStick, 2);
+  CreepRightButton.whileHeld(new RunCommand(() -> sClimb.Creep(-1)));
+  CreepRightButton.whenReleased(new InstantCommand(() -> sClimb.Creep(0)));
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

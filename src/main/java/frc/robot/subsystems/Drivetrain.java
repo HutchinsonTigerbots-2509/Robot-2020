@@ -8,11 +8,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SensorCollection;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -54,7 +51,7 @@ public class Drivetrain extends SubsystemBase {
   boolean EncoderNotReset = true;
 
   public double getAvgValue() {
-    double total = LFSC.getIntegratedSensorPosition();
+    double total = -RFSC.getIntegratedSensorPosition();
     return total;
   }
 
@@ -67,18 +64,28 @@ public class Drivetrain extends SubsystemBase {
     LeftFront.config_kP(0,Constants.kDrivetrainPGain);
     LeftFront.config_kI(0, Constants.kDrivetrainIGain);
     LeftFront.config_kD(0, Constants.kDrivetrainDGain);
+    LeftFront.setNeutralMode(NeutralMode.Coast);
 
     LeftRear.config_kP(0,Constants.kDrivetrainPGain);
     LeftRear.config_kI(0, Constants.kDrivetrainIGain);
     LeftRear.config_kD(0, Constants.kDrivetrainDGain);
+    LeftRear.setNeutralMode(NeutralMode.Coast);
 
     RightFront.config_kP(0,Constants.kDrivetrainPGain);
     RightFront.config_kI(0, Constants.kDrivetrainIGain);
     RightFront.config_kD(0, Constants.kDrivetrainDGain);
+    RightFront.setNeutralMode(NeutralMode.Coast);
 
     RightRear.config_kP(0,Constants.kDrivetrainPGain);
     RightRear.config_kI(0, Constants.kDrivetrainIGain);
     RightRear.config_kD(0, Constants.kDrivetrainDGain);
+    RightRear.setNeutralMode(NeutralMode.Coast);
+  
+    ResetEncoders();
+  }
+
+  public void MoveDrivetrain(double pSpeed){
+    Drive.tankDrive(pSpeed, pSpeed);
   }
 
   public void TurnLeft(double pSpeed) {
@@ -137,7 +144,7 @@ public class Drivetrain extends SubsystemBase {
   public void MarioDriveRamp(Joystick stick){
     double SpeedMulti = 0.65;
     double TurnSpeedMulti = 0.65;
-    double ForwardGain = 0.027; //0.007
+    double ForwardGain = 0.035; //0.007
     double ReverseGain = 0.1;
     double ReverseTurnGain = 0.1;
     double Target = (stick.getRawAxis(1) * SpeedMulti);
@@ -196,42 +203,43 @@ public class Drivetrain extends SubsystemBase {
     // }
 
     // Drives the motors
-    if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
-      Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
-    } else if (Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
-      Drive.arcadeDrive(0, -CurrentTurnValue);
-    } else {
-      Drive.arcadeDrive(0, 0);
-    }
-
-    //    <<<<<READY TO TEST>>>>>
-    // if(stick.getRawAxis(1) > 0.1){
-    //   if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
-    //     Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
-    //   }else{
-    //     Drive.arcadeDrive(-Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
-    //   }
-    // }else if(stick.getRawAxis(1)  < -0.1 ){
-    //   if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
-    //     Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
-    //   }else{
-    //     Drive.arcadeDrive(Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
-    //   }
-    // }else if (stick.getRawAxis(4) > 0.1){
-    //   if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
-    //     Drive.arcadeDrive(0, -CurrentTurnValue);
-    //   }else{
-    //     Drive.arcadeDrive(0, Constants.kDrivetrainMinVoltage);
-    //   }
-    // }else if(stick.getRawAxis(4) < -0.1){
-    //   if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
-    //     Drive.arcadeDrive(0, -CurrentTurnValue);
-    //   }else{
-    //     Drive.arcadeDrive(0, -Constants.kDrivetrainMinVoltage);
-    //   }
-    // }else{
+    // if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
+    //   Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
+    // } else if (Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
+    //   Drive.arcadeDrive(0, -CurrentTurnValue);
+    // } else {
     //   Drive.arcadeDrive(0, 0);
     // }
+
+    //    <<<<<READY TO TEST>>>>>
+
+    if(stick.getRawAxis(1) > 0.2){
+      if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
+        Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
+      }else{
+        Drive.arcadeDrive(-Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
+      }
+    }else if(stick.getRawAxis(1)  < -0.2 ){
+      if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
+        Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
+      }else{
+        Drive.arcadeDrive(Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
+      }
+    }else if (stick.getRawAxis(4) > 0.2){
+      if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
+        Drive.arcadeDrive(0, -CurrentTurnValue);
+      }else{
+        Drive.arcadeDrive(0, Constants.kDrivetrainMinVoltage);
+      }
+    }else if(stick.getRawAxis(4) < -0.2){
+      if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
+        Drive.arcadeDrive(0, -CurrentTurnValue);
+      }else{
+        Drive.arcadeDrive(0, -Constants.kDrivetrainMinVoltage);
+      }
+    }else{
+      Drive.arcadeDrive(0, 0);
+    }
 
     // SmartDashboard.putNumber("Current Value", CurrentValue);
     // SmartDashboard.putNumber("Target", Target);
@@ -249,6 +257,11 @@ public class Drivetrain extends SubsystemBase {
 
     MarioDriveRamp(RobotContainer.OpStick);
 
+    SmartDashboard.putNumber("Left Front", LFSC.getIntegratedSensorPosition());
+    SmartDashboard.putNumber("Left Rear", LRSC.getIntegratedSensorPosition());
+    SmartDashboard.putNumber("Right Front", RFSC.getIntegratedSensorPosition());
+    SmartDashboard.putNumber("Right Rear", RRSC.getIntegratedSensorPosition());
+
     // SmartDashboard.putNumber("Gyro Roll", Gyro.getRoll());
     // SmartDashboard.putNumber("Gyro Yaw", Gyro.getYaw());
     // SmartDashboard.putNumber("Gyro Pitch", Gyro.getPitch());
@@ -259,6 +272,11 @@ public class Drivetrain extends SubsystemBase {
     LeftRear.setSelectedSensorPosition(0);
     RightFront.setSelectedSensorPosition(0);
     RightRear.setSelectedSensorPosition(0);
+
+    RFSC.setIntegratedSensorPosition(0, 0);
+    RRSC.setIntegratedSensorPosition(0, 0);
+    LFSC.setIntegratedSensorPosition(0, 0);
+    LRSC.setIntegratedSensorPosition(0, 0);
   }
 
 }
