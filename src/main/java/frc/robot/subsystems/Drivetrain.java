@@ -204,6 +204,35 @@ public class Drivetrain extends SubsystemBase {
       Drive.arcadeDrive(0, 0);
     }
 
+    //    <<<<<READY TO TEST>>>>>
+    // if(stick.getRawAxis(1) > 0.1){
+    //   if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
+    //     Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
+    //   }else{
+    //     Drive.arcadeDrive(-Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
+    //   }
+    // }else if(stick.getRawAxis(1)  < -0.1 ){
+    //   if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
+    //     Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
+    //   }else{
+    //     Drive.arcadeDrive(Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
+    //   }
+    // }else if (stick.getRawAxis(4) > 0.1){
+    //   if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
+    //     Drive.arcadeDrive(0, -CurrentTurnValue);
+    //   }else{
+    //     Drive.arcadeDrive(0, Constants.kDrivetrainMinVoltage);
+    //   }
+    // }else if(stick.getRawAxis(4) < -0.1){
+    //   if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
+    //     Drive.arcadeDrive(0, -CurrentTurnValue);
+    //   }else{
+    //     Drive.arcadeDrive(0, -Constants.kDrivetrainMinVoltage);
+    //   }
+    // }else{
+    //   Drive.arcadeDrive(0, 0);
+    // }
+
     // SmartDashboard.putNumber("Current Value", CurrentValue);
     // SmartDashboard.putNumber("Target", Target);
     // SmartDashboard.putNumber("Stick Value", stick.getRawAxis(1));

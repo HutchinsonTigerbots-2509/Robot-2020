@@ -19,6 +19,7 @@ import frc.robot.RobotContainer;
 public class MoveDistanceDJ extends CommandBase {
   double Distance;
   double Speed;
+  boolean Finished;
   TalonFXSensorCollection TF_LF_SC = RobotContainer.sDrivetrain.LFSC;
   /**
    * Creates a new MoveDistanceDJ.
@@ -26,6 +27,7 @@ public class MoveDistanceDJ extends CommandBase {
   public MoveDistanceDJ(int pInchDistance, double pSpeed) {
     Distance = pInchDistance;
     Speed = pSpeed;
+    Finished = false;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -45,18 +47,22 @@ public class MoveDistanceDJ extends CommandBase {
     if(Distance > 0){
       if (RobotContainer.sDrivetrain.getAvgValue() < Distance * (256*Math.PI * 12.76*6) / 10){
        RobotContainer.sDrivetrain.Drive.tankDrive(Speed, Speed);
+       Finished = false;
       }else{
         RobotContainer.sDrivetrain.Drive.tankDrive(0, 0);
+        Finished = true;
       }
     }else if(Distance < 0){
       if (RobotContainer.sDrivetrain.getAvgValue() > Distance * (256*Math.PI * 12.76*6) / 10){
         RobotContainer.sDrivetrain.Drive.tankDrive(-Speed, -Speed);
+        Finished = false;
       }else{
         RobotContainer.sDrivetrain.Drive.tankDrive(0, 0);
+        Finished = true;
       }
     }else{
       RobotContainer.sDrivetrain.Drive.tankDrive(0, 0);
-      end(false); 
+      Finished = true;
     }
   }
 
@@ -68,6 +74,10 @@ public class MoveDistanceDJ extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(Finished){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
