@@ -8,6 +8,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SensorCollection;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -35,6 +37,12 @@ public class Drivetrain extends SubsystemBase {
   public final WPI_TalonFX RightFront = new WPI_TalonFX(Constants.kRightFrontID);
   public final WPI_TalonFX RightRear = new WPI_TalonFX(Constants.kRightRearID);
 
+  public final TalonFXSensorCollection LFSC = LeftFront.getSensorCollection();
+  public final TalonFXSensorCollection LRSC = LeftRear.getSensorCollection();
+  public final TalonFXSensorCollection RFSC = RightFront.getSensorCollection();
+  public final TalonFXSensorCollection RRSC = RightRear.getSensorCollection();
+
+
   public final SpeedControllerGroup Right = new SpeedControllerGroup(LeftFront, LeftRear);
   public final SpeedControllerGroup Left = new SpeedControllerGroup(RightFront, RightRear);
 
@@ -44,6 +52,11 @@ public class Drivetrain extends SubsystemBase {
   // DrivetrainGyro.setSubsystem("Drivetrain");
 
   boolean EncoderNotReset = true;
+
+  public double getAvgValue() {
+    double total = LFSC.getIntegratedSensorPosition();
+    return total;
+  }
 
   /**
    * Creates a new Drivetrain.

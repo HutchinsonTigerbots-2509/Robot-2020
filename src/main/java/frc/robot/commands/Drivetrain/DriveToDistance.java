@@ -23,7 +23,7 @@ public class DriveToDistance extends ParallelRaceGroup {
   public DriveToDistance(Drivetrain pDrivetrain, double pDistance) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new DrivetrainLeftPosition((int) (pDistance * Constants.kDrivetrainTicksPerInch)),
+    super(new DrivetrainLeftPosition((int) (pDistance * Constants.kDrivetrainTicksPerInch)), 
     new DrivetrainRightPosition((int)(pDistance * Constants.kDrivetrainTicksPerInch)));
   }
 }

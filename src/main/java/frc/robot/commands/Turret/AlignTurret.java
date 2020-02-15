@@ -73,6 +73,7 @@ public class AlignTurret extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     sTurret.StopTurretMotor();
+    SmartDashboard.putBoolean("Align Target", false);
   }
 
   // Returns true when the command should end.

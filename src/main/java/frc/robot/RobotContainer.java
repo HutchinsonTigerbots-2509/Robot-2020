@@ -17,14 +17,19 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Turret.AlignTurret;
+import frc.robot.commands.Turret.AlignTurretAutonomous;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.commands.RunConveyorMax;
 import frc.robot.commands.ShootAll;
+import frc.robot.commands.ShootAllAutonomous;
 import frc.robot.commands.ConveyorReverse;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.RunShooterMax;
@@ -32,7 +37,11 @@ import frc.robot.subsystems.Intake;
 import frc.robot.commands.ColorWheelForward;
 import frc.robot.commands.ColorWheelReverse;
 import frc.robot.commands.SwitchPipeline;
+import frc.robot.commands.Drivetrain.DriveToDistance;
+import frc.robot.commands.Drivetrain.MoveDistanceDJ;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -67,8 +76,17 @@ public class RobotContainer {
 
    // Commands - Create Command Objects
    // NOTE: it should be private, but if you need to reference it elsewhere, then
-
-
+  //  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
+  //    new AlignTurretAutonomous(sVision, sTurret),
+  //    new ShootAllAutonomous(sShooter, sConveyor, 4000)
+  //  );
+  private ParallelCommandGroup AutoCommands = new  ParallelCommandGroup(
+    new SequentialCommandGroup(
+      new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(1),
+      new AlignTurret(sVision, sTurret)),
+    new SequentialCommandGroup(
+      new MoveDistanceDJ(25, 0.5)),
+      new ShootAllAutonomous(sShooter, sConveyor, 4000));
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -117,8 +135,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  //   // NOTE: Put in an actual command
-  //   return cAlignTurret;
-  // }
+  public Command getAutonomousCommand() {
+    // NOTE: Put in an actual command
+    return AutoCommands;
+  }
 }

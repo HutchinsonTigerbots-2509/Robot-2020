@@ -23,7 +23,7 @@ public class Vision extends SubsystemBase {
   private NetworkTableEntry mTableVert = mLimelightTable.getEntry(Constants.kLimelightTargetVertID);
   private NetworkTableEntry mTableHor = mLimelightTable.getEntry(Constants.kLimelightTargetHorID);
   //private NetworkTableEntry mTableCorners = mLimelightTable.getEntry("tcornx");
-  // private NetworkTableEntry mTableTargetFound = mLimelightTable.getEntry(Constants.kLimelightTargetID);
+  private NetworkTableEntry mTableTargetFound = mLimelightTable.getEntry(Constants.kLimelightTargetID);
   
   // Variables to hold Network Table values in the form of Doubles
   private double mTargetX = 0;
@@ -32,9 +32,9 @@ public class Vision extends SubsystemBase {
   private double mTargetArea = 0;
   private double mTargetVert = 0;
   private double mTargetHor = 0;
+  private double mTargetFound = 0;
 
   private boolean TargetPipeline = true;
-  // private double mTargetFound = 0;
 
   /**
    * Creates a new Vision.
@@ -46,6 +46,11 @@ public class Vision extends SubsystemBase {
     mLimelightTable.getEntry("pipeline").setNumber(Constants.kLimelightStartingPipeline);
   }
 
+  public double getTargetFound() {
+    mTableTargetFound = mLimelightTable.getEntry(Constants.kLimelightTargetID);
+    mTargetFound = mTableTargetFound.getDouble(0.0);
+    return mTargetFound;
+  }
   // Returns the horizontal offset from crosshair to target (+/- 27 degrees)
   public double getTargetX() {
     mTableX = mLimelightTable.getEntry(Constants.kLimelightTargetXID); 
@@ -118,6 +123,7 @@ public class Vision extends SubsystemBase {
     // Puts all the vision numbers on the Shuffleboard
     SmartDashboard.putNumber("Target X", getTargetX());
     SmartDashboard.putNumber("Target Y", getTargetY());
+    SmartDashboard.putNumber("Target Found", getTargetFound());
     SmartDashboard.putNumber("Target Skew", getTargetSkew());
   }
 }

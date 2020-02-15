@@ -26,6 +26,7 @@ public class Turret extends SubsystemBase {
   private boolean LeftLimit = false;
   private boolean RightLimit = false;
   private boolean Direction; // True = Right, false = left
+  public boolean Aligned = false;
 
   // private final DigitalInput LeftLimit = new DigitalInput(1);
   // private final DigitalInput RightLimit = new DigitalInput(0);
