@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -34,9 +33,6 @@ import frc.robot.commands.ConveyorReverse;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.RunShooterMax;
 import frc.robot.subsystems.Intake;
-import frc.robot.commands.ColorWheelForward;
-import frc.robot.commands.ColorWheelReverse;
-import frc.robot.commands.SwitchPipeline;
 import frc.robot.commands.Drivetrain.DriveAutoTime;
 import frc.robot.commands.Drivetrain.DriveToDistance;
 import frc.robot.commands.Drivetrain.MoveDistanceDJ;
@@ -164,13 +160,15 @@ public class RobotContainer {
   RunShooterMaxButton.toggleWhenPressed(new RunShooterMax(sShooter));
 
   ColorWheelForward = new JoystickButton(OpStick, 5);
-  ColorWheelForward.whileHeld(new ColorWheelForward(sColorWheel));
+  ColorWheelForward.whileHeld(new RunCommand(() -> sColorWheel.ColorWheelForward(), sColorWheel));
+  ColorWheelForward.whenReleased(new InstantCommand(() -> sColorWheel.StopColorMotor()));
 
   ColorWheelReverse = new JoystickButton(OpStick, 6);
-  ColorWheelReverse.whileHeld(new ColorWheelReverse(sColorWheel));
+  ColorWheelReverse.whileHeld(new RunCommand(() -> sColorWheel.ColorWheelReverse(), sColorWheel));
+  ColorWheelReverse.whenReleased(new InstantCommand(() -> sColorWheel.StopColorMotor()));
 
   SwitchPipelineButton = new JoystickButton(CoOpStick, 4);
-  SwitchPipelineButton.whenPressed(new SwitchPipeline(sVision));
+  SwitchPipelineButton.whenPressed(new InstantCommand(() -> sVision.SwitchPipeline(), sVision));
 
   ExtendClimberButton = new JoystickButton(CoOpStick, 8);
   ExtendClimberButton.whileHeld(new RunCommand(() -> sClimb.ClimbExtend(1)));

@@ -53,13 +53,12 @@ public final class Constants {
     public static int kBottomConveyorMotorID = 7;
     public static int kIntakeMotorID = 9;
     public static double kTurretMinVoltage = 0.15;
-    public static int kShooterMotorMasterID = 4;
-    public static int kShooterMotorSlaveID = 5;
+    public static int kShooterMotorID = 4;
     public static int kTopLightSensorID = 0;
     public static int kBottomLightSensorID = 1;
     public static int kColorMotorID = 10;
 
-    public static int kShooterTicksPerRotation = 4096; // or 1024???
+    public static int kShooterTicksPerRotation = 2048; // or 4096
     /* Vision Constants */
 
     // Network

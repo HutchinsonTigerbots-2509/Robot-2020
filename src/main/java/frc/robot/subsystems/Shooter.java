@@ -8,30 +8,28 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
-  public static WPI_TalonSRX ShooterMotorMaster = new WPI_TalonSRX(Constants.kShooterMotorMasterID);
-  private static WPI_TalonSRX ShooterMotorSlave = new WPI_TalonSRX(Constants.kShooterMotorSlaveID);
+  // public static WPI_TalonSRX ShooterMotorMaster = new WPI_TalonSRX(Constants.kShooterMotorMasterID);
+  // private static WPI_TalonSRX ShooterMotorSlave = new WPI_TalonSRX(Constants.kShooterMotorSlaveID);
+  public static WPI_TalonFX ShooterMotor = new WPI_TalonFX(Constants.kShooterMotorID);
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
-    ShooterMotorMaster.setNeutralMode(NeutralMode.Coast);
-    ShooterMotorSlave.setNeutralMode(NeutralMode.Coast);
+    ShooterMotor.setNeutralMode(NeutralMode.Coast);
   }
 
   @Override
   public void periodic() {
     // SmartDashboard.putNumber("Velocity? (1)", ShooterMotorMaster.getSelectedSensorVelocity());
     // SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
-    SmartDashboard.putNumber("RPM", (ShooterMotorMaster.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
+    SmartDashboard.putNumber("RPM", (ShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
     // SmartDashboard.putNumber("Encoder", ShooterMotorMaster.getSelectedSensorPosition());
     // SmartDashboard.putNumber("RPM? (2)", (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);
     // SmartDashboard.putNumber("RPM? (Average)", ((ShooterMotor1.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) + (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation)) * 300);
@@ -39,27 +37,23 @@ public class Shooter extends SubsystemBase {
   }
 
   public int GetRPM(){
-    return (ShooterMotorMaster.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation;
+    return (ShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation;
   }
 
   public void ShooterForward(double pSpeed){
-    ShooterMotorMaster.set(-pSpeed);
-    ShooterMotorSlave.set(pSpeed);
+    ShooterMotor.set(-pSpeed);
   }
 
   public void ShooterReverse(){
-    ShooterMotorMaster.set(1);
-    ShooterMotorSlave.set(-1);
+    ShooterMotor.set(1);
   }
 
   public void StopShooter(){
-    ShooterMotorMaster.set(0);
-    ShooterMotorSlave.set(0);
+    ShooterMotor.set(0);
   }
 
   public void SetShooterVelocity(int RPM){
-    // ShooterMotorMaster.set(ControlMode.Velocity, 27307);// (RPM * Constants.kShooterTicksPerRotation) / 600);
-    // ShooterMotorSlave.set(ControlMode.Follower, Constants.kShooterMotorMasterID);
+    ShooterMotor.set(ControlMode.Velocity, (RPM * Constants.kShooterTicksPerRotation) / 600);
   }
 
 }
