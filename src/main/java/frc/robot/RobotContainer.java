@@ -80,14 +80,6 @@ public class RobotContainer {
   public static Joystick CoOpStick = new Joystick(Constants.kCoOpStickID);
 
    // Commands - Create Command Objects
-   // NOTE: it should be private, but if you need to reference it elsewhere, then
-  //  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
-  //    new AlignTurretAutonomous(sVision, sTurret),
-  //    new ShootAllAutonomous(sShooter, sConveyor, 4000)
-  //  );
-  // private ParallelCommandGroup AutoCommands = new  ParallelCommandGroup(
-  //   new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(4)
-  // );
 
   private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
   
@@ -113,19 +105,6 @@ public class RobotContainer {
   //     new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(5),
   //     new ShootAllAutonomous(sShooter, sConveyor, 4000)
   //   ));
-    
-    
-    
-      // new RunCommand(() -> sShooter.ShooterForward(0.5)).withTimeout(4),
-    // new SequentialCommandGroup(
-    //   new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(4),
-    //   new RunCommand(() -> sConveyor.ConveyorReverse()).withTimeout(0.1),
-    //   new ShootAllAutonomous(sShooter, sConveyor, 4000)));
-
-  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
-  //   new DriveAutoTime(sDrivetrain, 0.5, 2));
-
-    
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
