@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Shooter extends SubsystemBase {
   // public static WPI_TalonSRX ShooterMotorMaster = new WPI_TalonSRX(Constants.kShooterMotorMasterID);
   // private static WPI_TalonSRX ShooterMotorSlave = new WPI_TalonSRX(Constants.kShooterMotorSlaveID);
-  public static WPI_TalonFX ShooterMotor = new WPI_TalonFX(Constants.kShooterMotorID);
+  private static WPI_TalonFX ShooterMotor = new WPI_TalonFX(Constants.kShooterMotorID);
   /**
    * Creates a new Shooter.
    */
@@ -41,11 +41,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public void ShooterForward(double pSpeed){
-    ShooterMotor.set(-pSpeed);
+    ShooterMotor.set(ControlMode.PercentOutput, pSpeed);
   }
 
   public void ShooterReverse(){
-    ShooterMotor.set(1);
+    ShooterMotor.set(ControlMode.PercentOutput, -1);
   }
 
   public void StopShooter(){

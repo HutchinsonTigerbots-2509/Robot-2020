@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,6 +16,7 @@ import frc.robot.RobotContainer;
 
 public class Intake extends SubsystemBase {
   private static WPI_VictorSPX IntakeMotor = new WPI_VictorSPX(Constants.kIntakeMotorID);
+  private static WPI_TalonSRX IntakeDropMotor = new WPI_TalonSRX(Constants.kIntakeDropMotorID);
   /**
    * Creates a new Intake.
    */
@@ -30,7 +32,27 @@ public class Intake extends SubsystemBase {
     } else {
       StopIntakeMotor();
     }
+
+    if(RobotContainer.CoOpStick.getRawAxis(1) > 0.2){
+      LiftIntake();
+    } else if (RobotContainer.CoOpStick.getRawAxis(1) < -0.2){
+      DropIntake();
+    } else {
+      StopDropIntake();
+    }
     // This method will be called once per scheduler run
+  }
+
+  public void DropIntake(){
+    IntakeDropMotor.set(0.5);
+  }
+
+  public void LiftIntake(){
+    IntakeDropMotor.set(-0.5);
+  }
+
+  public void StopDropIntake(){
+    IntakeDropMotor.set(0);
   }
 
   private void IntakeIn(){

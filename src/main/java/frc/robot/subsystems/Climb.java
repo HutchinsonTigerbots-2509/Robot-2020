@@ -33,23 +33,27 @@ public class Climb extends SubsystemBase {
   }
 
   public boolean getClimbLimit(){
-    if(ClimbLimit.getVoltage() > 0.5){
+    if(ClimbLimit.getVoltage() > 0.25){
       return true;
     } else {
       return false;
     }
   }
 
-  public void ClimbExtend(double speed) {
-    ClimbMotor.set(Math.abs(speed));
+  public void ClimbExtend() {
+    ClimbMotor.set(-1);
   }
 
-  public void ClimbRetract(double speed){
+  public void ClimbRetract(){
     if(!getClimbLimit()){
-      ClimbMotor.set(-Math.abs(speed));
+      ClimbMotor.set(1);
     } else {
       ClimbMotor.set(0);
     }
+  }
+
+  public void StopClimb(){
+    ClimbMotor.set(0);
   }
 
   public void ExtendClimbPiston(){
@@ -64,5 +68,6 @@ public class Climb extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("Climb Limit", getClimbLimit());
+    SmartDashboard.putNumber("Climb volts", ClimbLimit.getVoltage());
   }
 }

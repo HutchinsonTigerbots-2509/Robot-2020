@@ -52,6 +52,7 @@ public final class Constants {
     public static int kTopConveyorMotorID = 6;
     public static int kBottomConveyorMotorID = 7;
     public static int kIntakeMotorID = 9;
+    public static int kIntakeDropMotorID = 13;
     public static double kTurretMinVoltage = 0.15;
     public static int kShooterMotorID = 4;
     public static int kTopLightSensorID = 0;

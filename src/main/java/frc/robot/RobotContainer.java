@@ -63,6 +63,7 @@ public class RobotContainer {
   private static JoystickButton RetractClimberButton;
   private static JoystickButton CreepLeftButton;
   private static JoystickButton CreepRightButton;
+  private static JoystickButton IntakeDropButton;
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
   public static Drivetrain sDrivetrain = new Drivetrain();
@@ -84,7 +85,7 @@ public class RobotContainer {
   private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
   
 
-  // AUTONOMOUS 1A - START RIGHT OF TARGET, STRAIGHT BACK INTO TRENCH
+  // AUTONOMOUS 1A - START RIGHT OF TARGET, GOES STRAIGHT BACK INTO TRENCH
   // NO INTAKE!!!!!!!!
   // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
   //   new SequentialCommandGroup(
@@ -150,12 +151,12 @@ public class RobotContainer {
   SwitchPipelineButton.whenPressed(new InstantCommand(() -> sVision.SwitchPipeline(), sVision));
 
   ExtendClimberButton = new JoystickButton(CoOpStick, 8);
-  ExtendClimberButton.whileHeld(new RunCommand(() -> sClimb.ClimbExtend(1)));
-  ExtendClimberButton.whenReleased(new InstantCommand(() -> sClimb.ClimbExtend(0)));
+  ExtendClimberButton.whileHeld(new RunCommand(() -> sClimb.ClimbExtend()));
+  ExtendClimberButton.whenReleased(new InstantCommand(() -> sClimb.StopClimb()));
 
   RetractClimberButton = new JoystickButton(CoOpStick, 7);
-  RetractClimberButton.whileHeld(new RunCommand(() -> sClimb.ClimbRetract(-1)));
-  RetractClimberButton.whenReleased(new InstantCommand(() -> sClimb.ClimbRetract(0)));
+  RetractClimberButton.whileHeld(new RunCommand(() -> sClimb.ClimbRetract()));
+  RetractClimberButton.whenReleased(new InstantCommand(() -> sClimb.StopClimb()));
 
   CreepLeftButton = new JoystickButton(OpStick, 3);
   CreepLeftButton.whileHeld(new RunCommand(() -> sClimb.Creep(1)));
