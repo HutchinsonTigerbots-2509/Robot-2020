@@ -257,10 +257,10 @@ public class Drivetrain extends SubsystemBase {
 
     MarioDriveRamp(RobotContainer.OpStick);
 
-    SmartDashboard.putNumber("Left Front", LFSC.getIntegratedSensorPosition());
-    SmartDashboard.putNumber("Left Rear", LRSC.getIntegratedSensorPosition());
-    SmartDashboard.putNumber("Right Front", RFSC.getIntegratedSensorPosition());
-    SmartDashboard.putNumber("Right Rear", RRSC.getIntegratedSensorPosition());
+    // SmartDashboard.putNumber("Left Front", LFSC.getIntegratedSensorPosition());
+    // SmartDashboard.putNumber("Left Rear", LRSC.getIntegratedSensorPosition());
+    // SmartDashboard.putNumber("Right Front", RFSC.getIntegratedSensorPosition());
+    // SmartDashboard.putNumber("Right Rear", RRSC.getIntegratedSensorPosition());
 
     // SmartDashboard.putNumber("Gyro Roll", Gyro.getRoll());
     // SmartDashboard.putNumber("Gyro Yaw", Gyro.getYaw());

@@ -123,7 +123,6 @@ public class Vision extends SubsystemBase {
     // Puts all the vision numbers on the Shuffleboard
     SmartDashboard.putNumber("Target X", getTargetX());
     SmartDashboard.putNumber("Target Y", getTargetY());
-    SmartDashboard.putNumber("Target Found", getTargetFound());
     SmartDashboard.putNumber("Target Skew", getTargetSkew());
   }
 }

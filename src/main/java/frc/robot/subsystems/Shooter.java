@@ -29,10 +29,10 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Velocity? (1)", ShooterMotorMaster.getSelectedSensorVelocity());
+    // SmartDashboard.putNumber("Velocity? (1)", ShooterMotorMaster.getSelectedSensorVelocity());
     // SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
-    SmartDashboard.putNumber("RPM? (1)", (ShooterMotorMaster.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
-    SmartDashboard.putNumber("Encoder", ShooterMotorMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("RPM", (ShooterMotorMaster.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
+    // SmartDashboard.putNumber("Encoder", ShooterMotorMaster.getSelectedSensorPosition());
     // SmartDashboard.putNumber("RPM? (2)", (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);
     // SmartDashboard.putNumber("RPM? (Average)", ((ShooterMotor1.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) + (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation)) * 300);
     // This method will be called once per scheduler run

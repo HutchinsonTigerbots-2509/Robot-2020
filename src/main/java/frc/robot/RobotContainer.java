@@ -173,12 +173,12 @@ public class RobotContainer {
   SwitchPipelineButton.whenPressed(new SwitchPipeline(sVision));
 
   ExtendClimberButton = new JoystickButton(CoOpStick, 8);
-  ExtendClimberButton.whileHeld(new RunCommand(() -> sClimb.climb(1)));
-  ExtendClimberButton.whenReleased(new InstantCommand(() -> sClimb.climb(0)));
+  ExtendClimberButton.whileHeld(new RunCommand(() -> sClimb.ClimbExtend(1)));
+  ExtendClimberButton.whenReleased(new InstantCommand(() -> sClimb.ClimbExtend(0)));
 
   RetractClimberButton = new JoystickButton(CoOpStick, 7);
-  RetractClimberButton.whileHeld(new RunCommand(() -> sClimb.climb(-1)));
-  RetractClimberButton.whenReleased(new InstantCommand(() -> sClimb.climb(0)));
+  RetractClimberButton.whileHeld(new RunCommand(() -> sClimb.ClimbRetract(-1)));
+  RetractClimberButton.whenReleased(new InstantCommand(() -> sClimb.ClimbRetract(0)));
 
   CreepLeftButton = new JoystickButton(OpStick, 3);
   CreepLeftButton.whileHeld(new RunCommand(() -> sClimb.Creep(1)));

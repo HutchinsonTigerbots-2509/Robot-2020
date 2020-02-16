@@ -67,11 +67,11 @@ public class DriveAutoTime extends CommandBase {
     // SmartDashboard.putNumber("2", (Math.pow(TIME_curr - TIME_half, 2)));
     // SmartDashboard.putNumber("3", (gain * (Math.pow(TIME_curr - TIME_half, 2))));
     
-    SmartDashboard.putNumber("Current Volts", VOLTS_curr);
-    SmartDashboard.putNumber("Time_curr", TIME_curr);
-    SmartDashboard.putNumber("Gain", gain);
-    SmartDashboard.putNumber("Time_init", TIME_init);
-    SmartDashboard.putNumber("FPGA Time Stamp", Timer.getFPGATimestamp());
+    // SmartDashboard.putNumber("Current Volts", VOLTS_curr);
+    // SmartDashboard.putNumber("Time_curr", TIME_curr);
+    // SmartDashboard.putNumber("Gain", gain);
+    // SmartDashboard.putNumber("Time_init", TIME_init);
+    // SmartDashboard.putNumber("FPGA Time Stamp", Timer.getFPGATimestamp());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -100,11 +100,11 @@ public class DriveAutoTime extends CommandBase {
     // SmartDashboard.putNumber("2", (Math.pow(TIME_curr - TIME_half, 2)));
     // SmartDashboard.putNumber("3", (gain * (Math.pow(TIME_curr - TIME_half, 2))));
     
-    SmartDashboard.putNumber("Current Volts", VOLTS_curr);
-    SmartDashboard.putNumber("Time_curr", TIME_curr);
-    SmartDashboard.putNumber("Gain", gain);
-    SmartDashboard.putNumber("Time_init", TIME_init);
-    SmartDashboard.putNumber("FPGA Time Stamp", Timer.getFPGATimestamp());
+    // SmartDashboard.putNumber("Current Volts", VOLTS_curr);
+    // SmartDashboard.putNumber("Time_curr", TIME_curr);
+    // SmartDashboard.putNumber("Gain", gain);
+    // SmartDashboard.putNumber("Time_init", TIME_init);
+    // SmartDashboard.putNumber("FPGA Time Stamp", Timer.getFPGATimestamp());
   }
 
   // Called once the command ends or is interrupted.
