@@ -55,15 +55,15 @@ public class Intake extends SubsystemBase {
     IntakeDropMotor.set(0);
   }
 
-  private void IntakeIn(){
+  public void IntakeIn(){
     IntakeMotor.set(0.8);
   }
 
-  private void IntakeOut(){
+  public void IntakeOut(){
     IntakeMotor.set(-0.8);
   }
 
-  private void StopIntakeMotor(){
+  public void StopIntakeMotor(){
     IntakeMotor.set(0);
   }
 }

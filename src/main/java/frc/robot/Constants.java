@@ -26,16 +26,17 @@ public final class Constants {
     public static int kLeftRearID = 1;
     public static int kRightFrontID = 2;
     public static int kRightRearID = 3;
-    // Climber
-    public static int kClimbMotorID = 11;
-    public static int kClimbMoverID = 12;
-    public static int kClimbPistonID;
-    public static int kClimbLimitID = 3;
 
     public static double kDrivetrainPGain = 0.15;
     public static double kDrivetrainIGain = 0.0;
     public static double kDrivetrainDGain = 4.0;
     public static double kDrivetrainMinVoltage = 0.4;//0.2
+
+    // Climber
+    public static int kClimbMotorID = 11;
+    public static int kClimbMoverID = 12;
+    public static int kClimbPistonID;
+    public static int kClimbLimitID = 3;
 
     //RobotThings
     public static double kWheelGap = 22;
@@ -46,20 +47,30 @@ public final class Constants {
     public static double kDrivetrainTicksPerRevolution = 2048 * 12.70654297; // Using Talon FX motor controllers / encoders
     public static double kDrivetrainTicksPerInch = kDrivetrainTicksPerRevolution / (kWheelDiameter * Math.PI);
 
-    // Shooter
+    // Turret
     public static int kTurretMotorID = 8;
     public static int kTurretLimitID = 2;
+    public static double kTurretMinVoltage = 0.15;
+
+    // Conveyor
     public static int kTopConveyorMotorID = 6;
     public static int kBottomConveyorMotorID = 7;
-    public static int kIntakeMotorID = 9;
-    public static int kIntakeDropMotorID = 13;
-    public static double kTurretMinVoltage = 0.15;
-    public static int kShooterMotorID = 4;
     public static int kTopLightSensorID = 0;
     public static int kBottomLightSensorID = 1;
-    public static int kColorMotorID = 10;
 
+    // Intake
+    public static int kIntakeMotorID = 9;
+    public static int kIntakeDropMotorID = 13;
+
+    // Shooter
+    public static int kBottomShooterMotorID = 4;
+    public static int kTopShooterMotorID = 5;
     public static int kShooterTicksPerRotation = 2048; // or 4096
+    public static double kShooterPGain = 1.25;
+    public static double kShooterIGain = 0.0;
+    public static double kShooterDGain = 4.0;
+
+    public static int kColorMotorID = 10;
     /* Vision Constants */
 
     // Network

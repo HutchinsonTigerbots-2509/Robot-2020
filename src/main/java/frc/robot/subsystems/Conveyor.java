@@ -34,10 +34,10 @@ public class Conveyor extends SubsystemBase {
     if(CanSensorMove == true){
       if(GetTopSensorValue() == false && GetBottomSensorValue() == true){
           // FullConveyorForward(0.6, 1); //0.3, 0.6
-          BottomConveyorForward(1);
+          BottomConveyorForward(0.8);//1
       } else {
         if(GetBottomSensorValue() == true) {
-          BottomConveyorForward(1); //0.6
+          BottomConveyorForward(0.8); //0.6 //1
         }else {
           StopMotors();
         }

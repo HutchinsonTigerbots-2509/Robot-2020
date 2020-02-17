@@ -30,7 +30,7 @@ public class ShootAll extends CommandBase {
   @Override
   public void initialize() {
     ReadyToShoot = false;
-    sShooter.ShooterForward(0.7);
+    sShooter.ShooterForward(0.7, 0.7);
     // if(sShooter.GetRPM() >= 3600 || sShooter.GetRPM() <= -3600){
       sConveyor.FullConveyorForward(1, 0.8);
     // } else {
@@ -42,7 +42,7 @@ public class ShootAll extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    sShooter.ShooterForward(.7);
+    sShooter.ShooterForward(.7, 0.7);
     if(sShooter.GetRPM() >= 3600 || sShooter.GetRPM() <= -3600){
       sConveyor.FullConveyorForward(1, 0.8);
       ReadyToShoot = true;

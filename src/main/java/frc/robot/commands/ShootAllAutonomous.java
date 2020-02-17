@@ -15,14 +15,18 @@ public class ShootAllAutonomous extends CommandBase {
   private Conveyor sConveyor;
   private Shooter sShooter;
   private Boolean ReadyToShoot;
+  private double TargetVoltage;
+  private double Voltage = 0.2;
   private int RPM;
   /**
    * Creates a new ShootAllAutonomous.
    */
-  public ShootAllAutonomous(Shooter pShooter, Conveyor pConveyor, int pRPM) {
+  public ShootAllAutonomous(Shooter pShooter, Conveyor pConveyor, int pRPM, double pTargetVolts) {
     sShooter = pShooter;
     sConveyor = pConveyor;
     RPM = pRPM;
+    // TargetVoltage = pTargetVolts;
+    Voltage = pTargetVolts;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sShooter);
     addRequirements(sConveyor);
@@ -31,7 +35,7 @@ public class ShootAllAutonomous extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    sShooter.ShooterForward(0.8);
+    sShooter.ShooterForward(Voltage, Voltage);
     ReadyToShoot = false;
   }
 
@@ -46,7 +50,11 @@ public class ShootAllAutonomous extends CommandBase {
       sConveyor.FullConveyorForward(0.9, 0.8);
     }
 
-    sShooter.ShooterForward(0.8);//.9
+    // if(Voltage < TargetVoltage){
+    //   Voltage = Voltage + 0.01;
+    // }
+
+    sShooter.ShooterForward(Voltage, Voltage);//.9
   }
 
   // Called once the command ends or is interrupted.

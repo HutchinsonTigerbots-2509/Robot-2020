@@ -13,35 +13,26 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Vision;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Turret.AlignTurret;
-import frc.robot.commands.Turret.AlignTurretAutonomous;
-import frc.robot.subsystems.Turret;
-import frc.robot.subsystems.ColorWheel;
-import frc.robot.subsystems.Conveyor;
+import frc.robot.commands.ConveyorReverse;
 import frc.robot.commands.RunConveyorMax;
+import frc.robot.commands.RunShooterMax;
 import frc.robot.commands.ShootAll;
 import frc.robot.commands.ShootAllAutonomous;
-import frc.robot.commands.ConveyorReverse;
-import frc.robot.subsystems.Shooter;
-import frc.robot.commands.RunShooterMax;
-import frc.robot.subsystems.Intake;
-import frc.robot.commands.Drivetrain.DriveAutoTime;
-import frc.robot.commands.Drivetrain.DriveToDistance;
-import frc.robot.commands.Drivetrain.MoveDistanceDJ;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commands.Turret.AlignTurret;
 import frc.robot.subsystems.Climb;
-import frc.robot.commands.RunShooterRPM;
+import frc.robot.subsystems.ColorWheel;
+import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -63,7 +54,6 @@ public class RobotContainer {
   private static JoystickButton RetractClimberButton;
   private static JoystickButton CreepLeftButton;
   private static JoystickButton CreepRightButton;
-  private static JoystickButton IntakeDropButton;
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
   public static Drivetrain sDrivetrain = new Drivetrain();
@@ -75,6 +65,9 @@ public class RobotContainer {
   public static ColorWheel sColorWheel = new ColorWheel();
   public static Climb sClimb = new Climb();
 
+  //FOR SHUFFLEBOARD AUTO CHOOSING
+  // private final SendableChooser<Command> commandChooser = new SendableChooser<Command>();
+  // private static ShuffleboardTab CoolTab = Shuffleboard.getTab("CoolTab");
   
    // Joysticks - Joysticks are made here
   public static Joystick OpStick = new Joystick(Constants.kOpStickID);
@@ -82,11 +75,11 @@ public class RobotContainer {
 
    // Commands - Create Command Objects
 
-  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
+  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
   
 
   // AUTONOMOUS 1A - START RIGHT OF TARGET, GOES STRAIGHT BACK INTO TRENCH
-  // NO INTAKE!!!!!!!!
+  // NO INTAKE!!!!!!!! (untested shooter)
   // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
   //   new SequentialCommandGroup(
   //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(1),
@@ -96,16 +89,18 @@ public class RobotContainer {
 
 
   // AUTONOMOUS 2A - START IN FRONT OF TARGET, ANGLED TOWARD CONTROL PANEL
-  // NO INTAKE!!!!!!!!!
-  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
-  //   new SequentialCommandGroup(
-  //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.6),
-  //     new AlignTurret(sVision, sTurret)),
-  //   new SequentialCommandGroup(
-  //     new ShootAllAutonomous(sShooter, sConveyor, 4000).withTimeout(4),
-  //     new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(5),
-  //     new ShootAllAutonomous(sShooter, sConveyor, 4000)
-  //   ));
+  // Has Shooter ramp up / power issues
+  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
+    new SequentialCommandGroup(
+      new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.6),
+      new AlignTurret(sVision, sTurret)),
+    new RunCommand(() -> sIntake.DropIntake()).withTimeout(1),
+    new SequentialCommandGroup(
+      new ShootAllAutonomous(sShooter, sConveyor, 3150, 0.8).withTimeout(6),
+      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(5)
+      .alongWith(new RunCommand(() -> sIntake.IntakeOut())).withTimeout(5),
+      new ShootAllAutonomous(sShooter, sConveyor, 3150, 0.8)
+    ));
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -113,6 +108,11 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    // CoolTab.add("Auto Chooser", commandChooser);
+
+    // commandChooser.setDefaultOption("A1", new PUTNAMEHERE());
+    // commandChooser.addOption("A1", new PUTNAMEHERE());
 
   }
 
@@ -137,7 +137,9 @@ public class RobotContainer {
   ShootAllButton.whileHeld(new ShootAll(sShooter, sConveyor));
 
   RunShooterMaxButton = new JoystickButton(CoOpStick, 3);
+  // RunShooterMaxButton.toggleWhenPressed(new RampUpShooter(sShooter).andThen(new RunShooterRPM(sShooter)));
   RunShooterMaxButton.toggleWhenPressed(new RunShooterMax(sShooter));
+  // RunShooterMaxButton.toggleWhenPressed(new RampUpShooter(sShooter));
 
   ColorWheelForward = new JoystickButton(OpStick, 5);
   ColorWheelForward.whileHeld(new RunCommand(() -> sColorWheel.ColorWheelForward(), sColorWheel));
@@ -176,5 +178,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // NOTE: Put in an actual command
     return AutoCommands;
+    //return commandChooser.getSelected();
   }
 }

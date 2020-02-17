@@ -12,11 +12,15 @@ import frc.robot.subsystems.Shooter;
 
 public class RunShooterRPM extends CommandBase {
   private Shooter sShooter;
+  private int RPM;
+  private int TargetRPM;
   /**
    * Creates a new RunShooterRPM.
    */
   public RunShooterRPM(Shooter pShooter) {
     sShooter = pShooter;
+    RPM = 250;
+    TargetRPM = 3500;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sShooter);
   }
@@ -24,12 +28,16 @@ public class RunShooterRPM extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    sShooter.SetShooterVelocity(RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    sShooter.SetShooterVelocity(4000);
+    if(RPM < TargetRPM){
+      RPM = RPM + 15;
+    }
+    sShooter.SetShooterVelocity(RPM);
   }
 
   // Called once the command ends or is interrupted.
