@@ -28,10 +28,10 @@ public class RunShooterMax extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    BottomSpeed = 0.3;
+    BottomSpeed = -0.5;
     TopSpeed = 0.5;
-    TargetBottomSpeed = 0.9;
-    TargetTopSpeed = 0.8;
+    TargetBottomSpeed = -1;
+    TargetTopSpeed = 1;
     sShooter.ShooterForward(BottomSpeed, TopSpeed);
   }
 
@@ -39,7 +39,7 @@ public class RunShooterMax extends CommandBase {
   @Override
   public void execute() {
     if(BottomSpeed < TargetBottomSpeed){
-      BottomSpeed = BottomSpeed + 0.02;
+      BottomSpeed = BottomSpeed - 0.02;
     }
     if(TopSpeed < TargetTopSpeed){
       TopSpeed = TopSpeed + 0.02;
