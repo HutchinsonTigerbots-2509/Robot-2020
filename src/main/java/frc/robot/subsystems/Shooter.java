@@ -9,7 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Shooter extends SubsystemBase {
   // public static WPI_TalonSRX ShooterMotorMaster = new WPI_TalonSRX(Constants.kShooterMotorMasterID);
   // private static WPI_TalonSRX ShooterMotorSlave = new WPI_TalonSRX(Constants.kShooterMotorSlaveID);
-  private static WPI_TalonFX BottomShooterMotor = new WPI_TalonFX(Constants.kBottomShooterMotorID);
-  private static WPI_TalonFX TopShooterMotor = new WPI_TalonFX(Constants.kTopShooterMotorID);
+  private static WPI_TalonSRX BottomShooterMotor = new WPI_TalonSRX(Constants.kBottomShooterMotorID);
+  private static WPI_TalonSRX TopShooterMotor = new WPI_TalonSRX(Constants.kTopShooterMotorID);
   /**
    * Creates a new Shooter.
    */
@@ -40,9 +40,10 @@ public class Shooter extends SubsystemBase {
     // SmartDashboard.putNumber("Velocity? (1)", ShooterMotorMaster.getSelectedSensorVelocity());
     // SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
     SmartDashboard.putNumber("RPM Bottom", (BottomShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
-    SmartDashboard.putNumber("RPM Top", (TopShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
-    SmartDashboard.putNumber("Temp Bottom", (BottomShooterMotor.getTemperature() * (9/5)) + 32);
-    SmartDashboard.putNumber("Temp Top", (TopShooterMotor.getTemperature() * (9/5)) + 32);
+    // SmartDashboard.putNumber("RPM Top", (TopShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
+    SmartDashboard.putNumber("Temp Bottom", (BottomShooterMotor.getTemperature() * (1.8)) + 32);
+    SmartDashboard.putNumber("Temp Top", (TopShooterMotor.getTemperature() * (1.8)) + 32);
+    // SmartDashboard.putNumber("Encoder", BottomShooterMotor.getSelectedSensorPosition());
     // SmartDashboard.putNumber("Encoder", ShooterMotorMaster.getSelectedSensorPosition());
     // SmartDashboard.putNumber("RPM? (2)", (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);
     // This method will be called once per scheduler run
@@ -53,12 +54,12 @@ public class Shooter extends SubsystemBase {
   }
 
   public void ShooterForward(double pBottomSpeed, double pTopSpeed){
-    BottomShooterMotor.set(ControlMode.PercentOutput, pBottomSpeed);
-    TopShooterMotor.set(ControlMode.PercentOutput, pTopSpeed - 0.2);
+    BottomShooterMotor.set(ControlMode.PercentOutput, -pBottomSpeed);
+    TopShooterMotor.set(ControlMode.PercentOutput, pTopSpeed);
   }
 
   public void ShooterReverse(){
-    BottomShooterMotor.set(ControlMode.PercentOutput, -1);
+    BottomShooterMotor.set(ControlMode.PercentOutput, 1);
     TopShooterMotor.set(ControlMode.PercentOutput, -1);
   }
 
@@ -67,9 +68,9 @@ public class Shooter extends SubsystemBase {
     TopShooterMotor.set(0);
   }
 
-  // Does not work
+  // kinda works
   public void SetShooterVelocity(int RPM){
-    BottomShooterMotor.set(ControlMode.Velocity, (RPM * Constants.kShooterTicksPerRotation) / 600);
+    BottomShooterMotor.set(ControlMode.Velocity, -(RPM * Constants.kShooterTicksPerRotation) / 600);
     TopShooterMotor.set(ControlMode.Follower, Constants.kBottomShooterMotorID);
   }
 

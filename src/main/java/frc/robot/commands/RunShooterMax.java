@@ -13,9 +13,7 @@ import frc.robot.subsystems.Shooter;
 public class RunShooterMax extends CommandBase {
   private static Shooter sShooter;
   private double BottomSpeed;
-  private double TargetBottomSpeed;
   private double TopSpeed;
-  private double TargetTopSpeed;
   /**
    * Creates a new RunShooterMax.
    */
@@ -28,22 +26,20 @@ public class RunShooterMax extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    BottomSpeed = -0.5;
-    TopSpeed = 0.5;
-    TargetBottomSpeed = -1;
-    TargetTopSpeed = 1;
+    BottomSpeed = 1; //0.8
+    TopSpeed = 1; //0.8
     sShooter.ShooterForward(BottomSpeed, TopSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(BottomSpeed < TargetBottomSpeed){
-      BottomSpeed = BottomSpeed - 0.02;
-    }
-    if(TopSpeed < TargetTopSpeed){
-      TopSpeed = TopSpeed + 0.02;
-    }
+    // if(BottomSpeed < TargetBottomSpeed){
+    //   BottomSpeed = BottomSpeed + 0.02;
+    // }
+    // if(TopSpeed < TargetTopSpeed){
+    //   TopSpeed = TopSpeed + 0.02;
+    // }
     sShooter.ShooterForward(BottomSpeed, TopSpeed);
   }
 

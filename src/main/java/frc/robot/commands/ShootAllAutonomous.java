@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
+import frc.robot.commands.Turret.AlignTurret;
 import frc.robot.subsystems.Conveyor;
 
 public class ShootAllAutonomous extends CommandBase {
@@ -47,7 +48,8 @@ public class ShootAllAutonomous extends CommandBase {
     }
 
     if(ReadyToShoot){
-      sConveyor.FullConveyorForward(0.9, 0.8);
+      sConveyor.CanSensorMove = false;
+      sConveyor.FullConveyorForward(1, 0.8);
     }
 
     // if(Voltage < TargetVoltage){
@@ -60,6 +62,7 @@ public class ShootAllAutonomous extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    sConveyor.CanSensorMove = true;
   }
 
   // Returns true when the command should end.

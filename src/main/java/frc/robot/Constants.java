@@ -65,7 +65,7 @@ public final class Constants {
     // Shooter
     public static int kBottomShooterMotorID = 4;
     public static int kTopShooterMotorID = 5;
-    public static int kShooterTicksPerRotation = 2048; // or 4096
+    public static int kShooterTicksPerRotation = 4096; // or 2048
     public static double kShooterPGain = 1.25;
     public static double kShooterIGain = 0.0;
     public static double kShooterDGain = 4.0;

@@ -45,7 +45,7 @@ public class RadiusTurnRight extends CommandBase {
     SmartDashboard.putNumber("Gyro Yaw", DT.DrivetrainGyro.getYaw());
     SmartDashboard.putString("Going", "Right (cmd)");
     if(Speed > 0){
-      if(DT.DrivetrainGyro.getAngle() < Angle){
+      if(DT.DrivetrainGyro.getAngle() > -Angle){
         DT.Right.set(-LongSpeed);
         DT.Left.set(Speed);
       }else{
@@ -54,7 +54,7 @@ public class RadiusTurnRight extends CommandBase {
         Finished = true;
       }
     } else {
-      if(DT.DrivetrainGyro.getAngle() > -Angle){
+      if(DT.DrivetrainGyro.getAngle() < Angle){
         DT.Right.set(-LongSpeed);
         DT.Left.set(Speed);
       }else{

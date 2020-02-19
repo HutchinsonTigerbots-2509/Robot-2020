@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.Turret.AlignTurretAutonomous;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ConveyorReverse;
@@ -24,8 +25,10 @@ import frc.robot.commands.RunConveyorMax;
 import frc.robot.commands.RunShooterMax;
 import frc.robot.commands.ShootAll;
 import frc.robot.commands.ShootAllAutonomous;
+import frc.robot.commands.Drivetrain.RadiusTurnRight;
 import frc.robot.commands.Turret.AlignTurret;
 import frc.robot.subsystems.Climb;
+import frc.robot.commands.Drivetrain.RadiusTurnLeft;
 import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
@@ -33,6 +36,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -79,27 +83,50 @@ public class RobotContainer {
   
 
   // AUTONOMOUS 1A - START RIGHT OF TARGET, GOES STRAIGHT BACK INTO TRENCH
-  // NO INTAKE!!!!!!!! (untested shooter)
+  // Works :)     ...unless it runs into the wheel
   // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
   //   new SequentialCommandGroup(
   //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(1),
   //     new AlignTurret(sVision, sTurret)),
-  //   new ShootAllAutonomous(sShooter, sConveyor, 4000),
-  //   new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(5));
+  //   new RunCommand(() -> sIntake.DropIntake()).withTimeout(1)
+  //     .andThen(new RunCommand(() -> sIntake.IntakeIn())),
+  //   new ShootAllAutonomous(sShooter, sConveyor, 3900, 0.8),
+  //   new WaitCommand(5).andThen(new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.45)).withTimeout(7.5)));
 
 
   // AUTONOMOUS 2A - START IN FRONT OF TARGET, ANGLED TOWARD CONTROL PANEL
-  // Has Shooter ramp up / power issues
+  // Might not go back far enough. Goes straight back.
+  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
+  //   new SequentialCommandGroup(
+  //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.6),
+  //     new AlignTurret(sVision, sTurret)),
+  //   new RunCommand(() -> sIntake.DropIntake()).withTimeout(1.5)
+  //     .andThen(new RunCommand(() -> sIntake.IntakeIn())),
+  //   new SequentialCommandGroup(
+  //     new ShootAllAutonomous(sShooter, sConveyor, 3900, 0.8).withTimeout(4),
+  //     new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(6)
+  //     .alongWith(new RunCommand(() -> sIntake.IntakeIn()).withTimeout(5)),
+  //     new ShootAllAutonomous(sShooter, sConveyor, 3900, 0.8)
+  //   ));
+  
+  //Autonomous 2A (with turn) - START IN FRONT OF TARGET ANGLED TOWARD FRONT OF TRENCH
+  // DOESN'T WORK SCREW IT THIS IS NOT FREAKING WORTH IT
+  // Actually it was a mechanical error.
+  // Test this code, it might work.
   private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
     new SequentialCommandGroup(
       new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.6),
-      new AlignTurret(sVision, sTurret)),
-    new RunCommand(() -> sIntake.DropIntake()).withTimeout(1),
+      new AlignTurret(sVision, sTurret).withTimeout(2),
+      new WaitCommand(0.8).andThen(new AlignTurret(sVision, sTurret))),
+    new RunCommand(() -> sIntake.DropIntake()).withTimeout(1.5)
+      .andThen(new RunCommand(() -> sIntake.IntakeIn())),
     new SequentialCommandGroup(
-      new ShootAllAutonomous(sShooter, sConveyor, 3150, 0.8).withTimeout(6),
-      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(5)
-      .alongWith(new RunCommand(() -> sIntake.IntakeOut())).withTimeout(5),
-      new ShootAllAutonomous(sShooter, sConveyor, 3150, 0.8)
+      new ShootAllAutonomous(sShooter, sConveyor, 3900, 0.8).withTimeout(4),
+      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(2.8),
+      new RadiusTurnRight(sDrivetrain, 25, -0.05, 5),
+      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.4)).withTimeout(5)
+        .alongWith(new RunCommand(() -> sConveyor.FullConveyorForward(1, 0.8)),
+        new ShootAllAutonomous(sShooter, sConveyor, 0, 1))
     ));
 
   /**
