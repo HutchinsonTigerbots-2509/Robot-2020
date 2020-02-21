@@ -45,7 +45,14 @@ public class ShootAllAutonomous extends CommandBase {
   public void execute() {
     if(Math.abs(sShooter.GetRPM()) > RPM){
       ReadyToShoot = true;
+      // if(sShooter.GetRPM() > RPM){
+      //   Voltage = Voltage - 0.02;
+      // }
     }
+
+    // if(ReadyToShoot && sShooter.GetRPM() < RPM - 300){
+    //   Voltage = Voltage + 0.01;
+    // }
 
     if(ReadyToShoot){
       sConveyor.CanSensorMove = false;
@@ -63,6 +70,7 @@ public class ShootAllAutonomous extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     sConveyor.CanSensorMove = true;
+    sShooter.StopShooter();
   }
 
   // Returns true when the command should end.

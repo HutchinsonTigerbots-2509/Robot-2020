@@ -79,19 +79,20 @@ public class RobotContainer {
 
    // Commands - Create Command Objects
 
-  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
+  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
   
 
   // AUTONOMOUS 1A - START RIGHT OF TARGET, GOES STRAIGHT BACK INTO TRENCH
-  // Works :)     ...unless it runs into the wheel
+  // Vision issues.
   // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
   //   new SequentialCommandGroup(
   //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(1),
-  //     new AlignTurret(sVision, sTurret)),
+  //     new AlignTurret(sVision, sTurret)),//.withTimeout(2),
+  //     // new WaitCommand(0.8).andThen(new AlignTurret(sVision, sTurret)),
   //   new RunCommand(() -> sIntake.DropIntake()).withTimeout(1)
   //     .andThen(new RunCommand(() -> sIntake.IntakeIn())),
-  //   new ShootAllAutonomous(sShooter, sConveyor, 3900, 0.8),
-  //   new WaitCommand(5).andThen(new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.45)).withTimeout(7.5)));
+  //   new ShootAllAutonomous(sShooter, sConveyor, 3900, 1),
+  //   new WaitCommand(5).andThen(new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.6)).withTimeout(2.3)));
 
 
   // AUTONOMOUS 2A - START IN FRONT OF TARGET, ANGLED TOWARD CONTROL PANEL
@@ -110,24 +111,24 @@ public class RobotContainer {
   //   ));
   
   //Autonomous 2A (with turn) - START IN FRONT OF TARGET ANGLED TOWARD FRONT OF TRENCH
-  // DOESN'T WORK SCREW IT THIS IS NOT FREAKING WORTH IT
-  // Actually it was a mechanical error.
-  // Test this code, it might work.
-  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
-    new SequentialCommandGroup(
-      new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.6),
-      new AlignTurret(sVision, sTurret).withTimeout(2),
-      new WaitCommand(0.8).andThen(new AlignTurret(sVision, sTurret))),
-    new RunCommand(() -> sIntake.DropIntake()).withTimeout(1.5)
-      .andThen(new RunCommand(() -> sIntake.IntakeIn())),
-    new SequentialCommandGroup(
-      new ShootAllAutonomous(sShooter, sConveyor, 3900, 0.8).withTimeout(4),
-      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(2.8),
-      new RadiusTurnRight(sDrivetrain, 25, -0.05, 5),
-      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.4)).withTimeout(5)
-        .alongWith(new RunCommand(() -> sConveyor.FullConveyorForward(1, 0.8)),
-        new ShootAllAutonomous(sShooter, sConveyor, 0, 1))
-    ));
+  // Shoots trench balls too high
+  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
+  //   new SequentialCommandGroup(
+  //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.6),
+  //     new AlignTurret(sVision, sTurret).withTimeout(1.5),
+  //     new WaitCommand(1.3).andThen(new AlignTurret(sVision, sTurret))),
+  //   new RunCommand(() -> sIntake.DropIntake()).withTimeout(1.5)
+  //     .andThen(new RunCommand(() -> sIntake.IntakeIn())),
+  //   new SequentialCommandGroup(
+  //     new ShootAllAutonomous(sShooter, sConveyor, 3900, 1).withTimeout(4),
+  //     new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(2.8),
+  //     new RadiusTurnRight(sDrivetrain, 25, -0.05, 5),
+  //     new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.4)).withTimeout(5.2)
+  //       .raceWith(new RunCommand(() -> sConveyor.FullConveyorForward(1, 0.8)),
+  //       new ShootAllAutonomous(sShooter, sConveyor, 0, 1)),
+  //     new ShootAllAutonomous(sShooter, sConveyor, 2500, 1)
+  //     .alongWith(new RunCommand(() -> sConveyor.FullConveyorForward(1, 0.8)))
+  //   ));
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
