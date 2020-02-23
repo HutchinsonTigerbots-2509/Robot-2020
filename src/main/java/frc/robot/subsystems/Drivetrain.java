@@ -140,15 +140,24 @@ public class Drivetrain extends SubsystemBase {
   private double CurrentTurnValue = 0;
   private double Change = 0;
   private double TurnChange = 0;
+  // private double Target = 0;
 
   public void MarioDriveRamp(Joystick stick){
-    double SpeedMulti = 0.65;
-    double TurnSpeedMulti = 0.65;
-    double ForwardGain = 0.035; //0.007
-    double ReverseGain = 0.1;
+    double SpeedMulti = 0.9;
+    double TurnSpeedMulti = 0.9;
+    double ForwardGain = 0.038; //0.007
+    double ReverseGain = 0.01;
     double ReverseTurnGain = 0.1;
     double Target = (stick.getRawAxis(1) * SpeedMulti);
     double TurnTarget = -(stick.getRawAxis(4) * TurnSpeedMulti);
+
+    // if(stick.getRawAxis(3) > 0.2){
+    //   Target = stick.getRawAxis(3);
+    // } else if(stick.getRawAxis(2) > 0.2){
+    //   Target = -stick.getRawAxis(2);
+    // } else {
+    //   Target = 0;
+    // }
 
     // Sets the target to zero if the target is too low
     if(Math.abs(Target) < Constants.kDrivetrainMinVoltage) {

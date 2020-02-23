@@ -17,18 +17,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.commands.Turret.AlignTurretAutonomous;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ConveyorReverse;
 import frc.robot.commands.RunConveyorMax;
 import frc.robot.commands.RunShooterMax;
-import frc.robot.commands.ShootAll;
 import frc.robot.commands.ShootAllAutonomous;
+import frc.robot.commands.ShootAllProp;
 import frc.robot.commands.Drivetrain.RadiusTurnRight;
 import frc.robot.commands.Turret.AlignTurret;
 import frc.robot.subsystems.Climb;
-import frc.robot.commands.Drivetrain.RadiusTurnLeft;
 import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
@@ -36,7 +35,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.ShootAllAutonomous;
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -79,7 +78,7 @@ public class RobotContainer {
 
    // Commands - Create Command Objects
 
-  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
+  //private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
   
 
   // AUTONOMOUS 1A - START RIGHT OF TARGET, GOES STRAIGHT BACK INTO TRENCH
@@ -112,23 +111,23 @@ public class RobotContainer {
   
   //Autonomous 2A (with turn) - START IN FRONT OF TARGET ANGLED TOWARD FRONT OF TRENCH
   // Shoots trench balls too high
-  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
-  //   new SequentialCommandGroup(
-  //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.6),
-  //     new AlignTurret(sVision, sTurret).withTimeout(1.5),
-  //     new WaitCommand(1.3).andThen(new AlignTurret(sVision, sTurret))),
-  //   new RunCommand(() -> sIntake.DropIntake()).withTimeout(1.5)
-  //     .andThen(new RunCommand(() -> sIntake.IntakeIn())),
-  //   new SequentialCommandGroup(
-  //     new ShootAllAutonomous(sShooter, sConveyor, 3900, 1).withTimeout(4),
-  //     new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(2.8),
-  //     new RadiusTurnRight(sDrivetrain, 25, -0.05, 5),
-  //     new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.4)).withTimeout(5.2)
-  //       .raceWith(new RunCommand(() -> sConveyor.FullConveyorForward(1, 0.8)),
-  //       new ShootAllAutonomous(sShooter, sConveyor, 0, 1)),
-  //     new ShootAllAutonomous(sShooter, sConveyor, 2500, 1)
-  //     .alongWith(new RunCommand(() -> sConveyor.FullConveyorForward(1, 0.8)))
-  //   ));
+  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
+    new SequentialCommandGroup(
+      new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.6),
+      new AlignTurret(sVision, sTurret).withTimeout(1.5),
+      new WaitCommand(1.3).andThen(new AlignTurret(sVision, sTurret))),
+    new RunCommand(() -> sIntake.DropIntake()).withTimeout(1.5)
+      .andThen(new RunCommand(() -> sIntake.IntakeIn())),
+    new SequentialCommandGroup(
+      new ShootAllAutonomous(sShooter, sConveyor, 4300, 1).withTimeout(4),
+      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.5)).withTimeout(2.8),
+      new RadiusTurnRight(sDrivetrain, 25, -0.05, 5),
+      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.4)).withTimeout(5.2)
+        .raceWith(new RunCommand(() -> sConveyor.FullConveyorForward(1, 0.8)),
+        new ShootAllAutonomous(sShooter, sConveyor, 0, 1)),
+      new ShootAllAutonomous(sShooter, sConveyor, 4700, 1)
+      .alongWith(new RunCommand(() -> sConveyor.FullConveyorForward(1, 0.8)))
+    ));
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -162,12 +161,14 @@ public class RobotContainer {
   ConveyorReverseButton.whileHeld(new ConveyorReverse(sConveyor));
 
   ShootAllButton = new JoystickButton(CoOpStick, 2);
-  ShootAllButton.whileHeld(new ShootAll(sShooter, sConveyor));
+  // ShootAllButton.whileHeld(new ShootAll(sShooter, sConveyor));
+  // ShootAllButton.whileHeld(new ShootAllProp(sShooter, sConveyor, 3500));
+  ShootAllButton.whileHeld(new RunCommand(() -> sShooter.ShooterForward(1, 1)));
 
   RunShooterMaxButton = new JoystickButton(CoOpStick, 3);
-  // RunShooterMaxButton.toggleWhenPressed(new RampUpShooter(sShooter).andThen(new RunShooterRPM(sShooter)));
-  RunShooterMaxButton.toggleWhenPressed(new RunShooterMax(sShooter));
-  // RunShooterMaxButton.toggleWhenPressed(new RampUpShooter(sShooter));
+  // RunShooterMaxButton.toggleWhenPressed(new RunShooterMax(sShooter));
+  // RunShooterMaxButton.toggleWhenPressed(new ShootAllProp(sShooter, sConveyor, 2900));
+  RunShooterMaxButton.toggleWhenPressed(new ShootAllAutonomous(sShooter, sConveyor, 2150, 1)); //2150
 
   ColorWheelForward = new JoystickButton(OpStick, 5);
   ColorWheelForward.whileHeld(new RunCommand(() -> sColorWheel.ColorWheelForward(), sColorWheel));

@@ -26,8 +26,8 @@ public class RunShooterMax extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    BottomSpeed = 0.8; //0.8
-    TopSpeed = 0.8; //0.8
+    BottomSpeed = 1; //0.8
+    TopSpeed = 1; //0.8
     sShooter.ShooterForward(BottomSpeed, TopSpeed);
   }
 

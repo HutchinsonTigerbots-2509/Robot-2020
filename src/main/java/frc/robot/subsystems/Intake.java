@@ -26,9 +26,9 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     if(RobotContainer.CoOpStick.getRawAxis(2) > 0.1){
-      IntakeIn();
-    } else if (RobotContainer.CoOpStick.getRawAxis(3) > 0.1){
       IntakeOut();
+    } else if (RobotContainer.CoOpStick.getRawAxis(3) > 0.1){
+      IntakeIn();
     } else {
       StopIntakeMotor();
     }

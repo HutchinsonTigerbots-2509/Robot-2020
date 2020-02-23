@@ -44,7 +44,7 @@ public class Turret extends SubsystemBase {
     // This method will be called once per scheduler run
     GetLimitValue();
 
-    SmartDashboard.putNumber("Turret Limit", TurretLimit.getVoltage());
+    // SmartDashboard.putNumber("Turret Limit", TurretLimit.getVoltage());
     SmartDashboard.putBoolean("Left Limit", LeftLimit);
     SmartDashboard.putBoolean("Right Limit", RightLimit);
     // SmartDashboard.putBoolean("Direction", Direction);

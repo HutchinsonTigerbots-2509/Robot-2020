@@ -7,8 +7,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
+import frc.robot.Constants;
 import frc.robot.commands.Turret.AlignTurret;
 import frc.robot.subsystems.Conveyor;
 
@@ -18,15 +20,17 @@ public class ShootAllAutonomous extends CommandBase {
   private Boolean ReadyToShoot;
   private double TargetVoltage;
   private double Voltage = 0.2;
-  private int RPM;
+  private int TargetRPM;
+  private double CurrentVoltage;
+  private double P;
   /**
    * Creates a new ShootAllAutonomous.
    */
   public ShootAllAutonomous(Shooter pShooter, Conveyor pConveyor, int pRPM, double pTargetVolts) {
     sShooter = pShooter;
     sConveyor = pConveyor;
-    RPM = pRPM;
-    // TargetVoltage = pTargetVolts;
+    TargetRPM = pRPM;
+    TargetVoltage = pTargetVolts;
     Voltage = pTargetVolts;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sShooter);
@@ -43,11 +47,31 @@ public class ShootAllAutonomous extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Math.abs(sShooter.GetRPM()) > RPM){
+
+    // int rpm = sShooter.GetRPM();
+
+    // int error = TargetRPM - Math.abs(rpm);
+
+    // double newVoltage = 0.0002 * error;
+
+
+    // if(Math.abs(rpm) < Math.abs(TargetRPM)){
+    //   if (newVoltage - CurrentVoltage > 0.05){
+    //   newVoltage += 0.05;
+    //   }if(newVoltage < Constants.kShooterMinVoltage){
+    //     newVoltage = Constants.kShooterMinVoltage;
+    //   }
+    // }else{
+    //  newVoltage = Math.abs(CurrentVoltage);
+    // }
+
+    if(Math.abs(sShooter.GetRPM()) > TargetRPM){
       ReadyToShoot = true;
-      // if(sShooter.GetRPM() > RPM){
-      //   Voltage = Voltage - 0.02;
+      // if(sShooter.GetRPM() > TargetRPM){
+      //   Voltage = Voltage - 0.05;
       // }
+    } else {
+      ReadyToShoot = false;
     }
 
     // if(ReadyToShoot && sShooter.GetRPM() < RPM - 300){
@@ -56,14 +80,24 @@ public class ShootAllAutonomous extends CommandBase {
 
     if(ReadyToShoot){
       sConveyor.CanSensorMove = false;
-      sConveyor.FullConveyorForward(1, 0.8);
+      sConveyor.FullConveyorForward(1, 1);
     }
 
     // if(Voltage < TargetVoltage){
     //   Voltage = Voltage + 0.01;
     // }
 
-    sShooter.ShooterForward(Voltage, Voltage);//.9
+    // SmartDashboard.putNumber("Current Volts", CurrentVoltage);
+
+    // if(rpm > TargetRPM && rpm < TargetRPM + 100){
+    //   sConveyor.CanSensorMove = false;
+    //   sConveyor.FullConveyorForward(1, 0.8);
+    // }else{
+    //   sShooter.ShooterForward(newVoltage, newVoltage);//.9
+    // }
+
+    // CurrentVoltage = newVoltage;
+    sShooter.ShooterForward(Voltage, Voltage);
   }
 
   // Called once the command ends or is interrupted.
