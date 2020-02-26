@@ -103,6 +103,10 @@ public class Turret extends SubsystemBase {
     }
   }
 
+  public void StopAlignCommand(){
+    Aligned = true;
+  }
+
   
   // public boolean GetLeftLimit(){
   //   return LeftLimit.get();

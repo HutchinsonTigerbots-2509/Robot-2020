@@ -222,25 +222,25 @@ public class Drivetrain extends SubsystemBase {
 
     //    <<<<<READY TO TEST>>>>>
 
-    if(stick.getRawAxis(1) > 0.2){
+    if(stick.getRawAxis(1) > 0.15){
       if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
         Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
       }else{
         Drive.arcadeDrive(-Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
       }
-    }else if(stick.getRawAxis(1)  < -0.2 ){
+    }else if(stick.getRawAxis(1)  < -0.15 ){
       if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
         Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
       }else{
         Drive.arcadeDrive(Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
       }
-    }else if (stick.getRawAxis(4) > 0.2){
+    }else if (stick.getRawAxis(4) > 0.15){
       if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
         Drive.arcadeDrive(0, -CurrentTurnValue);
       }else{
         Drive.arcadeDrive(0, Constants.kDrivetrainMinVoltage);
       }
-    }else if(stick.getRawAxis(4) < -0.2){
+    }else if(stick.getRawAxis(4) < -0.15){
       if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
         Drive.arcadeDrive(0, -CurrentTurnValue);
       }else{

@@ -20,14 +20,19 @@ public class AlignTurret extends CommandBase {
   private double Speed;
   private boolean Aligned;
   private double TargetDegrees;
+  private double Offset;
 
 
   /**
    * Creates a new AlignTurret.
    */
-  public AlignTurret(Vision pVision, Turret pTurret) {
+  // (From the perspective of the camera)
+  // A positive offset turns the turret right
+  // A negative offset turns the turret left
+  public AlignTurret(Vision pVision, Turret pTurret, double pOffset) {
     sVision = pVision;
     sTurret = pTurret;
+    Offset = pOffset;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sTurret);
     addRequirements(sVision);
@@ -47,21 +52,29 @@ public class AlignTurret extends CommandBase {
   public void execute() {
     TargetX = sVision.getTargetX();
     // Speed = Math.max(TargetX * 0.08, Constants.kTurretMinVoltage);
-    if(TargetX > TargetDegrees + 7){
+    if(TargetX > TargetDegrees + (7 + Offset)){
       Speed = Math.max(TargetX * 0.35, Constants.kTurretMinVoltage);//.01
       sTurret.TurnLeft(Speed);
       Aligned = false;
-    } else if(TargetX < TargetDegrees - 7){
+    } else if(TargetX < TargetDegrees - (7 + Offset)){
       Speed = Math.max(TargetX * 0.35, Constants.kTurretMinVoltage);
       sTurret.TurnRight(Speed);
       Aligned = false;
-    } else if(TargetX > TargetDegrees + 0.75){ //2
-      Speed = Math.max(TargetX * 0.16, Constants.kTurretMinVoltage);//.08
+    } else if(TargetX > TargetDegrees + (2 + Offset)){
+      Speed = Math.max(TargetX * 0.12, Constants.kTurretMinVoltage);
+      sTurret.TurnRight(Speed);
+      Aligned = false;
+    } else if(TargetX < TargetDegrees - (2 + Offset)){ //-2
+      Speed = Math.max(TargetX * 0.12, Constants.kTurretMinVoltage);
+      sTurret.TurnRight(Speed);
+      Aligned = false;
+    } else if(TargetX > TargetDegrees + (1 + Offset)){ //2
+      Speed = Math.max(TargetX * 0.1, Constants.kTurretMinVoltage);//.08
       sTurret.TurnLeft(Speed);
       Aligned = false;
-    } else if(TargetX < TargetDegrees - 2){ //-2
-      Speed = Math.max(TargetX * 0.16, Constants.kTurretMinVoltage);
-      sTurret.TurnRight(Speed);
+    } else if(TargetX < TargetDegrees - (1 + Offset)){
+      Speed = Math.max(TargetX * 0.1, Constants.kTurretMinVoltage);//.08
+      sTurret.TurnLeft(Speed);
       Aligned = false;
     } else {
       sTurret.StopTurretMotor();
@@ -74,16 +87,12 @@ public class AlignTurret extends CommandBase {
   public void end(boolean interrupted) {
     sTurret.StopTurretMotor();
     SmartDashboard.putBoolean("Align Target", false);
+    sTurret.Aligned = false;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Aligned == true){
-      // return true;
-      return false;
-    } else {
-      return false;
-    }
+    return sTurret.Aligned;
   }
 }

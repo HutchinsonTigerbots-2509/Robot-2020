@@ -34,9 +34,9 @@ public class Intake extends SubsystemBase {
     }
 
     if(RobotContainer.CoOpStick.getRawAxis(1) > 0.2){
-      LiftIntake();
-    } else if (RobotContainer.CoOpStick.getRawAxis(1) < -0.2){
       DropIntake();
+    } else if (RobotContainer.CoOpStick.getRawAxis(1) < -0.2){
+      LiftIntake();
     } else {
       StopDropIntake();
     }
@@ -44,11 +44,11 @@ public class Intake extends SubsystemBase {
   }
 
   public void DropIntake(){
-    IntakeDropMotor.set(0.5);
+    IntakeDropMotor.set(1);
   }
 
   public void LiftIntake(){
-    IntakeDropMotor.set(-0.5);
+    IntakeDropMotor.set(-1);
   }
 
   public void StopDropIntake(){
@@ -56,11 +56,11 @@ public class Intake extends SubsystemBase {
   }
 
   public void IntakeIn(){
-    IntakeMotor.set(-0.8);
+    IntakeMotor.set(0.8);
   }
 
   public void IntakeOut(){
-    IntakeMotor.set(0.8);
+    IntakeMotor.set(-0.8);
   }
 
   public void StopIntakeMotor(){

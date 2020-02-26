@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Conveyor extends SubsystemBase {
@@ -70,6 +72,7 @@ public class Conveyor extends SubsystemBase {
   }
 
   public void FullConveyorForward(double pTopSpeed, double pBottomSpeed){
+    RobotContainer.sTurret.StopAlignCommand();
     TopConveyorMotor.set(pTopSpeed);
     BottomConveyorMotor.set(pBottomSpeed);
   }
