@@ -25,6 +25,7 @@ import frc.robot.commands.RunConveyorMax;
 import frc.robot.commands.RunShooterMax;
 import frc.robot.commands.ShootAllAutonomous;
 import frc.robot.commands.ShootAllProp;
+import frc.robot.commands.AutoVision.ProcessVision;
 import frc.robot.commands.Drivetrain.RadiusTurnRight;
 import frc.robot.commands.Turret.AlignTurret;
 import frc.robot.subsystems.Climb;
@@ -34,6 +35,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.USBVision;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.ShootAllAutonomous;
 /**
@@ -67,6 +69,7 @@ public class RobotContainer {
   public static Intake sIntake = new Intake();
   public static ColorWheel sColorWheel = new ColorWheel();
   public static Climb sClimb = new Climb();
+  public static USBVision sUsbVision = new USBVision();
 
   //FOR SHUFFLEBOARD AUTO CHOOSING
   // private final SendableChooser<Command> commandChooser = new SendableChooser<Command>();
@@ -235,7 +238,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // NOTE: Put in an actual command
-    return AutoCommands;
+    // return AutoCommands;
     //return commandChooser.getSelected();
+    return new ProcessVision(sUsbVision);
   }
 }
