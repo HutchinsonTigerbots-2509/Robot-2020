@@ -25,6 +25,7 @@ import frc.robot.commands.RunConveyorMax;
 import frc.robot.commands.RunShooterMax;
 import frc.robot.commands.ShootAllAutonomous;
 import frc.robot.commands.ShootAllProp;
+import frc.robot.commands.AutoVision.ProcessAndGrab;
 import frc.robot.commands.AutoVision.ProcessVision;
 import frc.robot.commands.Drivetrain.RadiusTurnRight;
 import frc.robot.commands.Turret.AlignTurret;
@@ -240,6 +241,9 @@ public class RobotContainer {
     // NOTE: Put in an actual command
     // return AutoCommands;
     //return commandChooser.getSelected();
-    return new ProcessVision(sUsbVision);
+
+    // USB VISION TESTING
+    // return new ProcessVision(sUsbVision);
+    return new ProcessAndGrab(sUsbVision, sIntake, sDrivetrain);
   }
 }

@@ -51,13 +51,14 @@ public class USBVision extends SubsystemBase {
 
   public FoundContour[] getContours() {
     FoundContour[] Contours = new FoundContour[5];
-    for (FoundContour Contour : Contours) {
-      Contour = new FoundContour(-1, -1 , -1, false);
-    }
-    // Contours[1] = new FoundContour(-1, -1 , -1, false);
-    // Contours[2] = new FoundContour(-1, -1 , -1, false);
-    // Contours[3] = new FoundContour(-1, -1 , -1, false);
-    // Contours[4] = new FoundContour(-1, -1 , -1, false);
+    // for (FoundContour Contour : Contours) {
+    //   Contour = new FoundContour(-1, -1 , -1, false);
+    // }
+    Contours[0] = new FoundContour(-1, -1 , -1, false);
+    Contours[1] = new FoundContour(-1, -1 , -1, false);
+    Contours[2] = new FoundContour(-1, -1 , -1, false);
+    Contours[3] = new FoundContour(-1, -1 , -1, false);
+    Contours[4] = new FoundContour(-1, -1 , -1, false);
 
     // Empty Object for Logic
     Object imgLock = new Object();;

@@ -31,6 +31,8 @@ public class Conveyor extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Top Sensor", TopLightSensor.getVoltage());
+    SmartDashboard.putNumber("Bottom Sensor", BottomLightSensor.getVoltage());
     GetTopSensorValue();
     GetBottomSensorValue();
     if(CanSensorMove == true){

@@ -264,7 +264,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    MarioDriveRamp(RobotContainer.OpStick);
+    // MarioDriveRamp(RobotContainer.OpStick);
 
     // SmartDashboard.putNumber("Left Front", LFSC.getIntegratedSensorPosition());
     // SmartDashboard.putNumber("Left Rear", LRSC.getIntegratedSensorPosition());
