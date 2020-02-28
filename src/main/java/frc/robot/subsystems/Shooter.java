@@ -39,7 +39,7 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // SmartDashboard.putNumber("Velocity? (1)", ShooterMotorMaster.getSelectedSensorVelocity());
     // SmartDashboard.putNumber("Velocity? (2)", ShooterMotor2.getActiveTrajectoryVelocity());
-    SmartDashboard.putNumber("RPM Bottom", (BottomShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
+    // SmartDashboard.putNumber("RPM Bottom", (BottomShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
     SmartDashboard.putNumber("RPM", (BottomShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
     // SmartDashboard.putNumber("RPM Top", (TopShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
     SmartDashboard.putNumber("Temp Bottom", (BottomShooterMotor.getTemperature() * (1.8)) + 32);

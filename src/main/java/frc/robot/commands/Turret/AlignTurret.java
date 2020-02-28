@@ -68,11 +68,11 @@ public class AlignTurret extends CommandBase {
       Speed = Math.max(TargetX * 0.12, Constants.kTurretMinVoltage);
       sTurret.TurnRight(Speed);
       Aligned = false;
-    } else if(TargetX > TargetDegrees + (1 + Offset)){ //2
+    } else if(TargetX > TargetDegrees + (1.1 + Offset)){ //2
       Speed = Math.max(TargetX * 0.1, Constants.kTurretMinVoltage);//.08
       sTurret.TurnLeft(Speed);
       Aligned = false;
-    } else if(TargetX < TargetDegrees - (1 + Offset)){
+    } else if(TargetX < TargetDegrees - (1.1 + Offset)){
       Speed = Math.max(TargetX * 0.1, Constants.kTurretMinVoltage);//.08
       sTurret.TurnLeft(Speed);
       Aligned = false;

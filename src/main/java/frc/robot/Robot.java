@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,6 +27,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   public static RobotContainer RobotContainer;
+
+  // public static UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+  // public static CvSink sink = CameraServer.getInstance().getVideo("Ball");
 
 
   /**

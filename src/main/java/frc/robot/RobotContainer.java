@@ -12,6 +12,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.Turret.AlignTurretAutonomous;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -57,6 +58,7 @@ public class RobotContainer {
   private static JoystickButton RetractClimberButton;
   private static JoystickButton CreepLeftButton;
   private static JoystickButton CreepRightButton;
+  private static JoystickButton DisableSensorButton;
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
   public static Drivetrain sDrivetrain = new Drivetrain();
@@ -86,8 +88,8 @@ public class RobotContainer {
   // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
   //   new SequentialCommandGroup(
   //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(1),
-  //     new AlignTurret(sVision, sTurret).withTimeout(2),
-  //     new WaitCommand(0.8).andThen(new AlignTurret(sVision, sTurret))),
+  //     new AlignTurret(sVision, sTurret, 0).withTimeout(2),
+  //     new WaitCommand(0.8).andThen(new AlignTurret(sVision, sTurret, 0))),
   //   new RunCommand(() -> sIntake.DropIntake()).withTimeout(1)
   //     .andThen(new RunCommand(() -> sIntake.IntakeIn())),
   //   new SequentialCommandGroup(
@@ -127,12 +129,13 @@ public class RobotContainer {
   //   ));
   
   //Autonomous 3A (with turn) - START IN FRONT OF TARGET ANGLED TOWARD FRONT OF TRENCH
-  // Kinda works. Maybe fine tune a bit more?
+  // Turret not aligning for some reason???
   // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
   //   new SequentialCommandGroup(
   //     new RunCommand(() -> sTurret.TurnRight(0.8), sTurret).withTimeout(0.6),
   //     new AlignTurret(sVision, sTurret, 0).withTimeout(1.5),
-  //     new WaitCommand(1.3).andThen(new AlignTurret(sVision, sTurret, -0.5))),
+  //     new WaitCommand(1.3),
+  //     new AlignTurretAutonomous(sVision, sTurret, -0.5)),
   //   new RunCommand(() -> sIntake.DropIntake()).withTimeout(1.5)
   //     .andThen(new RunCommand(() -> sIntake.IntakeIn())),
   //   new SequentialCommandGroup(
@@ -198,6 +201,9 @@ public class RobotContainer {
   // RunShooterMaxButton.toggleWhenPressed(new RunShooterMax(sShooter));
   // RunShooterMaxButton.toggleWhenPressed(new ShootAllProp(sShooter, sConveyor, 2900));
   RunShooterMaxButton.toggleWhenPressed(new ShootAllAutonomous(sShooter, sConveyor, 2150, 1)); //2150
+
+  DisableSensorButton = new JoystickButton(OpStick, 2);
+  DisableSensorButton.toggleWhenPressed(new InstantCommand(() -> sConveyor.DisableSensor()));
 
   ColorWheelForward = new JoystickButton(OpStick, 5);
   ColorWheelForward.whileHeld(new RunCommand(() -> sColorWheel.ColorWheelForward(), sColorWheel));

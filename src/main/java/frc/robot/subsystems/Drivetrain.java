@@ -140,13 +140,14 @@ public class Drivetrain extends SubsystemBase {
   private double CurrentTurnValue = 0;
   private double Change = 0;
   private double TurnChange = 0;
+  private double ChangeMax = 0.009;
   // private double Target = 0;
 
   public void MarioDriveRamp(Joystick stick){
     double SpeedMulti = 0.9;
     double TurnSpeedMulti = 0.9;
-    double ForwardGain = 0.038; //0.007
-    double ReverseGain = 0.01;
+    double ForwardGain = 0.05; //0.038
+    double ReverseGain = 0.04; // 0.01
     double ReverseTurnGain = 0.1;
     double Target = (stick.getRawAxis(1) * SpeedMulti);
     double TurnTarget = -(stick.getRawAxis(4) * TurnSpeedMulti);
@@ -176,6 +177,13 @@ public class Drivetrain extends SubsystemBase {
       Change = -(ReverseGain * (Target - PreviousValue));
     } else {
       Change = -(ForwardGain * (Target - PreviousValue));
+    }
+    if((Target < 0 && PreviousValue > 0) || (Target > 0 && PreviousValue < 0)){
+      if(Change > ChangeMax){
+        Change = ChangeMax;
+      } else if (Change < -ChangeMax){
+        Change = -ChangeMax;
+      }
     }
 
     if (TurnTarget == 0.0) {
@@ -222,25 +230,25 @@ public class Drivetrain extends SubsystemBase {
 
     //    <<<<<READY TO TEST>>>>>
 
-    if(stick.getRawAxis(1) > 0.15){
+    if(stick.getRawAxis(1) > 0.1){
       if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
         Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
       }else{
         Drive.arcadeDrive(-Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
       }
-    }else if(stick.getRawAxis(1)  < -0.15 ){
+    }else if(stick.getRawAxis(1)  < -0.1){
       if(Math.abs(CurrentValue) > Constants.kDrivetrainMinVoltage){
         Drive.arcadeDrive(-CurrentValue, -CurrentTurnValue);
       }else{
         Drive.arcadeDrive(Constants.kDrivetrainMinVoltage, -CurrentTurnValue);
       }
-    }else if (stick.getRawAxis(4) > 0.15){
+    }else if (stick.getRawAxis(4) > 0.1){
       if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
         Drive.arcadeDrive(0, -CurrentTurnValue);
       }else{
         Drive.arcadeDrive(0, Constants.kDrivetrainMinVoltage);
       }
-    }else if(stick.getRawAxis(4) < -0.15){
+    }else if(stick.getRawAxis(4) < -0.1){
       if(Math.abs(CurrentTurnValue) > Constants.kDrivetrainMinVoltage){
         Drive.arcadeDrive(0, -CurrentTurnValue);
       }else{
@@ -253,7 +261,7 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putNumber("Current Value", CurrentValue);
     // SmartDashboard.putNumber("Target", Target);
     // SmartDashboard.putNumber("Stick Value", stick.getRawAxis(1));
-    // SmartDashboard.putNumber("Change", Change);
+    SmartDashboard.putNumber("Change", Change);
     // SmartDashboard.putNumber("Prev Value", PreviousValue);
     
     PreviousValue = CurrentValue;
