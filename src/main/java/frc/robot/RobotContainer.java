@@ -80,7 +80,7 @@ public class RobotContainer {
 
    // Commands - Create Command Objects
 
-  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
+  // private ParallelCommandGroup AutoCommands = new ParallelCommandGroup();
   
 
   // AUTONOMOUS 1A - START RIGHT OF TARGET, GOES STRAIGHT BACK INTO TRENCH
@@ -89,7 +89,7 @@ public class RobotContainer {
   //   new SequentialCommandGroup(
   //     new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(1),
   //     new AlignTurret(sVision, sTurret, 0).withTimeout(2),
-  //     new WaitCommand(0.8).andThen(new AlignTurret(sVision, sTurret, 0))),
+  //     new WaitCommand(0.8).andThen(new AlignTurretAutonomous(sVision, sTurret, 0))),
   //   new RunCommand(() -> sIntake.DropIntake()).withTimeout(1)
   //     .andThen(new RunCommand(() -> sIntake.IntakeIn())),
   //   new SequentialCommandGroup(
@@ -161,6 +161,26 @@ public class RobotContainer {
   //     new WaitCommand(2),
   //     new ShootAllAutonomous(sShooter, sConveyor, 2300, 1).withTimeout(4)));
 
+  // Autonomous 4C
+  // THIS IS PURELY EXPERIMENTAL, AND COMPLETELY UNTESTED
+  private ParallelCommandGroup AutoCommands = new ParallelCommandGroup(
+    new SequentialCommandGroup(
+      new RunCommand(() -> sTurret.TurnRight(0.9), sTurret).withTimeout(0.75),
+      new AlignTurret(sVision, sTurret, 0).withTimeout(1.5),
+      new WaitCommand(1.3),
+      new AlignTurretAutonomous(sVision, sTurret, 0)),
+    new RunCommand(() -> sIntake.DropIntake()).withTimeout(1.5).andThen(
+      new RunCommand(() -> sIntake.IntakeIn())),
+    new SequentialCommandGroup(
+      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.4)).withTimeout(1.5),
+      new WaitCommand(0.9),
+      new ShootAllAutonomous(sShooter, sConveyor, 2150, 1).withTimeout(2),
+      new RunCommand(() -> sDrivetrain.MoveDrivetrain(0.4)).withTimeout(3.6),
+      new WaitCommand(1),
+      new RunCommand(() -> sDrivetrain.MoveDrivetrain(-0.6)).withTimeout(0.6),
+      new WaitCommand(0.5),
+      new ShootAllAutonomous(sShooter, sConveyor, 2150, 1)));
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -190,6 +210,7 @@ public class RobotContainer {
   RunConveyorMaxButton.whileHeld(new RunConveyorMax(sConveyor));
 
   ConveyorReverseButton = new JoystickButton(CoOpStick, 6);
+  // ConveyorReverseButton.whenPressed(new ConveyorReverse(sConveyor).withTimeout(0.1));
   ConveyorReverseButton.whileHeld(new ConveyorReverse(sConveyor));
 
   ShootAllButton = new JoystickButton(CoOpStick, 2);

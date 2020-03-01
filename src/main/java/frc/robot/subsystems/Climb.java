@@ -10,8 +10,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -19,7 +17,7 @@ public class Climb extends SubsystemBase {
 
   private static WPI_TalonSRX ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
   private static WPI_TalonSRX ClimbMover = new WPI_TalonSRX(Constants.kClimbMoverID);
-  private static Relay ClimbPiston = new Relay(Constants.kClimbPistonID);
+  private static WPI_TalonSRX ClimbPiston = new WPI_TalonSRX(Constants.kClimbPistonID);
   private static AnalogInput ClimbLimit = new AnalogInput(Constants.kClimbLimitID);
   
   /**
@@ -33,7 +31,7 @@ public class Climb extends SubsystemBase {
   }
 
   public boolean getClimbLimit(){
-    if(ClimbLimit.getVoltage() > 0.25){
+    if(ClimbLimit.getVoltage() > 0.17){
       return true;
     } else {
       return false;
@@ -56,18 +54,20 @@ public class Climb extends SubsystemBase {
     ClimbMotor.set(0);
   }
 
+  // Extends the climb piston. Hopefully. (untested)
   public void ExtendClimbPiston(){
-    ClimbPiston.set(Value.kForward);
+    ClimbPiston.set(1);
   }
 
+  // Retracts the climb piston. Hopefully. (untested)
   public void RetractClimbPiston(){
-    ClimbPiston.set(Value.kReverse);
+    ClimbPiston.set(-1);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("Climb Limit", getClimbLimit());
-    // SmartDashboard.putNumber("Climb volts", ClimbLimit.getVoltage());
+    SmartDashboard.putNumber("Climb volts", ClimbLimit.getVoltage());
   }
 }

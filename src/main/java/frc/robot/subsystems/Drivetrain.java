@@ -140,13 +140,14 @@ public class Drivetrain extends SubsystemBase {
   private double CurrentTurnValue = 0;
   private double Change = 0;
   private double TurnChange = 0;
-  private double ChangeMax = 0.009;
+  private double ChangeMax = 0.008;
+  private double TurnChangeMax = 0.008;
   // private double Target = 0;
 
   public void MarioDriveRamp(Joystick stick){
     double SpeedMulti = 0.9;
     double TurnSpeedMulti = 0.9;
-    double ForwardGain = 0.05; //0.038
+    double ForwardGain = 0.048; //0.038
     double ReverseGain = 0.04; // 0.01
     double ReverseTurnGain = 0.1;
     double Target = (stick.getRawAxis(1) * SpeedMulti);
@@ -190,6 +191,13 @@ public class Drivetrain extends SubsystemBase {
       TurnChange = -(ReverseTurnGain * (TurnTarget - PreviousTurnValue));
     } else {
       TurnChange = -(ForwardGain * (TurnTarget - PreviousTurnValue));
+    }
+    if((TurnTarget < 0 && PreviousTurnValue > 0) || (TurnTarget > 0 && PreviousTurnValue < 0)){
+      if(TurnChange > TurnChangeMax){
+        TurnChange = TurnChangeMax;
+      } else if (TurnChange < -TurnChangeMax){
+        TurnChange = -TurnChangeMax;
+      }
     }
 
     // Updates the values to give to the motors

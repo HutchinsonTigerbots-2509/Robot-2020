@@ -7,7 +7,10 @@
 
 package frc.robot;
 
+import org.opencv.core.Mat;
+
 import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -30,6 +33,8 @@ public class Robot extends TimedRobot {
 
   // public static UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
   // public static CvSink sink = CameraServer.getInstance().getVideo("Ball");
+  // public static Mat image = new Mat();
+  // public static CvSource outputStream = CameraServer.getInstance().putVideo("Ball2", 640, 480);
 
 
   /**
@@ -57,6 +62,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    // sink.grabFrame(image);
+    // outputStream.putFrame(image);
   }
 
   /**

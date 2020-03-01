@@ -7,12 +7,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
-import frc.robot.Constants;
-import frc.robot.commands.Turret.AlignTurret;
 import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.Shooter;
 
 public class ShootAllAutonomous extends CommandBase {
   private Conveyor sConveyor;
@@ -40,6 +37,7 @@ public class ShootAllAutonomous extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    sConveyor.ConveyorReverse();
     sShooter.ShooterForward(Voltage, Voltage);
     ReadyToShoot = false;
   }

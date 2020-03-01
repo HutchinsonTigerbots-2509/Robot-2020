@@ -41,6 +41,7 @@ public class AlignTurret extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    sTurret.Aligned = false;
     SmartDashboard.putBoolean("Align Target", true);
     TargetX = sVision.getTargetX();
     Aligned = false;
@@ -94,5 +95,6 @@ public class AlignTurret extends CommandBase {
   @Override
   public boolean isFinished() {
     return sTurret.Aligned;
+    // return false;
   }
 }
