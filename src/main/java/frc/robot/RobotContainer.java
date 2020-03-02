@@ -59,6 +59,8 @@ public class RobotContainer {
   private static JoystickButton CreepLeftButton;
   private static JoystickButton CreepRightButton;
   private static JoystickButton DisableSensorButton;
+  private static JoystickButton ClimbLock;
+  private static JoystickButton ClimbUnlock;
 
    // Subsystems - Create all subsystems here, and then pass them into Commands
   public static Drivetrain sDrivetrain = new Drivetrain();
@@ -245,13 +247,21 @@ public class RobotContainer {
   RetractClimberButton.whileHeld(new RunCommand(() -> sClimb.ClimbRetract()));
   RetractClimberButton.whenReleased(new InstantCommand(() -> sClimb.StopClimb()));
 
-  CreepLeftButton = new JoystickButton(OpStick, 3);
-  CreepLeftButton.whileHeld(new RunCommand(() -> sClimb.Creep(1)));
-  CreepLeftButton.whenReleased(new InstantCommand(() -> sClimb.Creep(0)));
+  ClimbLock = new JoystickButton(CoOpStick, 9);
+  ClimbLock.whileHeld(new RunCommand(() -> sClimb.ClimbLock()));
+  ClimbLock.whenReleased(new InstantCommand(() -> sClimb.StopLock()));
 
-  CreepRightButton = new JoystickButton(OpStick, 2);
-  CreepRightButton.whileHeld(new RunCommand(() -> sClimb.Creep(-1)));
-  CreepRightButton.whenReleased(new InstantCommand(() -> sClimb.Creep(0)));
+  ClimbUnlock = new JoystickButton(CoOpStick, 10);
+  ClimbUnlock.whileHeld(new RunCommand(() -> sClimb.ClimbUnLock()));
+  ClimbUnlock.whenReleased(new InstantCommand(() -> sClimb.StopLock()));
+
+  // CreepLeftButton = new JoystickButton(OpStick, 3);
+  // CreepLeftButton.whileHeld(new RunCommand(() -> sClimb.Creep(1)));
+  // CreepLeftButton.whenReleased(new InstantCommand(() -> sClimb.Creep(0)));
+
+  // CreepRightButton = new JoystickButton(OpStick, 2);
+  // CreepRightButton.whileHeld(new RunCommand(() -> sClimb.Creep(-1)));
+  // CreepRightButton.whenReleased(new InstantCommand(() -> sClimb.Creep(0)));
   }
 
 

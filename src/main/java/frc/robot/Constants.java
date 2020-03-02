@@ -34,8 +34,8 @@ public final class Constants {
 
     // Climber
     public static int kClimbMotorID = 11;
-    public static int kClimbMoverID = 12;
-    public static int kClimbPistonID;
+    // public static int kClimbMoverID = 12;
+    public static int kClimbLockID = 12;
     public static int kClimbLimitID = 3;
 
     //RobotThings

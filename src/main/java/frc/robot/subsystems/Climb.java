@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Climb extends SubsystemBase {
 
   private static WPI_TalonSRX ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
-  private static WPI_TalonSRX ClimbMover = new WPI_TalonSRX(Constants.kClimbMoverID);
-  private static WPI_TalonSRX ClimbPiston = new WPI_TalonSRX(Constants.kClimbPistonID);
+  // private static WPI_TalonSRX ClimbMover = new WPI_TalonSRX(Constants.kClimbMoverID);
+  private static WPI_TalonSRX ClimbLock = new WPI_TalonSRX(Constants.kClimbLockID);
   private static AnalogInput ClimbLimit = new AnalogInput(Constants.kClimbLimitID);
   
   /**
@@ -26,9 +26,9 @@ public class Climb extends SubsystemBase {
   public Climb() {
   }
 
-  public void Creep(double speed) {
-    ClimbMover.set(speed);
-  }
+  // public void Creep(double speed) {
+  //   ClimbMover.set(speed);
+  // }
 
   public boolean getClimbLimit(){
     if(ClimbLimit.getVoltage() > 0.17){
@@ -55,13 +55,17 @@ public class Climb extends SubsystemBase {
   }
 
   // Extends the climb piston. Hopefully. (untested)
-  public void ExtendClimbPiston(){
-    ClimbPiston.set(1);
+  public void ClimbLock(){
+    ClimbLock.set(0.5);
   }
 
   // Retracts the climb piston. Hopefully. (untested)
-  public void RetractClimbPiston(){
-    ClimbPiston.set(-1);
+  public void ClimbUnLock(){
+    ClimbLock.set(-0.5);
+  }
+
+  public void StopLock() {
+    ClimbLock.set(0.0);
   }
 
   @Override
