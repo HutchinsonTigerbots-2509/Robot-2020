@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
 import edu.wpi.cscore.CvSink;
@@ -36,7 +37,16 @@ public class Robot extends TimedRobot {
   // public static Mat image = new Mat();
   // public static CvSource outputStream = CameraServer.getInstance().putVideo("Ball2", 640, 480);
 
+  public static UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("BALL", 0);
 
+  // 'Sinks' the camera stream into a processable image
+  public static CvSink cvSink = CameraServer.getInstance().getVideo("BALL");
+
+  // An output stream that sends our processed image out onto
+  // the Shuffleboard
+  public static CvSource outputStream = CameraServer.getInstance().putVideo("BALL2", 160, 120); // 160, 120
+
+  Mat image = new Mat();
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -46,6 +56,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     RobotContainer = new RobotContainer();
+
+    
+    camera.setResolution(640, 480); // 640, 480
+
+    cvSink.setSource(camera);
   }
 
   /**
@@ -55,6 +70,21 @@ public class Robot extends TimedRobot {
    * <p>This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
+  
+  public enum FlipCode {
+    X_AXIS(0),
+    Y_AXIS(1),
+    BOTH_AXES(-1);
+    public final int value;
+    FlipCode(int value) {
+      this.value = value;
+    }
+  }
+
+  public void cvFlip(Mat src, FlipCode flipcode) {
+    Core.flip(src, src, flipcode.value);
+  }
+
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
@@ -62,8 +92,13 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    // sink.grabFrame(image);
-    // outputStream.putFrame(image);
+  
+    cvSink.grabFrame(image);
+
+    FlipCode cvFlipFlipcode = FlipCode.BOTH_AXES;
+    cvFlip(image, cvFlipFlipcode);
+    
+    outputStream.putFrame(image);
   }
 
   /**
