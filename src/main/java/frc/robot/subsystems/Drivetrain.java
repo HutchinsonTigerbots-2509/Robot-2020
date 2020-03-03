@@ -269,7 +269,7 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putNumber("Current Value", CurrentValue);
     // SmartDashboard.putNumber("Target", Target);
     // SmartDashboard.putNumber("Stick Value", stick.getRawAxis(1));
-    SmartDashboard.putNumber("Change", Change);
+    // SmartDashboard.putNumber("Change", Change);
     // SmartDashboard.putNumber("Prev Value", PreviousValue);
     
     PreviousValue = CurrentValue;

@@ -37,16 +37,16 @@ public class Robot extends TimedRobot {
   // public static Mat image = new Mat();
   // public static CvSource outputStream = CameraServer.getInstance().putVideo("Ball2", 640, 480);
 
-  public static UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("BALL", 0);
+  // public static UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("BALL", 0);
 
   // 'Sinks' the camera stream into a processable image
-  public static CvSink cvSink = CameraServer.getInstance().getVideo("BALL");
+  // public static CvSink cvSink = CameraServer.getInstance().getVideo("BALL");
 
   // An output stream that sends our processed image out onto
   // the Shuffleboard
-  public static CvSource outputStream = CameraServer.getInstance().putVideo("BALL2", 160, 120); // 160, 120
+  // public static CvSource outputStream = CameraServer.getInstance().putVideo("BALL2", 160, 120); // 160, 120
 
-  Mat image = new Mat();
+  // Mat image = new Mat();
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -58,9 +58,9 @@ public class Robot extends TimedRobot {
     RobotContainer = new RobotContainer();
 
     
-    camera.setResolution(640, 480); // 640, 480
+    // camera.setResolution(640, 480); // 640, 480
 
-    cvSink.setSource(camera);
+    // cvSink.setSource(camera);
   }
 
   /**
@@ -71,19 +71,19 @@ public class Robot extends TimedRobot {
    * LiveWindow and SmartDashboard integrated updating.
    */
   
-  public enum FlipCode {
-    X_AXIS(0),
-    Y_AXIS(1),
-    BOTH_AXES(-1);
-    public final int value;
-    FlipCode(int value) {
-      this.value = value;
-    }
-  }
+  // public enum FlipCode {
+  //   X_AXIS(0),
+  //   Y_AXIS(1),
+  //   BOTH_AXES(-1);
+  //   public final int value;
+  //   FlipCode(int value) {
+  //     this.value = value;
+  //   }
+  // }
 
-  public void cvFlip(Mat src, FlipCode flipcode) {
-    Core.flip(src, src, flipcode.value);
-  }
+  // public void cvFlip(Mat src, FlipCode flipcode) {
+  //   Core.flip(src, src, flipcode.value);
+  // }
 
   @Override
   public void robotPeriodic() {
@@ -93,12 +93,14 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
   
-    cvSink.grabFrame(image);
 
-    FlipCode cvFlipFlipcode = FlipCode.BOTH_AXES;
-    cvFlip(image, cvFlipFlipcode);
+    // if (cvSink.grabFrame(image) != 0) {
+    //   cvSink.grabFrame(image);
+    //   FlipCode cvFlipFlipcode = FlipCode.BOTH_AXES;
+    //   cvFlip(image, cvFlipFlipcode);
     
-    outputStream.putFrame(image);
+    //   outputStream.putFrame(image);
+    // }
   }
 
   /**

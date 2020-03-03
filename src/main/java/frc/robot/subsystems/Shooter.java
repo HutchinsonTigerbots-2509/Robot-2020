@@ -42,8 +42,8 @@ public class Shooter extends SubsystemBase {
     // SmartDashboard.putNumber("RPM Bottom", (BottomShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
     SmartDashboard.putNumber("RPM", (BottomShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
     // SmartDashboard.putNumber("RPM Top", (TopShooterMotor.getSelectedSensorVelocity() * 600) / Constants.kShooterTicksPerRotation);
-    SmartDashboard.putNumber("Temp Bottom", (BottomShooterMotor.getTemperature() * (1.8)) + 32);
-    SmartDashboard.putNumber("Temp Top", (TopShooterMotor.getTemperature() * (1.8)) + 32);
+    // SmartDashboard.putNumber("Temp Bottom", (BottomShooterMotor.getTemperature() * (1.8)) + 32);
+    // SmartDashboard.putNumber("Temp Top", (TopShooterMotor.getTemperature() * (1.8)) + 32);
     // SmartDashboard.putNumber("Encoder", BottomShooterMotor.getSelectedSensorPosition());
     // SmartDashboard.putNumber("Encoder", ShooterMotorMaster.getSelectedSensorPosition());
     // SmartDashboard.putNumber("RPM? (2)", (ShooterMotor2.getActiveTrajectoryVelocity() / Constants.kShooterTicksPerRotation) * 600);

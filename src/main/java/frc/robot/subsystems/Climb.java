@@ -54,7 +54,6 @@ public class Climb extends SubsystemBase {
     ClimbMotor.set(0);
   }
 
-  // Extends the climb piston. Hopefully. (untested)
   public void ClimbLock(){
     ClimbLock.set(1);
   }
