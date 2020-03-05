@@ -66,6 +66,6 @@ public class Climb extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("Climb Limit", getClimbLimit());
-    SmartDashboard.putNumber("Climb volts", ClimbLimit.getVoltage());
+    // SmartDashboard.putNumber("Climb volts", ClimbLimit.getVoltage());
   }
 }

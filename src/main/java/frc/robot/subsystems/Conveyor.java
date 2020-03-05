@@ -61,10 +61,10 @@ public class Conveyor extends SubsystemBase {
 
   private boolean GetTopSensorValue(){
     if(TopLightSensor.getVoltage() < 0.15){
-      SmartDashboard.putBoolean("Top Sensor", true);
+      // SmartDashboard.putBoolean("Top Sensor", true);
       return true;
     } else{
-      SmartDashboard.putBoolean("Top Sensor", false);
+      // SmartDashboard.putBoolean("Top Sensor", false);
       return false;
     }
   }

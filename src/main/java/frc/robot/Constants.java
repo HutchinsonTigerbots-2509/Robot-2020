@@ -82,7 +82,7 @@ public final class Constants {
     public static int kLimelightLED = 0; // Sets LED. 0 = Set by Pipline, 1 = Force off, 2 = Force blink, 3 = Force on
     public static int kLimelightMode = 0; // Sets camera mode. 0 = Vision processor, 1 = Driver Camera
     public static int kLimelightStream = 0; // Sets streaming mode. 0 = Side-by-Side, 1 = PiP main, 2 = PiP secondary
-    public static int kLimelightStartingPipeline = 0; // The default pipeline to stream
+    public static int kLimelightStartingPipeline = 1; // The default pipeline to stream
     public static int kLimelightDriverPipeline = 6; // The pipeline to be used by the driver for the colorwheel
     
     // Table IDs (for getting values from the Network Table)
